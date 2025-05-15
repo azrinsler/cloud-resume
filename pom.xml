@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>azrinsler</groupId>
+    <artifactId>cloud-resume</artifactId>
+    <version>0H-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <repositories>
+        <!-- check maven central first -->
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <!-- this repositories id must match the one in settings.xml or auth will fail -->
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/${project.groupId}/${project.artifactId}</url>
+        </repository>
+    </repositories>
+
+    <modules>
+        <module>cloud-resume-lambda</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
