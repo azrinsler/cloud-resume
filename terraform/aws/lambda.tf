@@ -8,7 +8,7 @@ resource "aws_lambda_function" "kotlin_lambda_function" {
   handler = "azrinsler.aws.${var.kotlin_lambda_class}"
   source_code_hash = filebase64sha256(local.kotlin_lambda_path)
   role = aws_iam_role.lambda_exec.arn
-  timeout = 15 // specified in seconds
+  timeout = 45 // specified in seconds
 }
 
 # gives permission for api gateway to invoke the kotlin lambda
