@@ -23,7 +23,7 @@
     </repositories>
 
     <modules>
-        <module>cloud-resume-lambda</module>
+        <module>kotlin-lambda</module>
     </modules>
 
     <dependencyManagement>

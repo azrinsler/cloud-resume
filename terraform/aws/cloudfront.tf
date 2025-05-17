@@ -1,8 +1,20 @@
 # this cloudfront distribution is used in combination w/ route53 to provide access to our S3-hosted site
-resource "aws_cloudfront_distribution" "cloud_resume_cloudfront" {
+resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
   origin {
-    domain_name = aws_s3_bucket.cloud_resume_bucket.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.site_bucket.bucket_regional_domain_name
     origin_id = "S3-Origin"
+  }
+  origin {
+    domain_name = "${aws_apigatewayv2_api.primary_gateway.id}.execute-api.us-east-1.amazonaws.com"
+    origin_id   = "API-Gateway"
+    origin_path = "/${aws_apigatewayv2_stage.primary_gateway_stage.name}"
+
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
   }
 
   aliases = ["www.${var.site_name}"]
@@ -10,6 +22,7 @@ resource "aws_cloudfront_distribution" "cloud_resume_cloudfront" {
   enabled = true
   default_root_object = var.site_homepage
 
+  # for accessing the site (S3 Origin)
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
@@ -23,7 +36,24 @@ resource "aws_cloudfront_distribution" "cloud_resume_cloudfront" {
 
     forwarded_values {
       query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+  }
 
+  # https://medium.com/@d.kumarkaran12/aws-cloudfront-with-multiple-origins-a-terraform-powered-guide-to-path-based-routing-ea4a1e2dae63
+  # for accessing api gateway?
+  ordered_cache_behavior {
+    path_pattern           = "/${aws_apigatewayv2_stage.primary_gateway_stage.name}/*"
+    allowed_methods        = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "API-Gateway"
+    viewer_protocol_policy = "https-only"
+    compress               = true
+
+    forwarded_values {
+      query_string = true
       cookies {
         forward = "none"
       }
@@ -31,7 +61,7 @@ resource "aws_cloudfront_distribution" "cloud_resume_cloudfront" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.cloud_resume_cert.arn
+    acm_certificate_arn = aws_acm_certificate.primary_cert.arn
     ssl_support_method = "sni-only" # sni is short for 'server name identification'
   }
 
@@ -40,6 +70,5 @@ resource "aws_cloudfront_distribution" "cloud_resume_cloudfront" {
       restriction_type = "none"
     }
   }
-
-  depends_on = [aws_acm_certificate.cloud_resume_cert]
+  depends_on = [aws_acm_certificate_validation.primary_cert_validation]
 }

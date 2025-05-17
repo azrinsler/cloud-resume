@@ -1,6 +1,6 @@
-# these values can be references from other tf files
+# these values can be referenced from other tf files
 locals {
-  cloud_resume_lambda_path = "${var.packaged_source_relative_root}/${var.cloud_resume_lambda_artifact_name}-${var.cloud_resume_lambda_version}.jar"
+  kotlin_lambda_path = "${var.packaged_kotlin_relative_root}/${var.kotlin_lambda_artifact}-${var.kotlin_lambda_version}.jar"
   mime_types = {
     "html" = "text/html"
     "png"  = "image/png"

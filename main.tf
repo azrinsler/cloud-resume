@@ -7,6 +7,13 @@ terraform {
       version = "~> 5.97.0"
     }
   }
+  # S3 backend configuration
+  backend "s3" {
+    bucket = "azrinsler-tfstate"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+    encrypt = false
+  }
 }
 
 provider "aws" {

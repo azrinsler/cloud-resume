@@ -16,8 +16,15 @@ resource "aws_iam_role" "lambda_exec" {
 }
 
 # exposes above lambda_exec role as a service-role policy
-resource "aws_iam_role_policy_attachment" "lambda_policy" {
+resource "aws_iam_role_policy_attachment" "lambda_basic_policy" {
   role       = aws_iam_role.lambda_exec.name
   # this is an AWS managed policy which allows lambda(s) to write to cloudwatch logs
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+# exposes above lambda_exec role as a service-role policy
+resource "aws_iam_role_policy_attachment" "lambda_sqs_policy" {
+  role       = aws_iam_role.lambda_exec.name
+  # this is an AWS managed policy which allows lambda(s) to write to cloudwatch logs
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaSQSQueueExecutionRole"
 }

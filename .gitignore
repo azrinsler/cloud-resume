@@ -5,9 +5,14 @@
 **/.terraform
 **/terraform.tfstate**
 
+# Python
+**/*.iml
+**/.venv
+
 # (Local) Maven Repository (relative to project root)
 .m2/repository/**
 !.m2/repository/.empty
 
 # Build Outputs
 **/target
+**/*.zip

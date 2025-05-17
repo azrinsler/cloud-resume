@@ -3,9 +3,14 @@ variable "site_bucket_name" {
   default = "azrinsler-site-bucket"
 }
 
-variable "packaged_source_relative_root" {
+variable "packaged_kotlin_relative_root" {
   type = string
-  default = "./cloud-resume-lambda/target"
+  default = "./kotlin-lambda/target"
+}
+
+variable "packaged_python_relative_root" {
+  type = string
+  default = "./python-lambda"
 }
 
 variable "packaged_source_bucket_name" {
@@ -28,17 +33,17 @@ variable "site_homepage" {
   default = "index.html"
 }
 
-variable "cloud_resume_lambda_class" {
+variable "kotlin_lambda_class" {
   type = string
-  default = "CloudResumeLambda"
+  default = "KotlinLambda"
 }
 
-variable "cloud_resume_lambda_artifact_name" {
+variable "kotlin_lambda_artifact" {
   type = string
-  default = "cloud-resume-lambda"
+  default = "kotlin-lambda"
 }
 
-variable "cloud_resume_lambda_version" {
+variable "kotlin_lambda_version" {
   type = string
   default = "OH-SNAPSHOT"
 }
