@@ -22,7 +22,10 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_policy" {
     "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
     # uncertain what this policy is doing... something for SQS, clearly, but... it isn't giving sqs:SendMessage sooo...
     "arn:aws:iam::aws:policy/service-role/AWSLambdaSQSQueueExecutionRole",
-    "arn:aws:iam::aws:policy/AmazonSQSFullAccess" # Granting full access seems like a bit much, though?
+
+    # Granting full access to certain resource types seems like a bit much, though?
+    "arn:aws:iam::aws:policy/AmazonSQSFullAccess",
+    "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
   ])
   policy_arn = each.key
 }
