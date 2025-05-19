@@ -8,7 +8,13 @@ resource "aws_lambda_function" "kotlin_lambda_function" {
   handler = "azrinsler.aws.${var.kotlin_lambda_class}"
   source_code_hash = filebase64sha256(local.kotlin_lambda_path)
   role = aws_iam_role.lambda_exec.arn
-  timeout = 90 // specified in seconds
+  timeout = 30 // specified in seconds
+  // memory defaults to 128 which is too small for a Kotlin function using heavy dependencies like aws sdk and jackson
+  // (by setting this to a higher value we can VASTLY improve our cold start times, in particular)
+  memory_size = 1024 // specified in MB
+  snap_start {
+    apply_on = "PublishedVersions" // snap start improves cold start times but only works for specific runtimes/regions
+  }
 }
 
 # gives permission for api gateway to invoke the kotlin lambda
@@ -33,7 +39,7 @@ resource "aws_lambda_function" "python_lambda_function" {
   role          = aws_iam_role.lambda_exec.arn
   runtime       = "python3.13"
   handler       = "PythonLambda.lambda_handler"
-  timeout       = 45 // specified in seconds
+  timeout       = 10 // specified in seconds
 }
 
 # Event source from SQS

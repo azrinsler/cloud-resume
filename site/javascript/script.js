@@ -16,14 +16,21 @@ function setDisplayedIP (ip_address) {
 }
 
 function updateVisitCounter (isNew, visits) {
-    document.getElementById("previous-visits").textContent = visits
-    if (isNew) {
-        document.getElementById("new-ip").classList.remove("isHidden")
-        document.getElementById("visit-counter").classList.add("isHidden")
+    // keeps the ip-info div hidden until and until we have content to populate it with
+    if (isNaN(visits)) {
+        document.getElementById("ip-info").classList.add("isHidden")
     }
     else {
-        document.getElementById("new-ip").classList.add("isHidden")
-        document.getElementById("visit-counter").classList.remove("isHidden")
+        document.getElementById("previous-visits").textContent = visits
+        if (isNew) {
+            document.getElementById("new-ip").classList.remove("isHidden")
+            document.getElementById("visit-counter").classList.add("isHidden")
+        }
+        else {
+            document.getElementById("new-ip").classList.add("isHidden")
+            document.getElementById("visit-counter").classList.remove("isHidden")
+        }
+        document.getElementById("ip-info").classList.remove("isHidden")
     }
 }
 
@@ -37,8 +44,11 @@ async function getIP () {
 }
 
 async function putIpToDynamoDB (ip_address) {
+
     return await fetch(
         apiGatewayUrl, {
+            // we need an abnormally long timeout in case the lambda hasn't been called recently (long cold-start time)
+            signal: AbortSignal.timeout(120 * 1000), // specified in millis
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -49,6 +59,8 @@ async function putIpToDynamoDB (ip_address) {
         .then(response => response.json())
         .then(json => {
             console.log(json)
-            return [json.new_address, json.prior_visits]
+            let priorVisits = parseInt(json.prior_visits)
+            let isNew = json.new_address === "true"
+            return [isNew, priorVisits]
         })
 }
