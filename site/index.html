@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <script src="javascript/script.js"></script>
-
     <!-- these links set up the little icon that appears to the left of the site name in the open tab for this page -->
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
@@ -13,13 +12,56 @@
 
     <title>Placeholder Title</title>
 </head>
+
+<header style="background: url('images/baxter-peak.jpg'); background-size: 100%;">
+    <div class="flex-column">
+        <div style="position:absolute; top:0; width:100%; z-index:1;">
+            <ul class="flex-row navbar-list">
+                <!-- this is the HTML character code for a tiny little house icon -->
+                <li>&#x2302;</li>
+                <!-- &equiv; is the HTML character code for what is essentially the hamburger menu icon -->
+                <li style="margin-left:auto;">&equiv;</li>
+            </ul>
+        </div>
+        <div style="align-self: center">
+            <h1 class="outlined-text" style="font-size:3.5em;margin-top:2.5vh;">Placeholder Title</h1>
+        </div>
+        <div style="position:absolute; bottom:0; width:100%; z-index:1;">
+            <ul class="flex-row navbar-list" style="">
+                <li>button 1</li>
+                <li>button 2</li>
+                <li>button 3</li>
+                <li>button 4</li>
+                <li>button 5</li>
+                <li style="margin-left:auto;">button 6</li>
+            </ul>
+        </div>
+        <!-- set z-index to 0 so this gets drawn behind other stuffs -->
+        <div style="position:absolute; right:0; z-index: 0">
+            <img src="images/name-stylized.png" alt="header image" style="height:15vh;">
+        </div>
+    </div>
+</header>
+
 <body>
-<h1>Very Shitty HTML</h1>
-<p>This is where content would go if I had any.</p>
-<p>Your IP Address is: <span id="display-ip">loading</span></p>
-<div id="ip-info" class="isHidden">
-    <p>It has <span id="new-ip">not </span>been seen before</p>
-    <p id="visit-counter" class="isHidden">Count of previous visits from this IP Address: <span id="previous-visits">0</span></p>
-</div>
+    <div style="padding: 1vw;">
+        <div id="content-top">
+            content-top
+        </div>
+        <div id="content-main">
+            content-main
+        </div>
+        <div id="content-bottom">
+            content-bottom
+        </div>
+    </div>
 </body>
+
+<footer style="padding:0.5vw 0 0.25vw 0;">
+    <div id="ip-info" class="flex-row" style="margin:0 1vw 0 1vw;">
+        <span style="">Observed IP: <span id="display-ip"></span></span>
+        <span style="margin-left:auto;">It has <span id="new-ip"><em>not</em> </span>been seen before</span>
+        <span style="margin-left:auto;">Visit Counter: <span id="previous-visits">0</span></span>
+    </div>
+</footer>
 </html>

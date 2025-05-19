@@ -1,9 +1,86 @@
+* { /* globally disable margin and padding so we can control these values more granularly by element */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    position: relative;
+    height: 15vh;
+    margin-top: -15.5vh;
+}
+
 body {
     background-color: black;
     color: white;
+    width:100%;
+    height: 80.5vh;
+    margin-top: 15.5vh;
+}
+
+footer {
+    border-top: 1px solid darkslategray;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2vh;
 }
 
 .isHidden {
     visibility: hidden;
     display: none;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-column-reversed {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-row-reversed {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.navbar-list {
+    list-style-type: none; /* removes bullets */
+    margin: 1px;
+    padding: 1px;
+}
+
+.navbar-list > li {
+    border: 1px solid rgba(255,255,255,0.5);
+    background-color: rgba(100,100,100,0.35);
+    border-radius: 3px;
+    font-size: 1.25em;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.navbar-list > li:hover {
+    background-color: rgba(200,200,200,0.5);
+    text-shadow:
+            -1px -1px 0 black,
+            1px -1px 0 black,
+            -1px  1px 0 black,
+            1px  1px 0 black;
+}
+
+.outlined-text {
+    text-shadow:
+            -1px -1px 0 black,
+             1px -1px 0 black,
+            -1px  1px 0 black,
+             1px  1px 0 black;
 }
