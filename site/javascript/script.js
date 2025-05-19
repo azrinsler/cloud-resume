@@ -16,7 +16,7 @@ function setDisplayedIP (ip_address) {
 }
 
 function updateVisitCounter (isNew, visits) {
-    if (isNew) {
+    if (!isNew) {
         document.getElementById("new-ip").classList.add("isHidden")
         document.getElementById("visit-counter").classList.remove("isHidden")
     }

@@ -5,4 +5,5 @@ body {
 
 .isHidden {
     visibility: hidden;
+    display: none;
 }
