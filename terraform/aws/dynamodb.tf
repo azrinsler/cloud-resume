@@ -7,6 +7,10 @@ resource "aws_dynamodb_table" "site_visitor_table" {
     name = "ip_address"
     type = "S"
   }
+  # attribute {
+  #   name = "visit_counter"
+  #   type = "N"
+  # }
 
   # purposefully underpowered for development
   on_demand_throughput {
@@ -22,7 +26,8 @@ resource "aws_dynamodb_table_item" "loopback_ip" {
 
   item =  <<ITEM
           {
-            "ip_address": {"S": "192.168.1.1"}
+            "ip_address": {"S": "192.168.1.1"},
+            "visit_counter": {"N": "1" }
           }
           ITEM
 }
