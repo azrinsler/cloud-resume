@@ -2,15 +2,22 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="javascript/script.js"></script>
+
+    <!-- these links set up the little icon that appears to the left of the site name in the open tab for this page -->
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="images/favicon_io/site.webmanifest">
+
     <title>Placeholder Title</title>
 </head>
 <body>
 <h1>Very Shitty HTML</h1>
 <p>This is where content would go if I had any.</p>
 <p>Your IP Address is: <span id="display-ip"></span></p>
-<p>It has <span id="new-ip">not</span> been seen before</p>
-<p>Total number of unique IP addresses observed thus far: <span id="unique-ips">0</span></p>
+<p>It has <span id="new-ip">not </span>been seen before</p>
+<p id="visit-counter" class="isHidden">Count of previous visits from this IP Address: <span id="previous-visits">0</span></p>
 </body>
 </html>

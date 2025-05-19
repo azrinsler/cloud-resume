@@ -26,7 +26,7 @@ class KotlinLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
             log.log("Request Body: ${event.body}")
 
             // get IP address from input event
-            val expectedKey = "ipAddress"
+            val expectedKey = "ip_address"
             val mapper = jacksonObjectMapper()
             val inputAsJson = mapper.readTree(event.body)
 
@@ -115,6 +115,14 @@ class KotlinLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
 
             // respond to the original request after sending the message to queue
             with (response) {
+                // uncertain how necessary these headers are...
+                withHeaders(
+                    mapOf(
+                    "Content-Type" to "application/json",
+                    // todo - fix this to match the custom api domain once I've got that working correctly...
+                    "Access-Control-Allow-Origin" to "*"
+                    )
+                )
                 statusCode = 200
                 body =
                     """
