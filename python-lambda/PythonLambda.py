@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         logger.debug("Event Body: " + json.dumps(event_body))
 
         # event record body is passed along as an escaped JSON string within the overall JSON (parsed differently)
-        ip_address = json.loads(event_body)["ipAddress"]
+        ip_address = json.loads(event_body)["ip_address"]
         logger.debug("IP Address: " + ip_address)
 
         logger.debug("Table Response:")

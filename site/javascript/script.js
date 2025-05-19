@@ -16,15 +16,15 @@ function setDisplayedIP (ip_address) {
 }
 
 function updateVisitCounter (isNew, visits) {
-    if (!isNew) {
-        document.getElementById("new-ip").classList.add("isHidden")
-        document.getElementById("visit-counter").classList.remove("isHidden")
-    }
-    else {
+    document.getElementById("previous-visits").textContent = visits
+    if (isNew) {
         document.getElementById("new-ip").classList.remove("isHidden")
         document.getElementById("visit-counter").classList.add("isHidden")
     }
-    document.getElementById("previous-visits").textContent = visits
+    else {
+        document.getElementById("new-ip").classList.add("isHidden")
+        document.getElementById("visit-counter").classList.remove("isHidden")
+    }
 }
 
 async function getIP () {
