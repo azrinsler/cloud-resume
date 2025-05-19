@@ -1,5 +1,6 @@
 // this will likely need to be updated any time the gateway gets recreated, which is... not ideal
-const apiGatewayUrl = "https://gms9t124k8.execute-api.us-east-1.amazonaws.com/primary_api_gateway_stage/KotlinLambda"
+// const apiGatewayUrl = "https://gms9t124k8.execute-api.us-east-1.amazonaws.com/primary_api_gateway_stage/KotlinLambda"
+const apiGatewayUrl = "https://api.azrinsler.com/KotlinLambda"
 const ipifyUrl = "https://api.ipify.org?format=json"
 
 document.addEventListener("DOMContentLoaded", updateVisitDetails)

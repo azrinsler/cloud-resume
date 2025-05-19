@@ -35,6 +35,7 @@ resource "aws_apigatewayv2_stage" "primary_gateway_stage" {
   }
 }
 
+# lets AWS know that we're going to be backing this gateway with a lambda
 resource "aws_apigatewayv2_integration" "primary_gateway_kotlin_lambda_integration" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
   integration_uri    = aws_lambda_function.kotlin_lambda_function.invoke_arn
@@ -42,12 +43,14 @@ resource "aws_apigatewayv2_integration" "primary_gateway_kotlin_lambda_integrati
   integration_method = "POST"
 }
 
+# sends all POST requests to the kotlin lambda
 resource "aws_apigatewayv2_route" "primary_gateway_kotlin_route" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
   route_key = "POST /${aws_lambda_function.kotlin_lambda_function.function_name}"
   target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_kotlin_lambda_integration.id}"
 }
 
+# defines a custom domain name. note that this is separate from (and in addition to) our Route53 custom domain!
 resource "aws_apigatewayv2_domain_name" "primary_gateway_domain_name" {
   domain_name = "api.${var.site_name}"
   domain_name_configuration {
@@ -58,3 +61,9 @@ resource "aws_apigatewayv2_domain_name" "primary_gateway_domain_name" {
   depends_on = [aws_acm_certificate_validation.primary_cert_validation]
 }
 
+# this resource maps our aws-generated api gateway domain to the custom one
+resource "aws_apigatewayv2_api_mapping" "api_gateway_custom_domain_mapping" {
+  api_id      = aws_apigatewayv2_api.primary_gateway.id
+  domain_name = aws_apigatewayv2_domain_name.primary_gateway_domain_name.id
+  stage       = aws_apigatewayv2_stage.primary_gateway_stage.id
+}

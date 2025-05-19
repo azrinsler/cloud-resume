@@ -23,6 +23,8 @@
 - Install AWS Toolkit Plugin in IntelliJ
 - Install AWS SAM CLI
 - Install Postman
+- `cd` to Python Lambda directory and run an `npm install` (or whatever IntelliJ recommends)
+  - This may only be necessary if you want to work on the Python function locally — it does not affect remote?
 
 
 - Can use chocolatey on Windows for CLI-based installation 
