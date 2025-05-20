@@ -19,19 +19,19 @@ function setDisplayedIP (ip_address) {
 function updateVisitCounter (isNew, visits) {
     // keeps the ip-info div hidden until and until we have content to populate it with
     if (isNaN(visits)) {
-        document.getElementById("ip-info").classList.add("isHidden")
+        document.getElementById("ip-info").classList.add("hidden")
     }
     else {
         document.getElementById("previous-visits").textContent = visits
         if (isNew) {
-            document.getElementById("new-ip").classList.remove("isHidden")
-            document.getElementById("visit-counter").classList.add("isHidden")
+            document.getElementById("new-ip").classList.remove("hidden")
+            document.getElementById("visit-counter").classList.add("hidden")
         }
         else {
-            document.getElementById("new-ip").classList.add("isHidden")
-            document.getElementById("visit-counter").classList.remove("isHidden")
+            document.getElementById("new-ip").classList.add("hidden")
+            document.getElementById("visit-counter").classList.remove("hidden")
         }
-        document.getElementById("ip-info").classList.remove("isHidden")
+        document.getElementById("ip-info").classList.remove("hidden")
     }
 }
 

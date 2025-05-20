@@ -3,6 +3,10 @@
     * {
         font-size: 12px;
     }
+
+    .no-mobile {
+        visibility: hidden;
+    }
 }
 
 * { /* globally disable margin and padding so we can control these values more granularly by element */
@@ -73,7 +77,7 @@ h1.light {
             1px  1px 0 white;
 }
 
-.isHidden {
+.hidden {
     visibility: hidden;
     display: none;
     width: 0;
@@ -116,6 +120,7 @@ h1.light {
     margin-left: 2px;
     margin-right: 2px;
     text-wrap: nowrap;
+    cursor: pointer;
 }
 
 .navbar-list.dark > li:hover {

@@ -37,7 +37,7 @@
             </ul>
         </div>
         <!-- set z-index to 0 so this gets drawn behind other stuffs -->
-        <div style="position:absolute; right:0; z-index: 0">
+        <div class="no-mobile" style="position:absolute; right:0; z-index: 0">
             <img src="images/name-stylized.png" alt="header image" style="height:15vh;">
         </div>
     </div>
@@ -79,7 +79,7 @@
     </div>
 </body>
 
-<footer id="ip-info" class="isHidden" style="background-color:rgba(100,100,100,0.5)">
+<footer id="ip-info" class="hidden" style="background-color:rgba(100,100,100,0.5)">
     <div class="flex-row" style="margin:0 1vw 0 1vw;">
         <span style="">Observed IP: <span id="display-ip"></span></span>
         <span style="margin-left:auto;">It has <span id="new-ip"><em>not</em> </span>been seen before</span>
