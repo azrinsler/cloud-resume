@@ -112,7 +112,6 @@ h1.light {
 
 .navbar-list > li {
     border: 1px solid rgba(255,255,255,0.5);
-    background-color: rgba(100,100,100,0.35);
     border-radius: 3px;
     font-size: 1.25em;
     padding-left: 2px;
@@ -121,6 +120,14 @@ h1.light {
     margin-right: 2px;
     text-wrap: nowrap;
     cursor: pointer;
+}
+
+.navbar-list.dark > li {
+    background-color: rgba(40,40,40,0.85);
+}
+
+.navbar-list.light > li {
+    background-color: rgba(200,200,200,0.75);
 }
 
 .navbar-list.dark > li:hover {
