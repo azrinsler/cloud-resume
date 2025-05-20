@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height:100vh;width:100vw;">
+<html id="root" lang="en" style="height:100vh;width:100vw;">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
@@ -16,7 +16,7 @@
 <header style="background: url('images/baxter-peak.jpg'); background-size: 100%;">
     <div class="flex-column">
         <div style="position:absolute; top:0; width:100%; z-index:1;">
-            <ul class="flex-row navbar-list">
+            <ul class="flex-row navbar-list dark">
                 <!-- this is the HTML character code for a tiny little house icon -->
                 <li style="font-size:1.25em;"><a href="index.html">&#x2302;</a></li>
                 <!-- &equiv; is the HTML character code for what is essentially the hamburger menu icon -->
@@ -24,16 +24,16 @@
             </ul>
         </div>
         <div style="align-self: center">
-            <h1 style="font-size:3.5em;margin-top:2.5vh;">Cloud MacGuffin</h1>
+            <h1 class="dark" style="font-size:3.5em;margin-top:2.5vh;">Cloud MacGuffin</h1>
         </div>
         <div style="position:absolute; bottom:0; width:100%; z-index:1;">
-            <ul class="flex-row navbar-list" style="">
-                <li>button 1</li>
+            <ul class="flex-row navbar-list dark" style="">
+                <li><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></li>
                 <li>button 2</li>
                 <li>button 3</li>
                 <li>button 4</li>
                 <li>button 5</li>
-                <li style="margin-left:auto;"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></li>
+                <li style="margin-left:auto;" onclick="toggleMode()">Toggle Mode</li>
             </ul>
         </div>
         <!-- set z-index to 0 so this gets drawn behind other stuffs -->
@@ -43,8 +43,8 @@
     </div>
 </header>
 
-<body style="border: 1px solid wheat;overflow:hidden;">
-    <div class="flex-row" style="padding:0 0.75vw 0 0.75vw;height:100%;">
+<body class="dark" style="border: 1px solid wheat;overflow:hidden;">
+    <div class="flex-row dark" style="padding:0 0.75vw 0 0.75vw;height:100%;">
         <div class="flex-column" style="min-width:5vw;margin-right:1vw;">
             <div class="body-section" style="height:100%;">
                 Here there be: Column

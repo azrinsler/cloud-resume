@@ -65,3 +65,24 @@ async function putIpToDynamoDB (ip_address) {
             return [isNew, priorVisits]
         })
 }
+
+let isDarkMode = true;
+function toggleMode () {
+    let elements = document.getElementsByClassName(isDarkMode ? "dark" : "light")
+
+    isDarkMode = !isDarkMode
+
+    if (isDarkMode) console.log("Toggling dark elements to light")
+    else            console.log("Toggling light elements to dark")
+
+    console.log("Elements to be toggled:")
+    console.log(elements)
+
+    for (let i = elements.length - 1; i >= 0; i--) {
+        let element = elements.item(i)
+        console.log("Toggling element:")
+        console.log(elements.item(i))
+        element.classList.toggle("light")
+        element.classList.toggle("dark")
+    }
+}
