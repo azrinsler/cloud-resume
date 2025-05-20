@@ -18,7 +18,7 @@
         <div style="position:absolute; top:0; width:100%; z-index:1;">
             <ul class="flex-row navbar-list">
                 <!-- this is the HTML character code for a tiny little house icon -->
-                <li>&#x2302;</li>
+                <li style="font-size:1.25em;"><a href="index.html">&#x2302;</a></li>
                 <!-- &equiv; is the HTML character code for what is essentially the hamburger menu icon -->
                 <li style="margin-left:auto;">&equiv;</li>
             </ul>
@@ -33,7 +33,7 @@
                 <li>button 3</li>
                 <li>button 4</li>
                 <li>button 5</li>
-                <li style="margin-left:auto;">button 6</li>
+                <li style="margin-left:auto;"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></li>
             </ul>
         </div>
         <!-- set z-index to 0 so this gets drawn behind other stuffs -->
@@ -57,11 +57,11 @@
     </div>
 </body>
 
-<footer style="padding:0.5vw 0 0.25vw 0;">
-    <div id="ip-info" class="flex-row" style="margin:0 1vw 0 1vw;">
+<footer id="ip-info" class="isHidden" style="padding:0.5vw 0 0.25vw 0;">
+    <div class="flex-row" style="margin:0 1vw 0 1vw;">
         <span style="">Observed IP: <span id="display-ip"></span></span>
         <span style="margin-left:auto;">It has <span id="new-ip"><em>not</em> </span>been seen before</span>
-        <span style="margin-left:auto;">Visit Counter: <span id="previous-visits">0</span></span>
+        <span id="visit-counter" style="margin-left:auto;">Visit Counter: <span id="previous-visits">0</span></span>
     </div>
 </footer>
 </html>

@@ -1,5 +1,7 @@
 # Readme
 
+[Visit the Site](https://www.azrinsler.com)
+
 ![Architecture Diagram](diagrams/architecture.drawio.svg)
 
 ## Notable Manual Steps
