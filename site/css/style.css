@@ -111,7 +111,6 @@ h1.light {
 }
 
 .navbar-list > li {
-    border: 1px solid rgba(255,255,255,0.5);
     border-radius: 3px;
     font-size: 1.25em;
     padding-left: 2px;
@@ -123,10 +122,12 @@ h1.light {
 }
 
 .navbar-list.dark > li {
+    border: 1px solid rgba(255,255,255,0.5);
     background-color: rgba(40,40,40,0.85);
 }
 
 .navbar-list.light > li {
+    border: 1px solid rgba(55,55,55,0.5);
     background-color: rgba(200,200,200,0.75);
 }
 
@@ -140,7 +141,7 @@ h1.light {
 }
 
 .navbar-list.light > li:hover {
-    background-color: rgba(200,200,200,0.5);
+    background-color: rgba(255,255,255,0.5);
     text-shadow:
            -1px -1px 0 white,
             1px -1px 0 white,
