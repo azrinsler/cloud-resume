@@ -78,6 +78,7 @@ function toggleMode () {
     console.log("Elements to be toggled:")
     console.log(elements)
 
+    // this iterates backwards because accessing elements in-order causes the weirdness with "live" Collections
     for (let i = elements.length - 1; i >= 0; i--) {
         let element = elements.item(i)
         console.log("Toggling element:")

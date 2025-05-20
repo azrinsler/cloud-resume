@@ -123,13 +123,20 @@ h1.light {
 }
 
 .body-section {
-    border: 1px solid antiquewhite;
     background-color: rgba(100,100,100,0.1);
     border-radius: 3px;
     padding: 2px 5px 2px 5px;
     margin: 5px 0 5px 0;
     width: fit-content(0);
     min-height: 15vh;
+}
+
+.body-section.dark {
+    border: 1px solid antiquewhite;
+}
+
+.body-section.light {
+    border: 1px solid black;
 }
 
 .hide-scrollbar {
