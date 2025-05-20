@@ -22,8 +22,9 @@ body {
     background-color: black;
     color: white;
     width:100%;
-    height: 80.5vh;
+    height: 85vh;
     margin-top: 15.5vh;
+    overflow-x: clip;
 }
 
 footer {
@@ -35,9 +36,19 @@ footer {
     height: 2vh;
 }
 
+h1 {
+    text-shadow:
+           -1px -1px 0 black,
+            1px -1px 0 black,
+           -1px  1px 0 black,
+            1px  1px 0 black;
+}
+
 .isHidden {
     visibility: hidden;
     display: none;
+    width: 0;
+    height: 0;
 }
 
 .flex-column {
@@ -80,16 +91,27 @@ footer {
 .navbar-list > li:hover {
     background-color: rgba(200,200,200,0.5);
     text-shadow:
-            -1px -1px 0 black,
+           -1px -1px 0 black,
             1px -1px 0 black,
-            -1px  1px 0 black,
+           -1px  1px 0 black,
             1px  1px 0 black;
 }
 
-.outlined-text {
-    text-shadow:
-            -1px -1px 0 black,
-             1px -1px 0 black,
-            -1px  1px 0 black,
-             1px  1px 0 black;
+.body-section {
+    border: 1px solid antiquewhite;
+    background-color: rgba(100,100,100,0.1);
+    border-radius: 3px;
+    padding: 2px 5px 2px 5px;
+    margin: 5px 0 5px 0;
+    width: fit-content(0);
+    min-height: 15vh;
+}
+
+.hide-scrollbar {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* For WebKit browsers */
 }

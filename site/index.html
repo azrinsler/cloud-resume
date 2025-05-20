@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100vh;width:100vw;">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
@@ -24,7 +24,7 @@
             </ul>
         </div>
         <div style="align-self: center">
-            <h1 class="outlined-text" style="font-size:3.5em;margin-top:2.5vh;">Cloud MacGuffin</h1>
+            <h1 style="font-size:3.5em;margin-top:2.5vh;">Cloud MacGuffin</h1>
         </div>
         <div style="position:absolute; bottom:0; width:100%; z-index:1;">
             <ul class="flex-row navbar-list" style="">
@@ -43,16 +43,35 @@
     </div>
 </header>
 
-<body>
-    <div style="padding: 1vw;">
-        <div id="content-top">
-            content-top
+<body style="border: 1px solid wheat;overflow:hidden;">
+    <div class="flex-row" style="padding:0 0.75vw 0 0.75vw;height:100%;">
+        <div class="flex-column" style="min-width:5vw;margin-right:1vw;">
+            <div class="body-section" style="height:100%;">
+                Here there be: Column
+            </div>
         </div>
-        <div id="content-main">
-            content-main
-        </div>
-        <div id="content-bottom">
-            content-bottom
+        <div class="flex-column hide-scrollbar" style="width:100%;overflow-y:scroll;">
+            <div id="a" class="body-section">
+                alpha
+            </div>
+            <div id="b" class="body-section">
+                beta
+            </div>
+            <div id="c" class="body-section">
+                crayon
+            </div>
+            <div id="d" class="body-section">
+                delta
+            </div>
+            <div id="e" class="body-section">
+                epsilon
+            </div>
+            <div id="f" class="body-section">
+                fabulous
+            </div>
+            <div id="g" class="body-section">
+                gamma
+            </div>
         </div>
     </div>
 </body>
