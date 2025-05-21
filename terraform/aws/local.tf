@@ -8,5 +8,6 @@ locals {
     "gif"  = "image/gif"
     "css"  = "text/css"
     "js"   = "application/javascript"
+    "pdf"  = "application/pdf"
   }
 }
