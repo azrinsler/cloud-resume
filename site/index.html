@@ -9,35 +9,31 @@
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="images/favicon_io/site.webmanifest">
-
     <title>Azmo Rinsler</title>
 </head>
 
-<header style="background:url('images/baxter-peak.jpg') no-repeat;background-size:100%;max-height:100%;min-height:6.25lh;overflow:clip;">
+<header style="background:url('images/baxter-peak.jpg') no-repeat;background-size:100%;">
     <div class="flex-column">
         <div style="position:absolute; top:0; width:100%; z-index:1;">
             <ul class="flex-row navbar-list dark">
                 <!-- this is the HTML character code for a tiny little house icon -->
                 <li style="font-size:1.25em;"><a href="index.html">&#x2302;</a></li>
+                <!-- &#x1f4a1; is the HTML character code for a lightbulb -->
+                <li style="margin-left:auto;" onclick="toggleMode()">&#x1f4a1;</li>
                 <!-- &equiv; is the HTML character code for what is essentially the hamburger menu icon -->
-                <li style="margin-left:auto;">&equiv;</li>
+                <li style="">&equiv;</li>
             </ul>
         </div>
         <div style="align-self:center;z-index:2">
-            <h1 class="dark" style="font-size:3.5em;margin-top:2.5vh;">Cloud MacGuffin</h1>
+            <h1 class="dark" style="font-size:3.5em;margin-top:2.5vh;">Azmo Rinsler</h1>
         </div>
         <div style="position:absolute; bottom:0; width:100%; z-index:1;">
-            <ul class="flex-row navbar-list dark" style="">
-                <li><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></li>
-                <li>button 2</li>
-                <li>button 3</li>
-                <li>button 4</li>
-                <li>button 5</li>
-                <li style="margin-left:auto;" onclick="toggleMode()">Toggle Mode</li>
+            <ul class="flex-row navbar-list dark">
+                <li style="margin-left:auto;"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></li>
             </ul>
         </div>
         <!-- set z-index to 0 so this gets drawn behind other stuffs -->
-        <div class="no-mobile" style="position:absolute; right:0; z-index: 0">
+        <div class="no-mobile" style="position:absolute; left:-2em; z-index: 0">
             <img src="images/name-stylized.png" alt="header image" style="height:15vh;">
         </div>
     </div>
@@ -45,7 +41,7 @@
 
 <!-- settings body to a specific height w/ overflow off and adding overflow back to an internal div lets us have an
      "internal" scrollbar whilst keeping the header and footer fixed -->
-<body class="dark" style="height:87vh;overflow:hidden;">
+<body class="dark">
     <div class="flex-row" style="padding:0 0.25vw 0 0.25vw;height:100%;">
         <div class="flex-column" style="margin-right:0.5vw;">
             <div class="body-section dark" style="height:100%;">
@@ -54,35 +50,70 @@
         </div>
         <!-- this hide-scrollbar class doesn't DISABLE scrolling --- it simply hides the ugly, default scrollbar -->
         <div class="flex-column hide-scrollbar" style="width:100%;overflow-y:scroll;">
-            <div id="a" class="body-section dark">
-                alpha
+            <div id="alpha" class="body-section flex-row dark">
+                <div style="flex-grow:1;">
+                    <p>This simple-looking website is the result of a complex project.</p>
+                    <br />
+                    <p>It is entirely cloud-based, using a variety of AWS services.</p>
+                    <br />
+                    <ul>
+                        <li>Its files are hosted as a static website in S3</li>
+                        <li>And made available as a custom domain via Route53, ACM and Cloudfront</li>
+                        <li>It uses JS to call upon its own REST API through an API Gateway</li>
+                        <li>Which is itself backed by a Kotlin Lambda function</li>
+                        <li>That puts the request to an SQS queue</li>
+                        <li>Feeding into a Python Lambda</li>
+                        <li>Which connects to a DynamoDB table tracking visitor IP addresses</li>
+                    </ul>
+                    <br />
+                    <p>But that's just the parts you can see</p>
+                    <br />
+                    <ul>
+                        <li>What you can't see is that the entire project is available in GitHub</li>
+                        <li>Which serves as a code and artifact repository, KanBan board and build tool</li>
+                        <li>On every push; GitHub Actions builds and packages artifacts using Maven</li>
+                        <li>Some of which get deployed to GitHub Packages for later use</li>
+                        <li>Where they are imported back into other modules as version controlled dependencies</li>
+                        <li>Before finally being built and deployed to AWS through Terraform</li>
+                    </ul>
+                    <br />
+                    <p>It is an example of a fully automated, end-to-end, full-stack, cloud-based portfolio piece</p>
+                    <p>Built entirely by one person</p>
+                    <p>To showcase the breadth and depth of their development experience</p>
+                    <p>And dedication to excellence</p>
+                </div>
+                <div>
+                    <img src="images/architecture.drawio.png" alt="architecture diagram"/>
+                </div>
             </div>
-            <div id="b" class="body-section dark">
+            <div id="beta" class="body-section flex-row dark" style="width:auto;height:auto;">
                 beta
             </div>
-            <div id="c" class="body-section dark">
+            <!-- extra sections for later
+            <div id="crayon" class="body-section flex-column dark">
                 crayon
             </div>
-            <div id="d" class="body-section dark">
+            <div id="delta" class="body-section flex-column dark">
                 delta
             </div>
-            <div id="e" class="body-section dark">
+            <div id="epsilon" class="body-section flex-column dark">
                 epsilon
             </div>
-            <div id="f" class="body-section dark">
+            <div id="fabulous" class="body-section flex-column dark">
                 fabulous
             </div>
-            <div id="g" class="body-section dark">
+            <div id="gamma" class="body-section flex-column dark">
                 gamma
             </div>
-            <div id="h" class="body-section dark">
+            <div id="hayabusa" class="body-section flex-column dark">
                 hayabusa
             </div>
+            -->
         </div>
     </div>
 </body>
 
-<footer id="ip-info" class="hidden" style="background-color:rgba(100,100,100,0.5)">
+<footer id="ip-info" class="hidden">
     <div class="flex-row" style="margin:0 1vw 0 1vw;">
         <span style="">Observed IP: <span id="display-ip"></span></span>
         <span style="margin-left:auto;">It has <span id="new-ip"><em>not</em> </span>been seen before</span>

@@ -1,0 +1,58 @@
+name: Cloud Portfolio Build Pipeline
+
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Set up JDK
+        uses: actions/setup-java@main
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - name: Maven Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('/**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
+      # Guessing I'll need this but commenting out until I know for sure
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@main
+      #   with:
+      #     node-version: 20
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+
+      # May need to install and/or auth to AWS SAM CLI
+
+      - name: Maven Build
+        run: mvn clean package -s ./.m2/settings.xml -fae
+
+      # Add failsafe in once I have any integration tests worth running
+
+      - name: Terraform Build
+        run: terraform apply -auto-approve
