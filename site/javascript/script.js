@@ -4,6 +4,9 @@ const apiGatewayUrl = "https://api.azrinsler.com/KotlinLambda"
 const ipifyUrl = "https://api.ipify.org?format=json"
 
 document.addEventListener("DOMContentLoaded", updateVisitDetails)
+document.addEventListener("DOMContentLoaded", function () {
+    matchWidth("architecture-diagram", "text-column")
+})
 
 async function updateVisitDetails () {
     let ip_address = await getIP()
@@ -86,4 +89,15 @@ function toggleMode () {
         element.classList.toggle("light")
         element.classList.toggle("dark")
     }
+}
+
+function matchWidth (thisElement, thatElement) {
+    console.log("Attempting to match width of '#" + thisElement + "' to that of '#" + thatElement + "'")
+    let source = document.getElementById(thisElement)
+    let target = document.getElementById(thatElement).offsetWidth //.getBoundingClientRect()
+    let targetWidth = target.toString() + "px"
+    console.log("Source width: " + source.getBoundingClientRect().width.toString())
+    console.log("Target width: " + targetWidth)
+    //source.setAttribute("style", "width:" + targetWidth + ";")
+    source.style.width = targetWidth
 }

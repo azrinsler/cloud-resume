@@ -19,7 +19,7 @@
                 <!-- this is the HTML character code for a tiny little house icon -->
                 <li style="font-size:1.25em;"><a href="index.html">&#x2302;</a></li>
                 <!-- &#x1f4a1; is the HTML character code for a lightbulb -->
-                <li style="margin-left:auto;" onclick="toggleMode()">&#x1f4a1;</li>
+                <li style="margin-left:auto;background-color:transparent;border:none;" onclick="toggleMode()">&#x1f4a1;</li>
                 <!-- &equiv; is the HTML character code for what is essentially the hamburger menu icon -->
                 <li style="">&equiv;</li>
             </ul>
@@ -42,48 +42,50 @@
 <!-- settings body to a specific height w/ overflow off and adding overflow back to an internal div lets us have an
      "internal" scrollbar whilst keeping the header and footer fixed -->
 <body class="dark">
-    <div class="flex-row" style="padding:0 0.25vw 0 0.25vw;height:100%;">
+    <div class="flex-row hide-scrollbar" style="padding:0 0.25vw 0 0.25vw;height:100%;overflow-y:scroll;flex-wrap:wrap;">
         <div class="flex-column" style="margin-right:0.5vw;">
-            <div class="body-section dark" style="height:100%;">
-                <div class="flex-column">
-                    <p>This simple-looking website is the result of a complex project.</p>
-                    <p style="color:darkred;">It is under active development and will continue to improve with time!</p>
-                    <br />
-                    <p>It is entirely cloud-based, using a variety of AWS services.</p>
-                    <br />
-                    <ul>
-                        <li>Its files are hosted as a static website in S3</li>
-                        <li>And made available as a custom domain via Route53, ACM and Cloudfront</li>
-                        <li>It uses JS to call upon its own REST API through an API Gateway</li>
-                        <li>Which is itself backed by a Kotlin Lambda function</li>
-                        <li>That puts the request to an SQS queue</li>
-                        <li>Feeding into a Python Lambda</li>
-                        <li>Which connects to a DynamoDB table tracking visitor IP addresses</li>
-                    </ul>
-                    <br />
-                    <p>But that's just the parts you can see</p>
-                    <br />
-                    <ul>
-                        <li>What you can't see is that the entire project is available in GitHub</li>
-                        <li>Which serves as a code and artifact repository, KanBan board and build tool</li>
-                        <li>On every push; GitHub Actions builds and packages artifacts using Maven</li>
-                        <li>Some of which get deployed to GitHub Packages for later use</li>
-                        <li>Where they are imported back into other modules as version controlled dependencies</li>
-                        <li>Before finally being built and deployed to AWS through Terraform</li>
-                    </ul>
-                    <br />
-                    <p>It is an example of a fully automated, end-to-end, full-stack, cloud-based portfolio piece</p>
-                    <p>Built entirely by one person</p>
-                    <p>To showcase the breadth and depth of their development experience</p>
-                    <p>And dedication to excellence</p>
-                </div>
+            <div id="text-column" class="body-section dark flex-column" style="height:fit-content;max-width:100vw;">
+                <h2 style="text-align:center;">This simple-looking website is the result of a complex project.</h2>
+                <br />&nbsp;<br />
+                <h2 style="color:darkred;">It is under active development and will continue to improve with time!</h2>
+                <br />&nbsp;<br />
+                <p>It is entirely cloud-based, using a variety of AWS services.</p>
+                <br />&nbsp;<br />
+                <ul>
+                    <li>This page itself is responsive, written in HTML w/ CSS</li>
+                    <li>The files for which are hosted as a static website in S3</li>
+                    <li>Made available as a custom domain via Route53, ACM and Cloudfront</li>
+                    <li>It uses JS to call upon its own REST API through an API Gateway</li>
+                    <li>Which is itself backed by a Kotlin Lambda function</li>
+                    <li>That puts the request to an SQS queue</li>
+                    <li>Feeding into a Python Lambda</li>
+                    <li>Which connects to a DynamoDB table tracking visitor IP addresses</li>
+                </ul>
+                <br />&nbsp;<br />
+                <p>But that's just the parts you can see</p>
+                <br />&nbsp;<br />
+                <ul>
+                    <li>The entire project is available in GitHub</li>
+                    <li>Set up as a repository, artifact store, KanBan board, and build tool</li>
+                    <li>On every push; GitHub Actions builds and packages artifacts using Maven</li>
+                    <li><span style="color:greenyellow;"> TODO </span>Some of which get deployed to GitHub Packages for later use</li>
+                    <li><span style="color:greenyellow;"> TODO </span>Where they are imported back into other modules as version controlled dependencies</li>
+                    <li>Before finally being built and deployed to AWS through Terraform</li>
+                </ul>
+                <br />&nbsp;<br />
+                <p>It is an example of a fully automated, end-to-end, full-stack, serverless, cloud-based portfolio piece</p>
+                <p style="margin-left:1em;">Built entirely by one person</p>
+                <p style="margin-left:2em;">To showcase the breadth and depth of their development experience</p>
+                <p style="margin-left:3em;">And dedication to excellence</p>
             </div>
-            <div class="body-section flex-row dark" style="">
-                <img src="images/architecture.drawio.png" alt="architecture diagram" />
-            </div>
+            <img id="architecture-diagram" src="images/architecture.drawio.png" alt="architecture diagram" style="background-color:rgb(10,10,10)"/>
+
+<!--            <div id="architecture-diagram" class="body-section flex-row dark" style="">-->
+<!--                <img src="images/architecture.drawio.png" alt="architecture diagram" />-->
+<!--            </div>-->
         </div>
         <!-- this hide-scrollbar class doesn't DISABLE scrolling --- it simply hides the ugly, default scrollbar -->
-        <div class="flex-column hide-scrollbar" style="width:100%;overflow-y:scroll;flex-wrap:wrap;">
+        <div class="flex-column" style="width:fit-content;flex-wrap:wrap;">
             <div class="body-section flex-row dark" style="height:fit-content;width:fit-content;margin-left:auto;">
                 <!--suppress HtmlUnknownAnchorTarget -->
                 <iframe id="resume" src="images/Resume-SinglePageDraft.pdf#fit-content"></iframe>
