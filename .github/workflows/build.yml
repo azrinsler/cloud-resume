@@ -54,5 +54,8 @@ jobs:
 
       # Add failsafe in once I have any integration tests worth running
 
+      - name: Initialize Terraform
+        run: terraform init
+
       - name: Terraform Build
         run: terraform apply -auto-approve
