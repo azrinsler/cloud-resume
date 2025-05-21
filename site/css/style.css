@@ -6,6 +6,9 @@
 
     .no-mobile {
         visibility: hidden;
+        display: none;
+        width: 0;
+        height:0;
     }
 }
 
@@ -184,4 +187,11 @@ h1.light {
 
 .hide-scrollbar::-webkit-scrollbar {
     display: none; /* For WebKit browsers */
+}
+
+#resume {
+    overflow:hidden;
+    width:50lh;
+    max-width: 100%;
+    aspect-ratio: 8.5 / 11;
 }

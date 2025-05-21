@@ -45,14 +45,9 @@
     <div class="flex-row" style="padding:0 0.25vw 0 0.25vw;height:100%;">
         <div class="flex-column" style="margin-right:0.5vw;">
             <div class="body-section dark" style="height:100%;">
-                Here there be: Column
-            </div>
-        </div>
-        <!-- this hide-scrollbar class doesn't DISABLE scrolling --- it simply hides the ugly, default scrollbar -->
-        <div class="flex-column hide-scrollbar" style="width:100%;overflow-y:scroll;">
-            <div id="alpha" class="body-section flex-row dark">
-                <div style="flex-grow:1;">
+                <div class="flex-column">
                     <p>This simple-looking website is the result of a complex project.</p>
+                    <p style="color:darkred;">It is under active development and will continue to improve with time!</p>
                     <br />
                     <p>It is entirely cloud-based, using a variety of AWS services.</p>
                     <br />
@@ -82,33 +77,17 @@
                     <p>To showcase the breadth and depth of their development experience</p>
                     <p>And dedication to excellence</p>
                 </div>
-                <div>
-                    <img src="images/architecture.drawio.png" alt="architecture diagram"/>
-                </div>
             </div>
-            <div id="beta" class="body-section flex-row dark" style="width:auto;height:100%;">
-                beta
+            <div class="body-section flex-row dark" style="">
+                <img src="images/architecture.drawio.png" alt="architecture diagram" />
             </div>
-            <!-- extra sections for later
-            <div id="crayon" class="body-section flex-column dark">
-                crayon
+        </div>
+        <!-- this hide-scrollbar class doesn't DISABLE scrolling --- it simply hides the ugly, default scrollbar -->
+        <div class="flex-column hide-scrollbar" style="width:100%;overflow-y:scroll;flex-wrap:wrap;">
+            <div class="body-section flex-row dark" style="height:fit-content;width:fit-content;margin-left:auto;">
+                <!--suppress HtmlUnknownAnchorTarget -->
+                <iframe id="resume" src="images/Resume-SinglePageDraft.pdf#fit-content"></iframe>
             </div>
-            <div id="delta" class="body-section flex-column dark">
-                delta
-            </div>
-            <div id="epsilon" class="body-section flex-column dark">
-                epsilon
-            </div>
-            <div id="fabulous" class="body-section flex-column dark">
-                fabulous
-            </div>
-            <div id="gamma" class="body-section flex-column dark">
-                gamma
-            </div>
-            <div id="hayabusa" class="body-section flex-column dark">
-                hayabusa
-            </div>
-            -->
         </div>
     </div>
 </body>
