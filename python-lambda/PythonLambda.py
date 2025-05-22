@@ -86,13 +86,7 @@ def lambda_handler(event, context):
 
     except Exception as e:
         logger.error(e)
-        return {
-            "statusCode": 400,
-            "body": json.dumps({
-                "status":"failed",
-                "message":"failed to process request","detail":str(e)
-            })
-        }
+        raise
 
 
 # convenience in case we (for some reason) try to execute locally
