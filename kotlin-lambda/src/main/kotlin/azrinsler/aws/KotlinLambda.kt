@@ -119,7 +119,6 @@ class KotlinLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
                 withHeaders(
                     mapOf(
                     "Content-Type" to "application/json",
-                    // todo - fix this to match the custom api domain once I've got that working correctly...
                     "Access-Control-Allow-Origin" to "*"
                     )
                 )
