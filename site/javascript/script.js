@@ -3,11 +3,6 @@
 const apiGatewayUrl = "https://api.azrinsler.com/KotlinLambda"
 const ipifyUrl = "https://api.ipify.org?format=json"
 
-document.addEventListener("DOMContentLoaded", updateVisitDetails)
-document.addEventListener("DOMContentLoaded", function () {
-    matchWidth("architecture-diagram", "text-column")
-})
-
 async function updateVisitDetails () {
     let ip_address = await getIP()
     setDisplayedIP(ip_address)
@@ -84,8 +79,6 @@ function toggleMode () {
     // this iterates backwards because accessing elements in-order causes the weirdness with "live" Collections
     for (let i = elements.length - 1; i >= 0; i--) {
         let element = elements.item(i)
-        console.log("Toggling element:")
-        console.log(elements.item(i))
         element.classList.toggle("light")
         element.classList.toggle("dark")
     }
@@ -98,6 +91,54 @@ function matchWidth (thisElement, thatElement) {
     let targetWidth = target.toString() + "px"
     console.log("Source width: " + source.getBoundingClientRect().width.toString())
     console.log("Target width: " + targetWidth)
-    //source.setAttribute("style", "width:" + targetWidth + ";")
     source.style.width = targetWidth
+}
+
+function dropdown (contentElement) {
+    console.log("dropdown(" + contentElement + ") called")
+    let target = document.getElementById(contentElement)
+    target.style.display = "block"
+}
+
+function registerDropdownListener () {
+    // (mostly for mobile) listens for clicks outside a dropdown so we can close those menu(s) should the user click out of them
+    document.addEventListener("click", event => {
+        let target = event.target
+        let closestDropdownAncestor = target.closest(".dropdown")
+        let isDropdownElement = closestDropdownAncestor != null
+        if (!isDropdownElement) {
+            console.log("Click detected outside of any dropdown menu. Setting display for all dropdown-content to none.")
+            let elements = document.getElementsByClassName("dropdown-content")
+            // this iterates backwards because accessing elements in-order causes the weirdness with "live" Collections
+            for (let i = elements.length - 1; i >= 0; i--) {
+                let element = elements.item(i)
+                element.style.display = "none"
+            }
+        }
+    })
+
+    // (mostly for desktop)
+    let dropdowns = document.getElementsByClassName("dropdown")
+    for (let i = dropdowns.length - 1; i >= 0; i--) {
+        let dropdown = dropdowns.item(i)
+        let dropdownContent = dropdown.querySelector(".dropdown-content")
+        let openContentMenu = function () {
+            console.log("Opening dropdown content menu")
+            dropdownContent.style.display = "block"
+            // matches the width of menu button to the menu (so user is less likely to accidentally mouse-out as soon as they go to select something)
+            matchWidth(dropdown.id, dropdownContent.id)
+        }
+        let closeContentMenu = function () {
+            console.log("Closing dropdown content menu")
+            dropdownContent.style.display = "none"
+            // width returns to normal once the menu is closed (so it doesn't open when user hovers over vacant space)
+            dropdown.style.width = "fit-content"
+        }
+        // register hover listener for desktop users to open menu via mouseover
+        dropdown.onmouseover = openContentMenu
+        // corresponding on-click listener since mobile users can't easily mouse-over without a mouse
+        dropdown.onclick = openContentMenu
+        // corresponding mouseout even to close the menu after
+        dropdown.onmouseout = closeContentMenu
+    }
 }

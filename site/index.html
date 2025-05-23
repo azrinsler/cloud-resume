@@ -12,26 +12,25 @@
     <title>Azmo Rinsler</title>
 </head>
 
-<header style="background:url('images/baxter-peak.jpg') no-repeat;background-size:100%;">
-    <div class="flex-column">
-        <div style="position:absolute; top:0; width:100%; z-index:1;">
-            <ul class="flex-row navbar-list dark">
-                <!-- this is the HTML character code for a tiny little house icon -->
-                <li style="font-size:1.25em;"><a href="index.html">&#x2302;</a></li>
-                <!-- &#x1f4a1; is the HTML character code for a lightbulb -->
-                <li style="margin-left:auto;background-color:transparent;border:none;" onclick="toggleMode()">&#x1f4a1;</li>
-                <!-- &equiv; is the HTML character code for what is essentially the hamburger menu icon -->
-                <li style="">&equiv;</li>
-            </ul>
+<header id="main-header" class="dark">
+    <div class="flex-column" style="width:100%;">
+        <div class="flex-row-reversed">
+            <div id="hamburger-menu" class="flex-column dropdown" onmouseover="matchWidth(this.id,'hamburger-menu-content')" onmouseout="this.style.width='fit-content'">
+                <div class="flex-row-reversed"><!-- button uses char code for equivalent (hamburger menu icon) -->
+                    <button class="dark" onclick="dropdown('hamburger-menu-content')" style="width:fit-content;"><a style="bottom:2px;">&equiv;</a></button>
+                </div>
+                <ul id="hamburger-menu-content" class="navbar-list dropdown-content dark" style="right:0;">
+                    <li><button class="dark"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></button></li>
+                    <li><button class="dark"><a href="sandbox.html">Sandbox</a></button></li>
+                    <li><button class="dark" onclick="toggleMode()"><a>Toggle Mode</a></button></li>
+                </ul>
+            </div>
         </div>
-        <div style="align-self:center;z-index:2">
-            <h1 class="dark" style="font-size:3.5em;margin-top:2.5vh;">Azmo Rinsler</h1>
+
+        <div style="position:absolute;align-self:center;">
+            <h1 class="dark" style="font-size:3.5em;">Azmo Rinsler</h1>
         </div>
-        <div style="position:absolute; bottom:0; width:100%; z-index:1;">
-            <ul class="flex-row navbar-list dark">
-                <li style="margin-left:auto;"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></li>
-            </ul>
-        </div>
+
         <!-- set z-index to 0 so this gets drawn behind other stuffs -->
         <div class="no-mobile" style="position:absolute; left:-2em; z-index: 0">
             <img src="images/name-stylized.png" alt="header image" style="height:15vh;">
@@ -42,7 +41,7 @@
 <!-- settings body to a specific height w/ overflow off and adding overflow back to an internal div lets us have an
      "internal" scrollbar whilst keeping the header and footer fixed -->
 <body class="dark">
-    <div class="flex-row hide-scrollbar" style="padding:0 0.25vw 0 0.25vw;height:100%;overflow-y:scroll;flex-wrap:wrap;justify-content:center;">
+    <div id="main-body" class="flex-row hide-scrollbar">
         <div class="flex-column" style="margin-right:0.5vw;">
             <div id="text-column" class="body-section dark flex-column" style="height:fit-content;max-width:100vw;width:fit-content;">
                 <h2 style="text-align:center;">This simple-looking website is the result of a complex project.</h2>
@@ -82,7 +81,7 @@
         </div>
         <!-- this hide-scrollbar class doesn't DISABLE scrolling --- it simply hides the ugly, default scrollbar -->
         <div class="flex-column" style="width:fit-content;flex-wrap:wrap;">
-            <div class="body-section flex-row dark" style="height:fit-content;width:fit-content;margin-left:auto;">
+            <div class="body-section flex-row dark" style="height:fit-content;width:fit-content;margin-left:auto;border:none;">
                 <!--suppress HtmlUnknownAnchorTarget -->
                 <iframe id="resume" src="images/Resume-SinglePageDraft.pdf#fit-content"></iframe>
             </div>
@@ -90,7 +89,7 @@
     </div>
 </body>
 
-<footer id="ip-info" class="hidden">
+<footer id="ip-info" class="hidden" onload="updateVisitDetails()">
     <div class="flex-row" style="margin:0 1vw 0 1vw;">
         <span style="">Observed IP: <span id="display-ip"></span></span>
         <span style="margin-left:auto;">It has <span id="new-ip"><em>not</em> </span>been seen before</span>
@@ -98,3 +97,10 @@
     </div>
 </footer>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", updateVisitDetails)
+    document.addEventListener("DOMContentLoaded", function () {
+        matchWidth("architecture-diagram", "text-column")
+    })
+    registerDropdownListener()
+</script>

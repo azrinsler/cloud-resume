@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="javascript/script.js"></script>
+    <!-- these links set up the little icon that appears to the left of the site name in the open tab for this page -->
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="images/favicon_io/site.webmanifest">
+    <title>Azmo Rinsler</title>
+</head>
+
+<header id="main-header" class="dark">
+    <div class="flex-column" style="width:100%;">
+
+        <div class="flex-row">
+            <!-- this div is a spacer to help force our burger menu to the side -->
+            <div style="display:flex;flex-grow:1;"></div>
+
+            <div id="hamburger-menu" class="flex-column dropdown" onmouseover="matchWidth(this.id,'hamburger-menu-content')" onmouseout="this.style.width='fit-content'">
+                <div class="flex-row-reversed"><!-- button uses char code for equivalent (hamburger menu icon) -->
+                    <button class="dark" onclick="dropdown('hamburger-menu-content')" style="width:fit-content;"><a style="bottom:2px;">&equiv;</a></button>
+                </div>
+                <ul id="hamburger-menu-content" class="navbar-list dropdown-content dark" style="right:0;">
+                    <li><button class="dark"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></button></li>
+                    <li><button class="dark"><a href="index.html">Homepage</a></button></li>
+                    <li><button class="dark" onclick="toggleMode()"><a>Toggle Mode</a></button></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div style="position:absolute;align-self:center;">
+            <h1 class="dark" style="font-size:3.5em;">Styling Sandbox</h1>
+        </div>
+    </div>
+</header>
+
+<body class="dark">
+    <div id="main-body" class="flex-row">
+        <div class="flex-column body-section dark" style="text-align:center;">
+            <h2>This page is used for fidgeting around w/ CSS and JS styling</h2>
+            <p style="color:dimgray">It will usually be either empty or broken. Sometimes both at once?</p>
+            <p style="color:darkred">Please feel free to ignore.</p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    registerDropdownListener()
+</script>

@@ -17,7 +17,7 @@ import software.amazon.awssdk.services.sqs.model.SendMessageResponse
 import software.amazon.awssdk.services.sqs.model.SqsException
 
 
-// Supported (built-in) events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
+@Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
 class KotlinLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     override fun handleRequest(event: APIGatewayProxyRequestEvent, context: Context): APIGatewayProxyResponseEvent {
         val log = context.logger.also { it.log("Kotlin Lambda Handler - API Gateway Proxy Request Event received.") }
