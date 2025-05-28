@@ -28,7 +28,7 @@
 <body class="flex-row dark" style="flex-wrap:wrap;">
 <div id="hamburger-menu" class="flex-column dropdown" onmouseover="matchWidth(this.id,'hamburger-menu-content')" onmouseout="this.style.width='fit-content'">
     <div class="flex-row-reversed"><!-- button uses char code for equivalent (hamburger menu icon) -->
-        <h1 class="dark button text-outline" onclick="dropdown('hamburger-menu-content')" style="width:fit-content;margin-bottom:-0.2lh;">&equiv;</h1>
+        <h1 class="dark button text-outline" style="width:fit-content;margin-bottom:-0.2lh;">&equiv;</h1>
     </div>
     <ul id="hamburger-menu-content" class="navbar-list dropdown-content" style="right:0;">
         <li class="dark button"><a onclick="toggleMode()">Toggle Mode</a></li>
@@ -107,4 +107,5 @@
 <script>
     document.addEventListener("DOMContentLoaded", updateVisitDetails)
     registerDropdownListener()
+    checkForLightMode()
 </script>

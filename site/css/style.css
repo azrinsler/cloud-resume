@@ -100,7 +100,7 @@ h1 {
     background-color: transparent;
 }
 
-.dark.text-outline {
+.text-outline.dark {
     color: white;
     text-shadow:
             -1px -1px 0 black,
@@ -109,7 +109,7 @@ h1 {
             1px  1px 0 black;
 }
 
-.light.text-outline {
+.text-outline.light {
     color: black;
     text-shadow:
             -1px -1px 0 white,
@@ -131,11 +131,11 @@ h1 {
     text-align: center;
 }
 
-.light.button:hover {
+.button.light:hover {
     background-color: rgba(255,255,255,0.5);
 }
 
-.dark.button:hover {
+.button.dark:hover {
     background-color: rgba(0,0,0,0.6);
 }
 
@@ -157,10 +157,6 @@ h1 {
 .flex-row-reversed {
     display: flex;
     flex-direction: row-reverse;
-}
-
-.flex-row.slide {
-    flex-wrap: wrap-reverse;
 }
 
 .navbar-list {
@@ -201,6 +197,8 @@ h1 {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     padding: 5px 5px;
     z-index: 100; /* setting this to an arbitrarily large number to it always draws on top */
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .slide {
@@ -211,18 +209,26 @@ h1 {
 
 .pane {
     padding: 2em;
+    margin: 1px;
+    height: fit-content;
+    width: fit-content;
 }
 
 .pane.dark {
-    background-color: rgba(0,0,0,0.8)
+    background-color: rgba(0,0,0,0.8);
+    border: 1px solid white;
 }
 
 .pane.light {
-    background-color: rgba(255,255,255,0.5)
+    background-color: rgba(255,255,255,0.5);
+    border: 1px solid black;
 }
 
+/* putting these near the bottom so they apply after (on top of) other classes which might have conflicting values */
 .hidden {
     display: none;
+    width: 0;
+    height: 0;
 }
 
 .invisible {
@@ -267,7 +273,7 @@ h1 {
 #popout-menu {
     position: relative;
     overflow-x: hidden;
-    width: 1rem; /* initial width - controlled by JS */
+    width: 2.25em;
     z-index: 2;
 }
 
@@ -276,6 +282,8 @@ h1 {
     display: flex;
     flex-direction: row;
     align-self: flex-end;
+    font-size: 2.25em;
+    position: relative;
 }
 
 #body-content {
@@ -331,7 +339,20 @@ h1 {
         width: 0;
         height:0;
     }
+
+    .flex-row.slide {
+        flex-wrap: wrap-reverse;
+    }
+
+    .navbar-list > li {
+        width: 100%;
+    }
+
+    #popout-menu-content > li {
+        width: 100vw;
+    }
 }
+
 
 /* desktop-specific settings - mostly boils down to making things larger w/ more whitespace */
 @media (min-width: 601px) {

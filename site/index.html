@@ -28,7 +28,7 @@
 <body class="flex-row dark" style="flex-wrap:wrap;">
     <div id="hamburger-menu" class="flex-column dropdown" onmouseover="matchWidth(this.id,'hamburger-menu-content')" onmouseout="this.style.width='fit-content'">
         <div class="flex-row-reversed"><!-- button uses char code for equivalent (hamburger menu icon) -->
-            <h1 class="dark button text-outline" onclick="dropdown('hamburger-menu-content')" style="width:fit-content;margin-bottom:-0.2lh;">&equiv;</h1>
+            <h1 class="dark button text-outline" style="width:fit-content;margin-bottom:-0.2lh;">&equiv;</h1>
         </div>
         <ul id="hamburger-menu-content" class="navbar-list dropdown-content" style="right:0;">
             <li class="dark button"><a onclick="toggleMode()">Toggle Mode</a></li>
@@ -36,7 +36,7 @@
     </div>
 
     <div id="popout-menu" class="flex-column">
-        <div id="popout-menu-button" class="button" onclick="togglePopoutMenu()">&#9700;</div>
+        <div id="popout-menu-button" class="button text-outline dark" onclick="togglePopoutMenu()">&#9700;</div>
         <ul id="popout-menu-content" class="invisible navbar-list">
             <li class="dark button"><a href="index.html">Homepage</a></li>
             <li class="dark button"><a href="sandbox.html">Sandbox</a></li>
@@ -63,9 +63,9 @@
 
             <div id="slide-1" class="flex-row slide">
                 <div class="flex-column pane dark">
-                    <h2 style="text-align:center;">This simple-looking website is the result of a complex project.</h2>
+                    <h2 class="title text-outline dark" style="text-align:center;">This simple-looking website is the result of a complex project.</h2>
                     <br />&nbsp;<br />
-                    <h2 style="color:darkred;">It is under active development and will continue to improve with time!</h2>
+                    <h2 class="text-outline dark" style="color:darkred;">It is under active development and will continue to improve with time!</h2>
                     <br />&nbsp;<br />
                     <p>It is entirely cloud-based, using a variety of AWS services.</p>
                     <br />&nbsp;<br />
@@ -96,7 +96,7 @@
                     <p style="margin-left:2em;">To showcase the breadth and depth of their development experience</p>
                     <p style="margin-left:3em;">And dedication to excellence</p>
                 </div>
-                <div class="flex-column">
+                <div class="flex-column pane dark">
                     <img id="architecture-diagram" src="images/architecture.drawio.png" alt="architecture diagram"/>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                     </ul>
                     <p>Foo bar baz</p>
                 </div>
-                <div class="flex-column">
+                <div class="flex-column pane dark">
                     <img class="slide-image" src="" alt="placeholder">
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     </ul>
                     <p>Ipsum Lorem</p>
                 </div>
-                <div class="flex-column">
+                <div class="flex-column pane dark">
                     <img class="slide-image" src="" alt="placeholder">
                 </div>
             </div>
@@ -153,7 +153,7 @@
                     </ul>
                     <p>Fee Fie Foh Fum</p>
                 </div>
-                <div class="flex-column">
+                <div class="flex-column pane dark">
                     <img class="slide-image" src="" alt="placeholder">
                 </div>
             </div>
@@ -170,7 +170,7 @@
                     <p>CI/CD won't let me be let me IaC</p>
                     <p>(moms spaghetti)</p>
                 </div>
-                <div class="flex-column">
+                <div class="flex-column pane dark">
                     <img class="slide-image" src="" alt="placeholder">
                 </div>
             </div>
@@ -190,5 +190,6 @@
 </html>
 <script>
     document.addEventListener("DOMContentLoaded", updateVisitDetails)
+    document.addEventListener("DOMContentLoaded", checkForLightMode)
     registerDropdownListener()
 </script>

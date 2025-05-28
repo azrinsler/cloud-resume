@@ -63,8 +63,37 @@ async function putIpToDynamoDB (ip_address) {
         })
 }
 
-let isDarkMode = true;
+// default is dark mode so this really just checks for light mode and updates if necessary
+function checkForLightMode () {
+    console.log("Checking if light mode is enabled")
+    let isDarkMode = localStorage.getItem("isDarkMode")
+    if (isDarkMode !== "true") {
+        console.log("Dark mode is disabled. Switching to light.")
+        let elements = document.getElementsByClassName("dark")
+        for (let i = elements.length - 1; i >= 0; i--) {
+            let element = elements.item(i)
+            element.classList.toggle("light")
+            element.classList.toggle("dark")
+        }
+    }
+    else {
+        console.log("Dark mode is enabled. Good choice!")
+    }
+}
+
 function toggleMode () {
+    // uses local storage to track dark mode between pages
+    let isDarkMode = localStorage.getItem("isDarkMode")
+    if (isDarkMode == null) {
+        console.log("isDarkMode not found in local storage - defaulting to true")
+        isDarkMode = true
+    }
+    else {
+        console.log("isDarkMode found in local storage. Current value: " + isDarkMode)
+        isDarkMode = isDarkMode === "true"
+    }
+    console.log("Current value of isDarkMode (to be toggled) is: " + isDarkMode)
+
     let elements = document.getElementsByClassName(isDarkMode ? "dark" : "light")
 
     isDarkMode = !isDarkMode
@@ -81,6 +110,7 @@ function toggleMode () {
         element.classList.toggle("light")
         element.classList.toggle("dark")
     }
+    localStorage.setItem("isDarkMode", isDarkMode.toString())
 }
 
 function matchWidth (thisElement, thatElement) {
@@ -91,12 +121,6 @@ function matchWidth (thisElement, thatElement) {
     console.log("Source width: " + source.getBoundingClientRect().width.toString())
     console.log("Target width: " + targetWidth)
     source.style.width = targetWidth
-}
-
-function dropdown (contentElement) {
-    console.log("dropdown(" + contentElement + ") called")
-    let target = document.getElementById(contentElement)
-    target.style.display = "block"
 }
 
 function togglePopoutMenu () {
@@ -204,7 +228,6 @@ function registerDropdownListener () {
         }
     })
 
-    // (mostly for desktop)
     let dropdowns = document.getElementsByClassName("dropdown")
     for (let i = dropdowns.length - 1; i >= 0; i--) {
         let dropdown = dropdowns.item(i)
@@ -212,8 +235,6 @@ function registerDropdownListener () {
         let openContentMenu = function () {
             console.log("Opening dropdown content menu")
             dropdownContent.style.display = "flex"
-            dropdownContent.style.flexDirection = "column"
-            dropdownContent.style.alignItems = "end"
             // matches the width of menu button to the menu (so user is less likely to accidentally mouse-out as soon as they go to select something)
             matchWidth(dropdown.id, dropdownContent.id)
         }
@@ -223,11 +244,19 @@ function registerDropdownListener () {
             // width returns to normal once the menu is closed (so it doesn't open when user hovers over vacant space)
             dropdown.style.width = "fit-content"
         }
+        let toggleMenu = function () {
+            if (dropdownContent.style.display === "" || dropdownContent.style.display === "none") {
+                openContentMenu()
+            }
+            else {
+                closeContentMenu()
+            }
+        }
         // register hover listener for desktop users to open menu via mouseover
         dropdown.onmouseover = openContentMenu
-        // corresponding on-click listener since mobile users can't easily mouse-over without a mouse
-        dropdown.onclick = openContentMenu
         // corresponding mouseout even to close the menu after
         dropdown.onmouseout = closeContentMenu
+        // corresponding on-click listener since mobile users can't easily mouse-over without a mouse
+        dropdown.onclick = toggleMenu
     }
 }
