@@ -14,21 +14,8 @@
 
 <header id="main-header" class="dark">
     <div class="flex-column" style="width:100%;">
-        <div class="flex-row-reversed">
-            <div id="hamburger-menu" class="flex-column dropdown" onmouseover="matchWidth(this.id,'hamburger-menu-content')" onmouseout="this.style.width='fit-content'">
-                <div class="flex-row-reversed"><!-- button uses char code for equivalent (hamburger menu icon) -->
-                    <button class="dark" onclick="dropdown('hamburger-menu-content')" style="width:fit-content;"><a style="bottom:2px;">&equiv;</a></button>
-                </div>
-                <ul id="hamburger-menu-content" class="navbar-list dropdown-content dark" style="right:0;">
-                    <li><button class="dark"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></button></li>
-                    <li><button class="dark"><a href="sandbox.html">Sandbox</a></button></li>
-                    <li><button class="dark" onclick="toggleMode()"><a>Toggle Mode</a></button></li>
-                </ul>
-            </div>
-        </div>
-
         <div style="position:absolute;align-self:center;">
-            <h1 class="dark" style="font-size:3.5em;">Azmo Rinsler</h1>
+            <h1 class="dark title">Azmo Rinsler</h1>
         </div>
 
         <!-- set z-index to 0 so this gets drawn behind other stuffs -->
@@ -38,53 +25,157 @@
     </div>
 </header>
 
-<!-- settings body to a specific height w/ overflow off and adding overflow back to an internal div lets us have an
-     "internal" scrollbar whilst keeping the header and footer fixed -->
-<body class="dark">
-    <div id="main-body" class="flex-row hide-scrollbar">
-        <div class="flex-column" style="margin-right:0.5vw;">
-            <div id="text-column" class="body-section dark flex-column" style="height:fit-content;max-width:100vw;width:fit-content;">
-                <h2 style="text-align:center;">This simple-looking website is the result of a complex project.</h2>
-                <br />&nbsp;<br />
-                <h2 style="color:darkred;">It is under active development and will continue to improve with time!</h2>
-                <br />&nbsp;<br />
-                <p>It is entirely cloud-based, using a variety of AWS services.</p>
-                <br />&nbsp;<br />
-                <ul>
-                    <li>This page itself is responsive, written in HTML w/ CSS</li>
-                    <li>The files for which are hosted as a static website in S3</li>
-                    <li>Made available as a custom domain via Route53, ACM and Cloudfront</li>
-                    <li>It uses JS to call upon its own REST API through an API Gateway</li>
-                    <li>Which is itself backed by a Kotlin Lambda function</li>
-                    <li>That puts the request to an SQS queue</li>
-                    <li>Feeding into a Python Lambda</li>
-                    <li>Which connects to a DynamoDB table tracking visitor IP addresses</li>
-                </ul>
-                <br />&nbsp;<br />
-                <p>But that's just the parts you can see</p>
-                <br />&nbsp;<br />
-                <ul>
-                    <li>The entire project is available in GitHub</li>
-                    <li>Set up as a repository, artifact store, KanBan board, and build tool</li>
-                    <li>On every push; GitHub Actions builds and packages artifacts using Maven</li>
-                    <li><span style="color:greenyellow;"> TODO </span>Some of which get deployed to GitHub Packages for later use</li>
-                    <li><span style="color:greenyellow;"> TODO </span>Where they are imported back into other modules as version controlled dependencies</li>
-                    <li>Before finally being built and deployed to AWS through Terraform</li>
-                </ul>
-                <br />&nbsp;<br />
-                <p>It is an example of a fully automated, end-to-end, full-stack, serverless, cloud-based portfolio piece</p>
-                <p style="margin-left:1em;">Built entirely by one person</p>
-                <p style="margin-left:2em;">To showcase the breadth and depth of their development experience</p>
-                <p style="margin-left:3em;">And dedication to excellence</p>
-            </div>
-            <img id="architecture-diagram" src="images/architecture.drawio.png" alt="architecture diagram" style="background-color:rgb(10,10,10)"/>
+<body class="flex-row dark" style="flex-wrap:wrap;">
+    <div id="hamburger-menu" class="flex-column dropdown" onmouseover="matchWidth(this.id,'hamburger-menu-content')" onmouseout="this.style.width='fit-content'">
+        <div class="flex-row-reversed"><!-- button uses char code for equivalent (hamburger menu icon) -->
+            <h1 class="dark button text-outline" onclick="dropdown('hamburger-menu-content')" style="width:fit-content;margin-bottom:-0.2lh;">&equiv;</h1>
         </div>
-        <!-- this hide-scrollbar class doesn't DISABLE scrolling --- it simply hides the ugly, default scrollbar -->
-        <div class="flex-column" style="width:fit-content;flex-wrap:wrap;">
-            <div class="body-section flex-row dark" style="height:fit-content;width:fit-content;margin-left:auto;border:none;">
-                <!--suppress HtmlUnknownAnchorTarget -->
-                <iframe id="resume" src="images/Resume-SinglePageDraft.pdf#fit-content"></iframe>
+        <ul id="hamburger-menu-content" class="navbar-list dropdown-content" style="right:0;">
+            <li class="dark button"><a onclick="toggleMode()">Toggle Mode</a></li>
+        </ul>
+    </div>
+
+    <div id="popout-menu" class="flex-column">
+        <div id="popout-menu-button" class="button" onclick="togglePopoutMenu()">&#9700;</div>
+        <ul id="popout-menu-content" class="invisible navbar-list">
+            <li class="dark button"><a href="index.html">Homepage</a></li>
+            <li class="dark button"><a href="sandbox.html">Sandbox</a></li>
+            <li class="dark button"><a href="resume.html">Resume</a></li>
+            <li class="dark button"><a href="https://github.com/azrinsler/cloud-resume">GitHub</a></li>
+        </ul>
+    </div>
+
+    <div id="body-content" class="flex-column-reversed">
+
+        <div id="slide-nav" class="flex-row">
+            <div id="slide-nav-prev" class="button" onclick="previousSlide()">&#9665;</div>
+            <div id="slide-nav-squares" class="flex-row">
+                <span id="slide-1-square" class="button" onclick="activateSlide('slide-1')">&#9635;</span>
+                <span id="slide-2-square" class="button" onclick="activateSlide('slide-2')">&#9634;</span>
+                <span id="slide-3-square" class="button" onclick="activateSlide('slide-3')">&#9634;</span>
+                <span id="slide-4-square" class="button" onclick="activateSlide('slide-4')">&#9634;</span>
+                <span id="slide-5-square" class="button" onclick="activateSlide('slide-5')">&#9634;</span>
             </div>
+            <div id="slide-nav-next" class="button" onclick="nextSlide()">&#9655;</div>
+        </div>
+
+        <div id="slide-content" class="flex-row dark hide-scrollbar">
+
+            <div id="slide-1" class="flex-row slide">
+                <div class="flex-column" style="flex-grow:1;">
+                    <h2 style="text-align:center;">This simple-looking website is the result of a complex project.</h2>
+                    <br />&nbsp;<br />
+                    <h2 style="color:darkred;">It is under active development and will continue to improve with time!</h2>
+                    <br />&nbsp;<br />
+                    <p>It is entirely cloud-based, using a variety of AWS services.</p>
+                    <br />&nbsp;<br />
+                    <ul>
+                        <li>This page itself is responsive, written in HTML w/ CSS</li>
+                        <li>The files for which are hosted as a static website in S3</li>
+                        <li>Made available as a custom domain via Route53, ACM and Cloudfront</li>
+                        <li>It uses JS to call upon its own REST API through an API Gateway</li>
+                        <li>Which is itself backed by a Kotlin Lambda function</li>
+                        <li>That puts the request to an SQS queue</li>
+                        <li>Feeding into a Python Lambda</li>
+                        <li>Which connects to a DynamoDB table tracking visitor IP addresses</li>
+                    </ul>
+                    <br />&nbsp;<br />
+                    <p>But that's just the parts you can see</p>
+                    <br />&nbsp;<br />
+                    <ul>
+                        <li>The entire project is available in GitHub</li>
+                        <li>Set up as a repository, artifact store, KanBan board, and build tool</li>
+                        <li>On every push; GitHub Actions builds and packages artifacts using Maven</li>
+                        <li><span style="color:greenyellow;"> TODO </span>Some of which get deployed to GitHub Packages for later use</li>
+                        <li><span style="color:greenyellow;"> TODO </span>Where they are imported back into other modules as version controlled dependencies</li>
+                        <li>Before finally being built and deployed to AWS through Terraform</li>
+                    </ul>
+                    <br />&nbsp;<br />
+                    <p>It is an example of a fully automated, end-to-end, full-stack, serverless, cloud-based portfolio piece</p>
+                    <p style="margin-left:1em;">Built entirely by one person</p>
+                    <p style="margin-left:2em;">To showcase the breadth and depth of their development experience</p>
+                    <p style="margin-left:3em;">And dedication to excellence</p>
+                </div>
+                <div class="flex-column">
+                    <img id="architecture-diagram" src="images/architecture.drawio.png" alt="architecture diagram"/>
+                </div>
+            </div>
+
+            <div id="slide-2" class="flex-row slide hidden">
+                <div class="flex-column" style="flex-grow:1;">
+                    <h2>Frontend</h2>
+                    <p>TODO: Describe frontend in greater detail</p>
+                    <ul>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JS</li>
+                        <li>AWS S3</li>
+                    </ul>
+                    <p>Foo bar baz</p>
+                </div>
+                <div class="flex-column">
+                    <img class="slide-image" src="" alt="placeholder">
+                </div>
+            </div>
+
+            <div id="slide-3" class="flex-row slide hidden">
+                <div class="flex-column" style="flex-grow:1;">
+                    <h2>Backend</h2>
+                    <p>TODO: Describe backend in greater detail</p>
+                    <ul>
+                        <li>
+                            Lambdas w/ AWS SDKs
+                            <ul>
+                                <li>Kotlin</li>
+                                <li>Python</li>
+                            </ul>
+                        </li>
+                        <li>SQS w/ DLQ</li>
+                        <li>DynamoDB</li>
+                        <li>Cloudwatch</li>
+                    </ul>
+                    <p>Ipsum Lorem</p>
+                </div>
+                <div class="flex-column">
+                    <img class="slide-image" src="" alt="placeholder">
+                </div>
+            </div>
+
+            <div id="slide-4" class="flex-row slide hidden">
+                <div class="flex-column" style="flex-grow:1;">
+                    <h2>Networking</h2>
+                    <p>TODO: Describe networking components in greater detail</p>
+                    <ul>
+                        <li>ACM</li>
+                        <li>API Gateway</li>
+                        <li>Route 53</li>
+                        <li>Cloudfront</li>
+                    </ul>
+                    <p>Fee Fie Foh Fum</p>
+                </div>
+                <div class="flex-column">
+                    <img class="slide-image" src="" alt="placeholder">
+                </div>
+            </div>
+
+            <div id="slide-5" class="flex-row slide hidden">
+                <div class="flex-column" style="flex-grow:1;">
+                    <h2>Devops</h2>
+                    <p>TODO: Describe automation in greater detail</p>
+                    <ul>
+                        <li>GitHub Actions</li>
+                        <li>GitHub Packages</li>
+                        <li>Terraform</li>
+                    </ul>
+                    <p>CI/CD won't let me be let me IaC</p>
+                    <p>(moms spaghetti)</p>
+                </div>
+                <div class="flex-column">
+                    <img class="slide-image" src="" alt="placeholder">
+                </div>
+            </div>
+
+
         </div>
     </div>
 </body>
@@ -99,8 +190,5 @@
 </html>
 <script>
     document.addEventListener("DOMContentLoaded", updateVisitDetails)
-    document.addEventListener("DOMContentLoaded", function () {
-        matchWidth("architecture-diagram", "text-column")
-    })
     registerDropdownListener()
 </script>

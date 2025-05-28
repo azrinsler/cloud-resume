@@ -1,6 +1,8 @@
 * { /* globally disable margin and padding so we can control these values more granularly by element */
     margin: 0;
     padding: 0;
+    /* setting a default transition speed */
+    transition: all 1s;
 }
 
 /*******************************
@@ -33,9 +35,8 @@ header {
 }
 
 body {
-    width:100%;
-    margin-top: 4.5em;
-    height:100%;
+    width:100vw;
+    height:100vh;
     overflow:hidden;
 }
 
@@ -49,94 +50,91 @@ footer {
     z-index: 2;
 }
 
-.dark, .light {
-    transition: all;
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in;
-}
-
-body.dark, div.dark {
-    background-color: black;
-    color: white;
-}
-
-body.light, div.light {
-    background-color: white;
+.light {
     color: black;
+    border-color:black;
+    background-color: white;
 }
+
+.dark {
+    color: white;
+    border-color: white;
+    background-color: black;
+}
+
 
 h1 {
     font-size: 3.5em;
 }
 
-h1.dark {
-    text-shadow:
-           -1px -1px 0 black,
-            1px -1px 0 black,
-           -1px  1px 0 black,
-            1px  1px 0 black;
-    border-bottom: 1px solid white
+.title {
+    background-color: transparent;
 }
 
-h1.light {
-    text-shadow:
-           -1px -1px 0 white,
-            1px -1px 0 white,
-           -1px  1px 0 white,
-            1px  1px 0 white;
-    border-bottom: 1px solid black;
-}
-
-button {
-    margin: 5px;
-    padding:0;
-    border-radius: 7px;
-    text-wrap: nowrap;
-    width:fit-content;
-}
-
-button > :first-child {
-    padding: 2px 5px 2px 5px;
-    /* relative position w/ offset to make text respect padding */
-    position: relative;
-    right: 5px;
-}
-
-button.dark {
-    border: 1px solid rgba(255,255,255,0.5);
-    background-color: rgba(40,40,40,0.85);
-    color: white;
-}
-
-button.dark:hover {
-    background-color: rgba(200,200,200,0.5);
-}
-
-button.light {
-    border: 1px solid rgba(55,55,55,0.5);
-    background-color: rgba(200,200,200,0.75);
+.title.dark {
     color: black;
+    border-bottom: 1px solid white;
+    text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px  1px 0 white,
+            1px  1px 0 white;
 }
 
-button.light:hover {
-    background-color: rgba(255,255,255,0.5);
+.title.light {
+    color: white;
+    border-bottom: 1px solid black;
+    text-shadow:
+            -1px -1px 0 black,
+            1px -1px 0 black,
+            -1px  1px 0 black,
+            1px  1px 0 black;
 }
 
-button > a {
-    display: block;
-    width: 100%;
-    height:100%;
+.text-outline {
+    background-color: transparent;
+}
+
+.dark.text-outline {
+    color: white;
+    text-shadow:
+            -1px -1px 0 black,
+            1px -1px 0 black,
+            -1px  1px 0 black,
+            1px  1px 0 black;
+}
+
+.light.text-outline {
+    color: black;
+    text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px  1px 0 white,
+            1px  1px 0 white;
 }
 
 /********************************
  * TARGET ELEMENTS BY CSS CLASS *
  ********************************/
+.button {
+    text-wrap: nowrap;
+    cursor: pointer;
+    margin: 2px 0 1px 0;
+    font-family: "Copperplate Gothic Bold", "sans-serif";
+}
 
-.hidden {
-    visibility: hidden;
-    display: none;
-    width: 0;
-    height: 0;
+.button > :first-child {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.light.button:hover {
+    background-color: rgba(255,255,255,0.5);
+}
+
+.dark.button:hover {
+    background-color: rgba(0,0,0,0.6);
 }
 
 .flex-column {
@@ -160,50 +158,17 @@ button > a {
 }
 
 .navbar-list {
+    background-color:transparent;
     list-style-type: none; /* removes bullets */
     margin: 0;
-    width: fit-content;
 }
 
 .navbar-list > li {
-}
-
-.navbar-list > li > button {
-    width: 100%;
-    border-radius: 0;
-    margin: 2px 0 1px 0;
-    font-family: "Copperplate", "sans-serif";
-}
-
-.navbar-list.dark > li:hover {
-    text-shadow:
-           -1px -1px 0 white,
-            1px -1px 0 white,
-           -1px  1px 0 white,
-            1px  1px 0 white;
-}
-
-.navbar-list.light > li:hover {
-    text-shadow:
-           -1px -1px 0 black,
-            1px -1px 0 black,
-           -1px  1px 0 black,
-            1px  1px 0 black;
-}
-
-.body-section {
-    background-color: rgba(100,100,100,0.2);
-    padding: 2px 5px 2px 5px;
-    margin: 5px 0 5px 0;
-    width: auto;
-}
-
-.body-section.dark {
-    border: 1px solid antiquewhite;
-}
-
-.body-section.light {
-    border: 1px solid black;
+    list-style: none;
+    margin: 1px 0;
+    padding: 1px 5px;
+    border: 1px solid;
+    width: max-content;
 }
 
 .hide-scrollbar {
@@ -231,12 +196,20 @@ button > a {
     z-index: 100; /* setting this to an arbitrarily large number to it always draws on top */
 }
 
-.dropdown-content.dark {
-    background-color: rgba(255,255,255,0.25);
+.slide {
+    width: 100%;
 }
 
-.dropdown-content.light {
-    background-color: rgba(0,0,0,0.5);
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    opacity: 0;
 }
 
 /*************************
@@ -247,7 +220,6 @@ button > a {
     width:50lh;
     max-width: 100%;
     aspect-ratio: 8.5 / 11;
-    z-index:50;
 }
 
 #main-header {
@@ -264,18 +236,68 @@ button > a {
     background-size: 100vw;
 }
 
-#main-body {
-    padding:0 0.25vw 0 0.25vw;
-    height:100%;
-    overflow-y:scroll;
-    flex-wrap:wrap;
-    justify-content:center;
-    margin-top:4.5em;
-    margin-bottom:2em;
-    position:relative;
-    z-index:1;
+#hamburger-menu {
+    position: absolute;
+    right: 0;
+    z-index:2;
 }
 
+#popout-menu {
+    position: relative;
+    overflow-x: hidden;
+    padding: 5px;
+    width: 1rem; /* initial width - controlled by JS */
+    z-index: 2;
+}
+
+#popout-menu-button {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+}
+
+#body-content {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+}
+
+#slide-content {
+    flex-grow: 1;
+    margin-top: 4.5em; /* leave space for header */
+    justify-content:center;
+}
+
+#slide-content.dark {
+    background-color: rgba(0,0,0,0.5)
+}
+
+#slide-content.light {
+    background-color: rgba(255,255,255,0.5)
+}
+
+#slide-nav {
+    width: 100%;
+}
+
+#slide-nav-squares {
+    flex-grow: 1;
+}
+
+#slide-nav-squares > span {
+    margin: auto;
+}
+
+#slide-nav-prev, #slide-nav-next {
+    align-self: center;
+}
+
+#slide-nav-prev {
+    /* to leave space for popout menu (otherwise it overlaps and interferes w/ clicking due to z-index */
+    margin-left: 2em;
+}
 
 /* mobile-specific settings to help things fit better on tiny screens */
 @media (max-width: 600px) {

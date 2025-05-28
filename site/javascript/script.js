@@ -43,7 +43,6 @@ async function getIP () {
 }
 
 async function putIpToDynamoDB (ip_address) {
-
     return await fetch(
         apiGatewayUrl, {
             // we need an abnormally long timeout in case the lambda hasn't been called recently (long cold-start time)
@@ -100,6 +99,92 @@ function dropdown (contentElement) {
     target.style.display = "block"
 }
 
+function togglePopoutMenu () {
+    let popoutMenuContent = document.getElementById("popout-menu-content")
+    let isClosed = popoutMenuContent.classList.contains("invisible")
+    let isMobile = /Mobi|Android/i.test(navigator.userAgent)
+
+    if (isClosed) {
+        let popoutMenu = document.getElementById("popout-menu")
+        if (isMobile) {
+            console.log("Opening mobile popout menu")
+            popoutMenuContent.style.width = "100%"
+            popoutMenu.style.width = "100vw"
+        }
+        else {
+            console.log("Opening desktop popout menu")
+            popoutMenuContent.style.width = "fit-content"
+            let menuWidth = popoutMenuContent.offsetWidth
+            popoutMenu.style.width = menuWidth + "px"
+        }
+        popoutMenu.style.borderRight = "3px solid"
+        document.getElementById("popout-menu-button").style.transform = "rotate(180deg)"
+    }
+    else {
+        console.log("Closing popout menu")
+        popoutMenuContent.style.width = "0"
+        let buttonWidth = document.getElementById("popout-menu-button").offsetWidth
+        let popoutMenu = document.getElementById("popout-menu")
+        popoutMenu.style.width = buttonWidth + "px"
+        popoutMenu.style.borderRight = "0 solid transparent"
+        document.getElementById("popout-menu-button").style.transform = "rotate(0deg)"
+    }
+    let invisibleLi = popoutMenuContent.getElementsByClassName("invisible")
+    for (let i = invisibleLi.length - 1; i >= 0; i--)
+        invisibleLi.item(i).classList.toggle("invisible")
+    popoutMenuContent.classList.toggle("invisible")
+}
+
+function activateSlide (slideId) {
+    let target = document.getElementById(slideId)
+    let isHidden = target.classList.contains("hidden")
+    if (isHidden) {
+        console.log("Activating slide: " + slideId)
+        let slides = document.getElementsByClassName("slide")
+        for (let i = slides.length - 1; i >=0; i--) {
+            let slide = slides.item(i)
+            if (!slide.classList.contains("hidden")) {
+                let targetSlideSquare = document.getElementById(slide.id + "-square")
+                targetSlideSquare.innerHTML = "&#9634;"
+                slide.classList.toggle("hidden")
+                break
+            }
+        }
+        let targetSlideSquare = document.getElementById(slideId + "-square")
+        targetSlideSquare.innerHTML = "&#9635;"
+        target.classList.toggle("hidden")
+    }
+}
+
+function previousSlide () {
+    let slides = document.getElementsByClassName("slide")
+    for (let i = slides.length - 1; i >= 0; i--) {
+        let slide = slides.item(i)
+        if (!slide.classList.contains("hidden")) {
+            let slideNumber = parseInt(slide.id.split("-")[1])
+            if (slideNumber > 1) {
+                activateSlide("slide-" + (slideNumber - 1) )
+                break
+            }
+        }
+    }
+}
+
+function nextSlide () {
+    let slides = document.getElementsByClassName("slide")
+    for (let i = slides.length - 1; i >= 0; i--) {
+        let slide = slides.item(i)
+        if (!slide.classList.contains("hidden")) {
+            let slideNumber = parseInt(slide.id.split("-")[1])
+            if (slideNumber < slides.length) {
+                activateSlide("slide-" + (slideNumber + 1) )
+                break
+            }
+        }
+    }
+}
+
+
 function registerDropdownListener () {
     // (mostly for mobile) listens for clicks outside a dropdown so we can close those menu(s) should the user click out of them
     document.addEventListener("click", event => {
@@ -124,7 +209,9 @@ function registerDropdownListener () {
         let dropdownContent = dropdown.querySelector(".dropdown-content")
         let openContentMenu = function () {
             console.log("Opening dropdown content menu")
-            dropdownContent.style.display = "block"
+            dropdownContent.style.display = "flex"
+            dropdownContent.style.flexDirection = "column"
+            dropdownContent.style.alignItems = "end"
             // matches the width of menu button to the menu (so user is less likely to accidentally mouse-out as soon as they go to select something)
             matchWidth(dropdown.id, dropdownContent.id)
         }
