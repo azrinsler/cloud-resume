@@ -67,7 +67,7 @@ async function putIpToDynamoDB (ip_address) {
 function checkForLightMode () {
     console.log("Checking if light mode is enabled")
     let isDarkMode = localStorage.getItem("isDarkMode")
-    if (isDarkMode !== "true") {
+    if (isDarkMode != null && isDarkMode !== "true") {
         console.log("Dark mode is disabled. Switching to light.")
         let elements = document.getElementsByClassName("dark")
         for (let i = elements.length - 1; i >= 0; i--) {
@@ -84,7 +84,7 @@ function checkForLightMode () {
 function toggleMode () {
     // uses local storage to track dark mode between pages
     let isDarkMode = localStorage.getItem("isDarkMode")
-    if (isDarkMode == null) {
+    if (isDarkMode === null) {
         console.log("isDarkMode not found in local storage - defaulting to true")
         isDarkMode = true
     }
