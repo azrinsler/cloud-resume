@@ -283,6 +283,8 @@ h1 {
 }
 
 #slide-nav {
+    /* to leave space for footer w/ ip address details */
+    margin-bottom:1.25em;
     width: 100%;
 }
 
