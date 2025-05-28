@@ -157,6 +157,10 @@ h1 {
     flex-direction: row-reverse;
 }
 
+.flex-row.slide {
+    flex-wrap: wrap-reverse;
+}
+
 .navbar-list {
     background-color:transparent;
     list-style-type: none; /* removes bullets */
@@ -297,6 +301,11 @@ h1 {
 #slide-nav-prev {
     /* to leave space for popout menu (otherwise it overlaps and interferes w/ clicking due to z-index */
     margin-left: 2em;
+}
+
+#slide-nav-next {
+    /* to match the left margin on slide-nav-prev */
+    margin-right: 2em;
 }
 
 /* mobile-specific settings to help things fit better on tiny screens */
