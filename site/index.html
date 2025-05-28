@@ -59,10 +59,10 @@
             <div id="slide-nav-next" class="button" onclick="nextSlide()">&#9655;</div>
         </div>
 
-        <div id="slide-content" class="flex-row dark hide-scrollbar">
+        <div id="slide-content" class="flex-row hide-scrollbar" style="overflow-y:scroll;">
 
             <div id="slide-1" class="flex-row slide">
-                <div class="flex-column" style="flex-grow:1;">
+                <div class="flex-column pane dark">
                     <h2 style="text-align:center;">This simple-looking website is the result of a complex project.</h2>
                     <br />&nbsp;<br />
                     <h2 style="color:darkred;">It is under active development and will continue to improve with time!</h2>
@@ -102,7 +102,7 @@
             </div>
 
             <div id="slide-2" class="flex-row slide hidden">
-                <div class="flex-column" style="flex-grow:1;">
+                <div class="flex-column pane dark">
                     <h2>Frontend</h2>
                     <p>TODO: Describe frontend in greater detail</p>
                     <ul>
@@ -119,7 +119,7 @@
             </div>
 
             <div id="slide-3" class="flex-row slide hidden">
-                <div class="flex-column" style="flex-grow:1;">
+                <div class="flex-column pane dark">
                     <h2>Backend</h2>
                     <p>TODO: Describe backend in greater detail</p>
                     <ul>
@@ -142,7 +142,7 @@
             </div>
 
             <div id="slide-4" class="flex-row slide hidden">
-                <div class="flex-column" style="flex-grow:1;">
+                <div class="flex-column pane dark">
                     <h2>Networking</h2>
                     <p>TODO: Describe networking components in greater detail</p>
                     <ul>
@@ -159,7 +159,7 @@
             </div>
 
             <div id="slide-5" class="flex-row slide hidden">
-                <div class="flex-column" style="flex-grow:1;">
+                <div class="flex-column pane dark">
                     <h2>Devops</h2>
                     <p>TODO: Describe automation in greater detail</p>
                     <ul>
@@ -184,7 +184,7 @@
     <div class="flex-row" style="margin:0 1vw 0 1vw;">
         <span style="">Observed IP: <span id="display-ip"></span></span>
         <span style="margin-left:auto;">It has <span id="new-ip"><em>not</em> </span>been seen before</span>
-        <span id="visit-counter" style="margin-left:auto;">Visit Counter: <span id="previous-visits">0</span></span>
+        <span id="visit-counter" style="margin-left:auto;">Page Loads: <span id="previous-visits">0</span></span>
     </div>
 </footer>
 </html>

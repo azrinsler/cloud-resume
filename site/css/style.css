@@ -67,6 +67,11 @@ h1 {
     font-size: 3.5em;
 }
 
+
+/********************************
+ * TARGET ELEMENTS BY CSS CLASS *
+ ********************************/
+
 .title {
     background-color: transparent;
 }
@@ -113,9 +118,6 @@ h1 {
             1px  1px 0 white;
 }
 
-/********************************
- * TARGET ELEMENTS BY CSS CLASS *
- ********************************/
 .button {
     text-wrap: nowrap;
     cursor: pointer;
@@ -172,7 +174,8 @@ h1 {
     margin: 1px 0;
     padding: 1px 5px;
     border: 1px solid;
-    width: max-content;
+    /* this 100vw is for mobile - desktop specific width is in a @media section at bottom */
+    width: 100vw;
 }
 
 .hide-scrollbar {
@@ -202,6 +205,20 @@ h1 {
 
 .slide {
     width: 100%;
+    height: fit-content;
+    justify-content: center;
+}
+
+.pane {
+    padding: 2em;
+}
+
+.pane.dark {
+    background-color: rgba(0,0,0,0.8)
+}
+
+.pane.light {
+    background-color: rgba(255,255,255,0.5)
 }
 
 .hidden {
@@ -242,14 +259,14 @@ h1 {
 
 #hamburger-menu {
     position: absolute;
-    right: 0;
-    z-index:2;
+    right: 0.5em;
+    top: -0.5em;
+    z-index: 2;
 }
 
 #popout-menu {
     position: relative;
     overflow-x: hidden;
-    padding: 5px;
     width: 1rem; /* initial width - controlled by JS */
     z-index: 2;
 }
@@ -272,14 +289,6 @@ h1 {
     flex-grow: 1;
     margin-top: 4.5em; /* leave space for header */
     justify-content:center;
-}
-
-#slide-content.dark {
-    background-color: rgba(0,0,0,0.5)
-}
-
-#slide-content.light {
-    background-color: rgba(255,255,255,0.5)
 }
 
 #slide-nav {
@@ -324,8 +333,18 @@ h1 {
     }
 }
 
+/* desktop-specific settings - mostly boils down to making things larger w/ more whitespace */
 @media (min-width: 601px) {
     * {
         font-size: large;
+    }
+
+    .navbar-list > li {
+        /* adjust this to comfortably fit max length list item (setting a specific value instead of 100% helps transitions animate smoothly) */
+        width: 10em;
+    }
+
+    #popout-menu {
+        padding: 5px;
     }
 }

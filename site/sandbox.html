@@ -59,10 +59,10 @@
         <div id="slide-nav-next" class="button" onclick="nextSlide()">&#9655;</div>
     </div>
 
-    <div id="slide-content" class="flex-row dark hide-scrollbar">
+    <div id="slide-content" class="flex-row hide-scrollbar">
 
         <div id="slide-1" class="flex-row slide">
-            <div class="flex-column" style="text-align:center;">
+            <div class="flex-column pane dark" style="text-align:center;">
                 <h2>This page is used for fidgeting around w/ CSS and JS styling</h2>
                 <p style="color:dimgray">It will usually be either empty or broken. Sometimes both at once?</p>
                 <p style="color:darkred">Please feel free to ignore.</p>
@@ -70,19 +70,27 @@
         </div>
 
         <div id="slide-2" class="flex-row slide hidden">
-            Slide 2
+            <div class="flex-column pane dark">
+                Slide 2
+            </div>
         </div>
 
         <div id="slide-3" class="flex-row slide hidden">
-            Slide 3
+            <div class="flex-column pane dark">
+                Slide 3
+            </div>
         </div>
 
         <div id="slide-4" class="flex-row slide hidden">
-            Slide 4
+            <div class="flex-column pane dark">
+                Slide 4
+            </div>
         </div>
 
         <div id="slide-5" class="flex-row slide hidden">
-            Slide 5
+            <div class="flex-column pane dark">
+                Slide 5
+            </div>
         </div>
     </div>
 </div>
@@ -92,7 +100,7 @@
     <div class="flex-row" style="margin:0 1vw 0 1vw;">
         <span style="">Observed IP: <span id="display-ip"></span></span>
         <span style="margin-left:auto;">It has <span id="new-ip"><em>not</em> </span>been seen before</span>
-        <span id="visit-counter" style="margin-left:auto;">Visit Counter: <span id="previous-visits">0</span></span>
+        <span id="visit-counter" style="margin-left:auto;">Page Loads: <span id="previous-visits">0</span></span>
     </div>
 </footer>
 </html>

@@ -117,6 +117,7 @@ function togglePopoutMenu () {
             let menuWidth = popoutMenuContent.offsetWidth
             popoutMenu.style.width = menuWidth + "px"
         }
+        popoutMenu.style.backgroundColor = "dimgray"
         popoutMenu.style.borderRight = "3px solid"
         document.getElementById("popout-menu-button").style.transform = "rotate(180deg)"
     }
@@ -126,6 +127,7 @@ function togglePopoutMenu () {
         let buttonWidth = document.getElementById("popout-menu-button").offsetWidth
         let popoutMenu = document.getElementById("popout-menu")
         popoutMenu.style.width = buttonWidth + "px"
+        popoutMenu.style.backgroundColor = "transparent"
         popoutMenu.style.borderRight = "0 solid transparent"
         document.getElementById("popout-menu-button").style.transform = "rotate(0deg)"
     }
