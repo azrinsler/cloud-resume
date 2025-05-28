@@ -36,18 +36,10 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven
 
-      # Guessing I'll need this but commenting out until I know for sure
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@main
-      #   with:
-      #     node-version: 20
-
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: latest
-
-      # May need to install and/or auth to AWS SAM CLI
 
       - name: Maven Build
         run: mvn clean package -s ./.m2/settings.xml -fae

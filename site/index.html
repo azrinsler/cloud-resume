@@ -97,13 +97,13 @@
                     <p style="margin-left:3em;">And dedication to excellence</p>
                 </div>
                 <div class="flex-column pane dark">
-                    <img id="architecture-diagram" src="images/architecture.drawio.png" alt="architecture diagram"/>
+                    <img src="images/architecture.drawio.png" alt="architecture diagram"/>
                 </div>
             </div>
 
             <div id="slide-2" class="flex-row slide hidden">
                 <div class="flex-column pane dark">
-                    <h2>Frontend</h2>
+                    <h2 class="title text-outline dark" style="text-align:center;">Frontend</h2>
                     <p>TODO: Describe frontend in greater detail</p>
                     <ul>
                         <li>HTML</li>
@@ -120,7 +120,7 @@
 
             <div id="slide-3" class="flex-row slide hidden">
                 <div class="flex-column pane dark">
-                    <h2>Backend</h2>
+                    <h2 class="title text-outline dark" style="text-align:center;">Backend</h2>
                     <p>TODO: Describe backend in greater detail</p>
                     <ul>
                         <li>
@@ -143,7 +143,7 @@
 
             <div id="slide-4" class="flex-row slide hidden">
                 <div class="flex-column pane dark">
-                    <h2>Networking</h2>
+                    <h2 class="title text-outline dark" style="text-align:center;">Networking</h2>
                     <p>TODO: Describe networking components in greater detail</p>
                     <ul>
                         <li>ACM</li>
@@ -160,18 +160,53 @@
 
             <div id="slide-5" class="flex-row slide hidden">
                 <div class="flex-column pane dark">
-                    <h2>Devops</h2>
-                    <p>TODO: Describe automation in greater detail</p>
+                    <h2 class="title text-outline dark" style="text-align:center;">Devops</h2>
+                    <p>
+                        Build automation, DevOps, Lean, CI/CD, IaC (Infrastructure as Code)... these terms are often used somewhat interchangeably.
+                        They are highly related concepts which - broadly speaking - focus on the speed, quality, and consistency of your build and development processes.
+                        Much like QE, DevOps is frequently overlooked or deprioritized in favor of more visible and pressing aspects of software development,
+                        with the consequences of doing so only becoming apparent at a late stage. Why is that?
+                    </p>
+                    <br/>&nbsp;<br/>
+                    <p>
+                        There are of course a myriad of possible reasons, but I would argue that most of them fall into one of these categories:
+                    </p>
                     <ul>
-                        <li>GitHub Actions</li>
-                        <li>GitHub Packages</li>
-                        <li>Terraform</li>
+                        <li>DevOps is its own skill set involving a different tech stack, which developers are not necessarily familiar with.</li>
+                        <li>Automation in general is heavily front-loaded in terms of effort, which makes it <em>painful</em> to set up.</li>
+                        <li>The benefits are frequently invisible - it's hard to appreciate the value of good support, if you haven't experienced the pain of poor support.</li>
                     </ul>
-                    <p>CI/CD won't let me be let me IaC</p>
-                    <p>(moms spaghetti)</p>
+                    <br/>&nbsp;<br/>
+                    <p>
+                        The fact is; having a highly automated build process is of absolutely foundational importance to all but the smallest of projects.
+                    </p>
+                    <br/>&nbsp;<br/>
+                    <p>
+                        This project leverages the following:
+                    </p>
+                    <ul>
+                        <li>GitHub Actions - Build Automation</li>
+                        <li>GitHub Packages - Artifact Storage</li>
+                        <li>Maven - Dependency Management</li>
+                        <li>Terraform - IaC</li>
+                    </ul>
+                    <br/>&nbsp;<br/>
+                    <p>
+                        By using these tools together, we can create a cohesive build process which quietly handles many of the common pain points surrounding CI/CD.
+                        GitHub Actions and Packages are of course tightly coupled to GitHub itself, which is where the codebase already resides.
+                        By using these we can avoid the additional setup and maintenance involved in alternative tools, such as Jenkins or JFrog/Artifactory.
+                        <br/>&nbsp;<br/>
+                        Maven greatly simplifies dependency management in addition to being a powerful build tool in its own right.
+                        A custom settings.xml file allows Maven to retrieve dependencies from GitHub packages without exposing credentials.
+                        I could have just as easily used Gradle for this same purpose, and mostly went with Maven out of personal preference.
+                        <br/>&nbsp;<br/>
+                        Being that this is an AWS-based project, Cloudformation would typically be the go-to option for IaC. So why Terraform?
+                        Well, mostly because Terraform is open-source and vendor-agnostic.
+                        In order to avoid any additional cost or dependency on Hashicorp themselves, this project stores its state in S3.
+                    </p>
                 </div>
                 <div class="flex-column pane dark">
-                    <img class="slide-image" src="" alt="placeholder">
+                    <img src="images/devops.drawio.png" alt="devops diagram"/>
                 </div>
             </div>
 

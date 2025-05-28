@@ -365,6 +365,11 @@ h1 {
         width: 10em;
     }
 
+    .pane {
+        /* so we can try to ensure 2 panes are able to exist side-by-side instead of wrapping (with a little whitespace to spare) */
+        max-width: 45vw;
+    }
+
     #popout-menu {
         padding: 5px;
     }
