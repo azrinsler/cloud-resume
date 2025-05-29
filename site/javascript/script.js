@@ -162,6 +162,7 @@ function togglePopoutMenu () {
 }
 
 function activateSlide (slideId) {
+    localStorage.setItem("activeSlide", slideId)
     let target = document.getElementById(slideId)
     let isHidden = target.classList.contains("hidden")
     if (isHidden) {

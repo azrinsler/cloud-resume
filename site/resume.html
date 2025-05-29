@@ -65,7 +65,10 @@
 </footer>
 </html>
 <script>
+    // waits to show IP Address and Page Load counter until the API call to Lambda has returned
     document.addEventListener("DOMContentLoaded", updateVisitDetails)
+    // checks to see if the user prefers light mode (the default is dark)
     document.addEventListener("DOMContentLoaded", checkForLightMode)
+    // this adds event listeners for clicks NOT on a dropdown (so user can close dropdowns by clicking out of them)
     registerDropdownListener()
 </script>
