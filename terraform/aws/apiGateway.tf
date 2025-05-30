@@ -3,7 +3,7 @@ resource "aws_apigatewayv2_api" "primary_gateway" {
   name          = "primary_api_gateway"
   protocol_type = "HTTP"
   cors_configuration {
-    allow_origins = ["https://www.azrinsler.com"]
+    allow_origins = ["https://azrinsler.com", "https://www.azrinsler.com"]
     allow_methods = ["POST", "GET", "OPTIONS"]
     allow_headers = ["*"]
     max_age = 300

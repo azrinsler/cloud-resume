@@ -16,6 +16,19 @@ resource "aws_route53_record" "www_record" {
   }
 }
 
+# this 'A' record does the same thing as the www_record, except without the w's
+resource "aws_route53_record" "no_w_record" {
+  zone_id = aws_route53_zone.primary_route53_zone.zone_id
+  name    = ""
+  type    = "A"
+
+  alias {
+    name = aws_cloudfront_distribution.primary_cloudfront_distro.domain_name
+    zone_id = aws_cloudfront_distribution.primary_cloudfront_distro.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
 # this 'A' record ties our domain name to our API Gateway
 resource "aws_route53_record" "api_gateway_record" {
   zone_id = aws_route53_zone.primary_route53_zone.zone_id

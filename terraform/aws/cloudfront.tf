@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
     }
   }
 
-  aliases = ["www.${var.site_name}"]
+  aliases = [var.site_name, "www.${var.site_name}"]
 
   enabled = true
   default_root_object = var.site_homepage
@@ -42,8 +42,7 @@ resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
     }
   }
 
-  # https://medium.com/@d.kumarkaran12/aws-cloudfront-with-multiple-origins-a-terraform-powered-guide-to-path-based-routing-ea4a1e2dae63
-  # for accessing api gateway?
+  # for accessing api gateway
   ordered_cache_behavior {
     path_pattern           = "/${aws_apigatewayv2_stage.primary_gateway_stage.name}/*"
     allowed_methods        = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
