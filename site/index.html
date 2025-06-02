@@ -199,7 +199,7 @@
                         origin. Redirecting HTTP to HTTPS is one of the options we can select for its behavior. Easy enough!
                         <br />&nbsp;<br />
                         Much like the S3 bucket itself, Amazon gives our CloudFront distribution its own programmatically
-                        generated URL. Something like <a>https://dpqmp8uwwgxwd.cloudfront.net</a> which is... unfortunately
+                        generated URL. Something like <a href="https://dpqmp8uwwgxwd.cloudfront.net">https://dpqmp8uwwgxwd.cloudfront.net</a> which is... unfortunately
                         difficult to read, let alone remember. We can use Route 53 to solve this problem; in order to do
                         so we must first update our CloudFront distribution to use the same name server(s) as Route 53,
                         which we can easily check using our NS record.
@@ -212,6 +212,7 @@
                         need to include our CNAME records from ACM. While these "A" and CNAME records serve different
                         purposes, for our case we can treat them as pairs:
                     </p>
+                    <br/>&nbsp;<br/>
                     <ul>
                         <li>One pair for the root domain</li>
                         <li>One pair for the "www" subdomain</li>
@@ -235,8 +236,36 @@
                         <a href="https://d-37rxfs2ecj.execute-api.us-east-1.amazonaws.com">d-37rxfs2ecj.execute-api.us-east-1.amazonaws.com</a>.
                         <br />&nbsp;<br />
                         This custom domain is internally connected to a specific stage within an API Gateway API, but as
-                        mentioned that is more of an implementation detail.
+                        mentioned that is more of an implementation detail. Each API implemented in this way will have its own
+                        generated URL <em>in addition</em> to that of the custom domain, so we can add that one to the list of
+                        unintelligible URLs we could technically use, but prefer to avoid due to readability issues.
+                        For instance, the API stage used by this site is located at
+                        <a href="https://gms9t124k8.execute-api.us-east-1.amazonaws.com/">https://gms9t124k8.execute-api.us-east-1.amazonaws.com/</a>.
                     </p>
+                    <p>
+                        Following all this setup, we have the following:
+                    </p>
+                    <br/>&nbsp;<br/>
+                    <ol>
+                        <li>
+                            Our primary domain, located at <a href="https://www.azrinsler.com">azrinsler.com</a>
+                            <ul>
+                                <li>This works with or without the "www" prefix</li>
+                                <li>It automatically redirects HTTP traffic to HTTPS</li>
+                                <li>Traffic going through CloudFront internally uses <a href="https://dpqmp8uwwgxwd.cloudfront.net">dpqmp8uwwgxwd.cloudfront.net</a></li>
+                                <li>The S3 bucket the site originates from is located at <a href="http://azrinsler-site-bucket.s3-website-us-east-1.amazonaws.com">azrinsler-site-bucket.s3-website-us-east-1.amazonaws.com</a></li>
+                            </ul>
+                            <br/>&nbsp;<br/>
+                        </li>
+                        <li>
+                            An API located at <a href="https://api.azrinsler.com">api.azrinsler.com</a>
+                            <ul>
+                                <li>When going through CloudFront, this only accepts HTTPS traffic</li>
+                                <li>It points to a custom domain at <a href="https://d-37rxfs2ecj.execute-api.us-east-1.amazonaws.com">d-37rxfs2ecj.execute-api.us-east-1.amazonaws.com</a></li>
+                                <li>The custom domain itself internally uses <a href="https://gms9t124k8.execute-api.us-east-1.amazonaws.com">gms9t124k8.execute-api.us-east-1.amazonaws.com/</a></li>
+                            </ul>
+                        </li>
+                    </ol>
                 </div>
                 <div class="flex-column pane dark">
                     <img src="images/networking.drawio.png" alt="networking diagram"/>
