@@ -83,7 +83,7 @@ function checkForLightMode () {
 
 function toggleMode () {
     // uses local storage to track dark mode between pages
-    let isDarkMode = localStorage.getItem("isDarkMode")
+    let isDarkMode = localStorage.getItem("isDarkMode") ?? "true"
     if (isDarkMode === null) {
         console.log("isDarkMode not found in local storage - defaulting to true")
         isDarkMode = true
@@ -210,7 +210,6 @@ function nextSlide () {
         }
     }
 }
-
 
 function registerDropdownListener () {
     // (mostly for mobile) listens for clicks outside a dropdown so we can close those menu(s) should the user click out of them

@@ -1,0 +1,11 @@
+.small-screen-tall {
+    width: 375px;
+    height: 665px;
+    border: 1px solid;
+}
+
+.small-screen-wide {
+    width: 665px;
+    height: 375px;
+    border: 1px solid;
+}

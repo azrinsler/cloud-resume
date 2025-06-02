@@ -123,6 +123,7 @@ h1 {
     cursor: pointer;
     margin: 2px 0 1px 0;
     font-family: "Copperplate Gothic Bold", "sans-serif";
+    user-select: none; /* so users don't accidentally select/highlight button text when they meant to click on it */
 }
 
 .button > :first-child {
@@ -208,7 +209,7 @@ h1 {
 }
 
 .pane {
-    padding: 2em;
+    padding: 1em;
     margin: 1px;
     height: fit-content;
     width: fit-content;
@@ -319,12 +320,12 @@ h1 {
 
 #slide-nav-prev {
     /* to leave space for popout menu (otherwise it overlaps and interferes w/ clicking due to z-index */
-    margin-left: 2em;
+    margin-left: 2.5em;
 }
 
 #slide-nav-next {
     /* to match the left margin on slide-nav-prev */
-    margin-right: 2em;
+    margin-right: 2.5em;
 }
 
 /* mobile-specific settings to help things fit better on tiny screens */
