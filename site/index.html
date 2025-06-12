@@ -92,9 +92,6 @@
                     </ul>
                     <br />&nbsp;<br />
                     <p>It is an example of a fully automated, end-to-end, full-stack, serverless, cloud-based portfolio piece</p>
-                    <p style="margin-left:1em;">Built entirely by one person</p>
-                    <p style="margin-left:2em;">To showcase the breadth and depth of their development experience</p>
-                    <p style="margin-left:3em;">And dedication to excellence</p>
                 </div>
                 <div class="flex-column pane dark">
                     <img src="images/architecture.drawio.png" alt="architecture diagram"/>
@@ -131,20 +128,54 @@
             <div id="slide-3" class="flex-row slide hidden">
                 <div class="flex-column pane dark">
                     <h2 class="title text-outline dark" style="text-align:center;">Backend</h2>
-                    <p>TODO: Describe backend in greater detail</p>
+                    <p>
+                        The backend for this site has been kept <em>comparatively</em> simple in an effort to limit
+                        scope creep, but it is still necessarily more complex than the frontend.
+                    </p>
+                    <br />&nbsp;<br />
+                    <p>
+                        It consists of two lambda functions, which communicate with each other via an SQS queue. The
+                        first function is written in Kotlin and uses the AWS Java SDK, which it imports using Maven.
+                        This function sits behind an API Gateway and serves as the handler for REST API calls. The other
+                        function - written in Python - uses the AWS Python SDK (Boto3). Both functions interact with
+                        DynamoDB, albeit for slightly different purposes:
+                    </p>
+                    <br />&nbsp;<br />
                     <ul>
                         <li>
-                            Lambdas w/ AWS SDKs
-                            <ul>
-                                <li>Kotlin</li>
-                                <li>Python</li>
-                            </ul>
+                            The Kotlin lambda uses Jackson to deserialize input coming from API Gateway, which is
+                            expected to contain an IPv4 Address. It then uses RegEx to perform some basic validation
+                            that the input IP is, in fact, a valid address, before querying DynamoDB to check how many
+                            times that particular IP address has loaded a page from the site.  The response from
+                            DynamoDB is parsed and used to generate a response indicating if and how many times the IP
+                            address has been observed.
+                            <br />&nbsp;<br />
+                            At the same time, the Kotlin lambda also puts the message body from the API Gateway event
+                            onto an SQS queue feeding into the Python lambda. It returns immediately after sending the
+                            SQS message, so users do not have to wait on whatever additional processing happens beyond
+                            that point.
+                            <br />&nbsp;<br />
                         </li>
-                        <li>SQS w/ DLQ</li>
-                        <li>DynamoDB</li>
-                        <li>Cloudwatch</li>
+                        <li>
+                            The Python lambda, on the other hand, is the one responsible for actually updating DynamoDB.
+                            The first time an IP is seen it will be added to DynamoDB with an initial visit counter of
+                            1, before returning a 201 - Created response stating the IP was added. Should the same IP be
+                            encountered additional times, the Python lambda simply increments the visit counter for that
+                            IP instead. When this happens, it instead returns a 200 - Successful response.
+                            <br />&nbsp;<br />
+                            Since the Python function is invoked asynchronously, its responses do not get sent back to
+                            the original user. They are visible in CloudWatch as logs, and help AWS determine if the
+                            function was executed successfully or not.
+                            <br />&nbsp;<br />
+                            Should the Python function fail for any reason, it instead throws an exception, which sends
+                            the bad input back to SQS where it goes into a DLQ for manual remediation.
+                        </li>
                     </ul>
-                    <p>Ipsum Lorem</p>
+                    <br />&nbsp;<br />
+                    <p>
+                        Both functions send their logger output to CloudWatch, which improves observability and greatly
+                        aids with any potential troubleshooting or debugging.
+                    </p>
                 </div>
                 <div class="flex-column pane dark">
                     <img class="slide-image" src="" alt="placeholder">
@@ -155,29 +186,29 @@
                 <div class="flex-column pane dark">
                     <h2 class="title text-outline dark" style="text-align:center;">Networking</h2>
                     <p>
-                        In order to access any website, you need to - at some level - know its IP address. Asking users
-                        to remember this address would of course be completely unreasonable, which is where DNS comes
+                        To access any website, you need to — at some level — know its IP address. Asking users
+                        to remember this address would, of course, be completely unreasonable, which is where DNS comes
                         into play. DNS is what maps between IP addresses and human-readable domain names.
                         <br />&nbsp;<br />
                         By default, Amazon makes it relatively quick and easy to statically host a website using S3; you
-                        simply upload your files to a bucket marked for that purpose, make sure it's publicly readable,
+                        upload your files to a bucket marked for that purpose, make sure it's publicly readable,
                         and Amazon generates a URL for you. The URL it generates is based on the name of the bucket, so
                         you end up with something like <a href="http://azrinsler-site-bucket.s3-website-us-east-1.amazonaws.com/">http://azrinsler-site-bucket.s3-website-us-east-1.amazonaws.com/</a>.
                         <br />&nbsp;<br />
                         While certainly better than a "raw" IP address, there are still several problems with serving your
-                        content through these. The foremost, as you may have noticed, being that the URL is http instead of
-                        https - a security flaw. One serious enough that most browsers will warn users away from even
+                        content through these. The foremost, as you may have noticed, is that the URL is http instead of
+                        https — a security flaw. One serious enough that most browsers will warn users away from even
                         accessing the site in the first place! A secondary issue with this URL is that it is kind of long
-                        and difficult to remember. We can address these issues using a combination of Route 53, ACM (AWS Certificate Manager),
-                        and CloudFront.
+                        and challenging to remember. We can address these issues using a combination of Route 53, ACM
+                        (AWS Certificate Manager), and CloudFront.
                     </p>
                     <br />&nbsp;<br />
                     <p>
                         ACM is the simplest and most straightforward of these three services, in that "all" it's doing is
                         providing us with the SSL certificate(s) we need in order to enable HTTPS. Each certificate we
                         make in ACM is for a specific root domain, and contains one or more CNAME (Canonical Name) DNS
-                        records related to that domain. CNAME records by themselves don't do much besides map between
-                        each other, and these particular CNAME's point to Amazon-owned records related to the validation
+                        records related to that domain. CNAME records by themselves do little besides map between
+                        each other, and these particular CNAME(s) point to Amazon-owned records related to the validation
                         of our certificate. You need one record for the root domain name, and may need more for any
                         subdomains based on that root. The first and most obvious subdomain we will need is the "www"
                         one. It would also be convenient to have a subdomain for API access, so we create one for "api"
@@ -192,26 +223,26 @@
                         <br />&nbsp;<br />
                         Route 53 also provides us with the ability to additional DNS records of different types, which we
                         will need to do if we want our website to actually be found when somebody attempts to navigate to it.
-                        In order to define these additional records, we need to first create a hosted zone within Route 53.
+                        To define these additional records, we need to first create a hosted zone within Route 53.
                         Hosted zones, by default, come with a few records of their own. This includes one for NS (name server)
                         and one for SOA (start of authority). You can read more about these <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html">here</a>.
                         <br />&nbsp;<br />
-                        In addition to these, we will need a number of "A" records - these are how we connect our domain
+                        In addition to these, we will need a number of "A" records — these are how we connect our domain
                         to its IPv4 address. If we wanted to use IPv6, these would instead need to be "AAAA" records.
-                        We could have these point directly to our site content in S3, but that by itself would not solve
+                        We could have them point directly to our site content in S3, but that by itself would not solve
                         for the original, primary issue with S3 (the lack of HTTPS).
                     </p>
                     <br />&nbsp;<br />
                     <p>
                         For this, we need to use CloudFront. CloudFront provides a variety of different services, but
                         right now the one we're most interested in is the ability to redirect HTTP traffic to HTTPS. We
-                        can accomplish this by creating a new CloudFront distribution, and adding our S3 bucket as an
+                        can achieve this by creating a new CloudFront distribution, and adding our S3 bucket as an
                         origin. Redirecting HTTP to HTTPS is one of the options we can select for its behavior. Easy enough!
                         <br />&nbsp;<br />
                         Much like the S3 bucket itself, Amazon gives our CloudFront distribution its own programmatically
                         generated URL. Something like <a href="https://dpqmp8uwwgxwd.cloudfront.net">https://dpqmp8uwwgxwd.cloudfront.net</a> which is... unfortunately
-                        difficult to read, let alone remember. We can use Route 53 to solve this problem; in order to do
-                        so we must first update our CloudFront distribution to use the same name server(s) as Route 53,
+                        difficult to read, let alone remember. We can use Route 53 to solve this problem; to do so, we
+                        must first update our CloudFront distribution to use the same name server(s) as Route 53,
                         which we can easily check using our NS record.
                     </p>
                     <br />&nbsp;<br />
@@ -220,7 +251,7 @@
                         To start with, we'll need "A" records which connect our registered domain (and subdomain) names
                         to whatever URL AWS gave to it. Since CloudFront is set to redirect HTTP to HTTPS, we will also
                         need to include our CNAME records from ACM. While these "A" and CNAME records serve different
-                        purposes, for our case we can treat them as pairs:
+                        purposes, in our case, we can treat them as pairs:
                     </p>
                     <br/>&nbsp;<br/>
                     <ul>
@@ -236,9 +267,9 @@
                     </p>
                     <br />&nbsp;<br />
                     <p>
-                        In order to create an API through AWS, we'll use API Gateway. The actual specifics of how it works
+                        To create an API through AWS, we'll use API Gateway. The actual specifics of how it works
                         are more of a backend implementation detail, but thankfully we can worry about that at a different time.
-                        For now; we can simply create a custom domain (within API Gateway) using our subdomain name, and
+                        For now, we can simply create a custom domain (within API Gateway) using our subdomain name, and
                         update our "api" "A" record in Route 53 to point to it. Much like with CloudFront, the default
                         URL assigned to our custom domain in API gateway is largely unintelligible to a human reader,
                         so this record is the difference between users accessing your API at something like
@@ -246,10 +277,10 @@
                         <a href="https://d-37rxfs2ecj.execute-api.us-east-1.amazonaws.com">d-37rxfs2ecj.execute-api.us-east-1.amazonaws.com</a>.
                         <br />&nbsp;<br />
                         This custom domain is internally connected to a specific stage within an API Gateway API, but as
-                        mentioned that is more of an implementation detail. Each API implemented in this way will have its own
-                        generated URL <em>in addition</em> to that of the custom domain, so we can add that one to the list of
-                        unintelligible URLs we could technically use, but prefer to avoid due to readability issues.
-                        For instance, the API stage used by this site is located at
+                        mentioned, that is more of an implementation detail. Each API implemented in this way will have
+                        its own generated URL <em>in addition</em> to that of the custom domain. We can add that one to
+                        the list of unintelligible URLs we could technically use, but prefer to avoid it due to
+                        readability issues. For instance, the API stage used by this site is located at
                         <a href="https://gms9t124k8.execute-api.us-east-1.amazonaws.com/">https://gms9t124k8.execute-api.us-east-1.amazonaws.com/</a>.
                     </p>
                     <p>
@@ -287,38 +318,38 @@
                     <h2 class="title text-outline dark" style="text-align:center;">Devops</h2>
                     <p>
                         Build automation, DevOps, Lean, CI/CD, IaC (Infrastructure as Code)... these terms are often used somewhat interchangeably.
-                        They are highly related concepts which - broadly speaking - focus on the speed, quality, and consistency of your build and development processes.
+                        They are highly related concepts that - broadly speaking - focus on the speed, quality, and consistency of your build and development processes.
                         Much like QE, DevOps is frequently overlooked or deprioritized in favor of more visible and pressing aspects of software development,
-                        with the consequences of doing so only becoming apparent at a late stage. Why is that?
+                        with the consequences of doing so only becoming clear at a late stage. Why is that?
                     </p>
                     <br/>&nbsp;<br/>
                     <p>
-                        There are of course a myriad of possible reasons, but I would argue that most of them fall into one of these categories:
+                        There are, of course, a myriad of possible reasons, but I would argue that most of them fall into one of these categories:
                     </p>
                     <ul>
                         <li>DevOps is its own skill set involving a different tech stack, which developers are not necessarily familiar with.</li>
                         <li>Automation in general is heavily front-loaded in terms of effort, which makes it <em>painful</em> to set up.</li>
-                        <li>The benefits are frequently invisible - it's hard to appreciate the value a seamless deployment if you haven't experienced the pain of a botched one.</li>
+                        <li>The benefits are frequently invisible — it's hard to appreciate the value of a seamless deployment if you haven't experienced the pain of a botched one.</li>
                     </ul>
                     <br/>&nbsp;<br/>
                     <p>
-                        The fact is; having a highly automated build process is of absolutely foundational importance to all but the smallest of projects.
+                        The fact is, having a highly automated build process is of absolutely foundational importance to all but the smallest of projects.
                     </p>
                     <br/>&nbsp;<br/>
                     <p>
                         This project leverages the following:
                     </p>
                     <ul>
-                        <li>GitHub Actions - Build Automation</li>
-                        <li>GitHub Packages - Artifact Storage</li>
-                        <li>Maven - Dependency Management</li>
-                        <li>Terraform - IaC</li>
+                        <li>GitHub Actions — Build Automation</li>
+                        <li>GitHub Packages — Artifact Storage</li>
+                        <li>Maven — Dependency Management</li>
+                        <li>Terraform — IaC</li>
                     </ul>
                     <br/>&nbsp;<br/>
                     <p>
                         By using these tools together, we can create a cohesive build process which quietly handles many of the common pain points surrounding CI/CD.
-                        GitHub Actions and Packages are of course tightly coupled to GitHub itself, which is where the codebase already resides.
-                        By using these we can avoid the additional setup and maintenance involved in alternative tools, such as Jenkins or JFrog/Artifactory.
+                        GitHub Actions and Packages are, of course, tightly coupled to GitHub itself, which is where the codebase already resides.
+                        By using these, we can avoid the additional setup and maintenance involved in alternative tools, such as Jenkins or JFrog/Artifactory.
                         <br/>&nbsp;<br/>
                         Maven greatly simplifies dependency management in addition to being a powerful build tool in its own right.
                         A custom settings.xml file allows Maven to retrieve dependencies from GitHub packages without exposing credentials.
@@ -326,7 +357,7 @@
                         <br/>&nbsp;<br/>
                         Being that this is an AWS-based project, Cloudformation would typically be the go-to option for IaC. So why Terraform?
                         Well, mostly because Terraform is open-source and vendor-agnostic.
-                        In order to avoid any additional cost or dependency on Hashicorp themselves, this project stores its state in S3.
+                        To avoid any additional cost or dependency on Hashicorp themselves, this project stores its state in S3.
                     </p>
                 </div>
                 <div class="flex-column pane dark">

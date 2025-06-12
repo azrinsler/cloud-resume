@@ -79,7 +79,7 @@ def lambda_handler(event, context):
         return {
             "statusCode": 200,
             "body": json.dumps({
-                "status":"succeeded",
+                "status":"Succeeded",
                 "message":"The specified IP Address already exists in DynamoDB. It's visit_counter has increased to: " + str(visit_counter)
             })
         }
