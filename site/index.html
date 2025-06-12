@@ -174,7 +174,9 @@
                     <br />&nbsp;<br />
                     <p>
                         Both functions send their logger output to CloudWatch, which improves observability and greatly
-                        aids with any potential troubleshooting or debugging.
+                        aids with any potential troubleshooting or debugging. They also both store their source code in
+                        S3 as packaged ZIP files containing all relevant dependencies. Terraform handles the upload of
+                        this packaged code. In the case of the Kotlin lambda, Maven is also used (to produce the JAR).
                     </p>
                 </div>
                 <div class="flex-column pane dark">
