@@ -17,6 +17,8 @@
         <kotlin.compiler.jvmTarget>${jvm.version}</kotlin.compiler.jvmTarget>
 
         <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
+        <maven.deploy.skip>false</maven.deploy.skip>
+
         <jackson.version>2.19.0</jackson.version>
     </properties>
 

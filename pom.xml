@@ -6,8 +6,11 @@
     <groupId>azrinsler</groupId>
     <artifactId>cloud-resume</artifactId>
     <version>0H-SNAPSHOT</version>
-
     <packaging>pom</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
 
     <modules>
         <module>kotlin-lambda</module>

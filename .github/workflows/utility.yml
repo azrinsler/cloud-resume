@@ -16,7 +16,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: kotlin-lambda
 
     steps:
       - name: Checkout
@@ -36,4 +35,4 @@ jobs:
           restore-keys: ${{ runner.os }}-maven
 
       - name: Maven Build
-        run: mvn clean deploy -s ../.m2/settings.xml -fae
+        run: mvn clean deploy -s ./.m2/settings.xml -fae
