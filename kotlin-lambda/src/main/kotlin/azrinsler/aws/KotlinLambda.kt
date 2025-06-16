@@ -4,7 +4,6 @@ import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient
@@ -27,9 +26,7 @@ class KotlinLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
 
             // get IP address from input event
             val expectedKey = "ip_address"
-            val mapper = jacksonObjectMapper()
-            val inputAsJson = mapper.readTree(event.body)
-
+            val inputAsJson = JacksonWrapper.readTree(event.body)
             if (inputAsJson[expectedKey] == null) {
                 with (response) {
                     statusCode = 400 // "Bad Request"

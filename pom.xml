@@ -14,16 +14,23 @@
         <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <!-- this repositories id must match the one in settings.xml or auth will fail -->
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/${project.groupId}/${project.artifactId}</url>
+            <url>https://maven.pkg.github.com/azrinsler/cloud-resume</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
     <modules>
         <module>kotlin-lambda</module>
+        <module>kotlin-utility</module>
     </modules>
 
     <dependencyManagement>

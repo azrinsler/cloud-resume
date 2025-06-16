@@ -1,0 +1,39 @@
+name: Kotlin Utility Build Pipeline
+
+on: [workflow_dispatch]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: kotlin-lambda
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Set up JDK
+        uses: actions/setup-java@main
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - name: Maven Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
+      - name: Maven Build
+        run: mvn clean deploy -s ../.m2/settings.xml -fae
