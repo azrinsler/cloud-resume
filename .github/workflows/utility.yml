@@ -1,6 +1,15 @@
 name: Kotlin Utility Build Pipeline
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: Project to deploy
+        required: true
+        type: choice
+        options:
+          - kotlin-utility
+
 
 permissions:
   contents: read
@@ -16,6 +25,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: ./${{ inputs.project }}
 
     steps:
       - name: Checkout
@@ -35,4 +45,4 @@ jobs:
           restore-keys: ${{ runner.os }}-maven
 
       - name: Maven Build
-        run: mvn clean deploy -s ./.m2/settings.xml -fae
+        run: mvn clean deploy -s ../.m2/settings.xml -fae
