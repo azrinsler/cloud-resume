@@ -145,9 +145,12 @@
                     <br />&nbsp;<br />
                     <ul>
                         <li>
-                            The Kotlin lambda uses Jackson to deserialize input coming from API Gateway, which is
-                            expected to contain an IPv4 Address. It then uses RegEx to perform some basic validation
-                            that the input IP is, in fact, a valid address, before querying DynamoDB to check how many
+                            The Kotlin lambda uses a Jackson wrapper to deserialize input coming from API Gateway, which
+                            is expected to contain an IPv4 Address. This wrapper is imported as a utility from a
+                            separate module in the project, which gets deployed to GitHub packages as a utility before
+                            subsequently being imported into the lambda function itself as a version controlled
+                            dependency. It then uses RegEx to perform some basic validation that the input IP is,
+                            in fact, a valid address, before querying DynamoDB to check how many
                             times that particular IP address has loaded a page from the site.  The response from
                             DynamoDB is parsed and used to generate a response indicating if and how many times the IP
                             address has been observed.
