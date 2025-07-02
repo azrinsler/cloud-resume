@@ -335,7 +335,7 @@ h1 {
 }
 
 /* mobile-specific settings to help things fit better on tiny screens */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     * {
         font-size: small;
     }
@@ -362,7 +362,7 @@ h1 {
 
 
 /* desktop-specific settings - mostly boils down to making things larger w/ more whitespace */
-@media (min-width: 601px) {
+@media (min-width: 701px) {
     * {
         font-size: large;
     }

@@ -1,0 +1,33 @@
+h2, h3 {
+    font-family: "Copperplate Gothic Bold", "sans-serif";
+}
+
+#simple-title {
+    min-width: 200px;
+    width: 70%;
+    padding: 1em;
+    justify-content: center;
+    border: 1px solid;
+    flex-grow: 1;
+}
+
+#recipe-title {
+    min-width: 200px;
+    width: 25%;
+    justify-content: center;
+    padding: 1em;
+    border: 1px solid;
+    flex-grow: 1;
+}
+
+#recipe-steps {
+    margin-left: 1em;
+}
+
+#ingredients-list {
+    margin-left: 1.25em;
+}
+
+#items-list {
+    margin-left: 1.25em;
+}
