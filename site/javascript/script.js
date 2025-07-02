@@ -63,7 +63,7 @@ async function putIpToDynamoDB (ip_address) {
         })
 }
 
-// default is dark mode so this really just checks for light mode and updates if necessary
+// default is dark mode, so this really just checks for light mode and updates if necessary
 function checkForLightMode () {
     console.log("Checking if light mode is enabled")
     let isDarkMode = localStorage.getItem("isDarkMode")

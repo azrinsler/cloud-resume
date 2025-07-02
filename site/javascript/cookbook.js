@@ -22,7 +22,6 @@ function setRecipeTitle (title) {
 function setIngredients (ingredients) {
     let ingredientsList = document.getElementById("ingredients-list");
     ingredientsList.innerHTML = "";
-
     for (let i = 0; i < ingredients.length; i++) {
         let nextItem = document.createElement("li");
         let nextDiv = document.createElement("div");
