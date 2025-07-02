@@ -58,20 +58,13 @@
   ],
   "steps": [
     {
-      "ordinal": 0,
-      "description": "Step 0: No Notes"
-    },
-    {
       "ordinal": 1,
       "description": "Step 1: Empty Notes (still no note)",
       "notes": []
     },
     {
-      "ordinal": 2,
-      "description": "Step 2: Single Note",
-      "notes": [
-        "Note: This is a note."
-      ]
+      "ordinal": 0,
+      "description": "Step 0: No Notes"
     },
     {
       "ordinal": 3,
@@ -79,6 +72,13 @@
       "notes": [
         "Note: This is the first note. Sort of.",
         "Note: These notes are not necessarily well ordered."
+      ]
+    },
+    {
+      "ordinal": 2,
+      "description": "Step 2: Single Note",
+      "notes": [
+        "Note: This is a note."
       ]
     }
   ]
