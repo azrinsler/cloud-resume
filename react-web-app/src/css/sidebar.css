@@ -1,0 +1,22 @@
+#sidebar {
+    background-color: light-dark(#fffef0,#6952f2);
+    height: 100vh;
+}
+
+#sidebar-icon {
+    place-content: center;
+}
+
+#sidebar-toggle {
+    font-size: 2em;
+    background-color: transparent;
+}
+
+#sidebar-content {
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.sidebar-button {
+
+}

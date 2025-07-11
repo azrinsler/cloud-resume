@@ -1,5 +1,9 @@
-h2, h3 {
-    font-family: "Copperplate Gothic Bold", "sans-serif";
+#recipe-card {
+    border: 1px solid;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: light-dark(#ffffff,#1a1916);
+    max-width: 80em;
 }
 
 #simple-title {
@@ -9,6 +13,7 @@ h2, h3 {
     justify-content: center;
     border: 1px solid;
     flex-grow: 1;
+    height: fit-content;
 }
 
 #recipe-title {
@@ -18,11 +23,17 @@ h2, h3 {
     padding: 0.5em 1em;
     border: 1px solid;
     flex-grow: 1;
+    height: fit-content;
 }
 
 #recipe-steps {
     font-family: "Consolas", sans-serif;
     margin-left: 1em;
+}
+
+/* indents any notes underneath each step */
+#recipe-steps > li > ul > li {
+    margin-left: 1.2em;
 }
 
 #ingredients-list {
