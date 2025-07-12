@@ -27,7 +27,7 @@ body {
     width:100vw;
     min-height:100vh;
     display: flex;
-    background-color: light-dark(#535bf2, #2a1c40);
+    background-color: light-dark(#535bf2, #12000a);
 }
 
 h1 {

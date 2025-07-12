@@ -5,11 +5,13 @@
 
 #sidebar-icon {
     place-content: center;
+    margin: -2em -1em -1.5em -1em;
 }
 
 #sidebar-toggle {
     font-size: 2em;
     background-color: transparent;
+    z-index: 1;
 }
 
 #sidebar-content {

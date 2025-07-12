@@ -2,8 +2,8 @@
     border: 1px solid;
     display: flex;
     flex-wrap: wrap;
-    background-color: light-dark(#ffffff,#1a1916);
-    max-width: 80em;
+    background-color: light-dark(#ffffff,#0f0f0d);
+    max-width: 70em;
 }
 
 #simple-title {
@@ -14,6 +14,7 @@
     border: 1px solid;
     flex-grow: 1;
     height: fit-content;
+    color: light-dark(purple,pink);
 }
 
 #recipe-title {
@@ -34,6 +35,7 @@
 /* indents any notes underneath each step */
 #recipe-steps > li > ul > li {
     margin-left: 1.2em;
+    color: light-dark(gray,gray);
 }
 
 #ingredients-list {

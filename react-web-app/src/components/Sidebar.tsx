@@ -64,7 +64,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
                 }
             >
                 <div className='flex-row'>
-                    <h2>Simple Recipes</h2>
+                    <h2>{props.title}</h2>
                 </div>
                 <hr style={{height:'0.15lh',width:'100%',backgroundColor:'aqua'}}/>
                 <ul style={{ listStyleType:'none', width:'100%'}}>

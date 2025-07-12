@@ -7,10 +7,6 @@ resource "aws_dynamodb_table" "site_visitor_table" {
     name = "ip_address"
     type = "S"
   }
-  # attribute {
-  #   name = "visit_counter"
-  #   type = "N"
-  # }
 
   # purposefully underpowered for development
   on_demand_throughput {
@@ -30,4 +26,21 @@ resource "aws_dynamodb_table_item" "loopback_ip" {
             "visit_counter": {"N": "1" }
           }
           ITEM
+}
+
+resource "aws_dynamodb_table" "recipes_table" {
+  name           = "Recipes"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "id"
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+
+  # purposefully underpowered for development
+  on_demand_throughput {
+    max_read_request_units = 1
+    max_write_request_units = 1
+  }
 }
