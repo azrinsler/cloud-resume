@@ -1,20 +1,24 @@
+/*noinspection CssInvalidFunction*/
 #recipe-card {
     border: 1px solid;
     display: flex;
     flex-wrap: wrap;
     background-color: light-dark(#ffffff,#0f0f0d);
     max-width: 70em;
+    border-radius:1em;
 }
 
+/*noinspection CssInvalidFunction*/
 #simple-title {
     min-width: 200px;
     width: 70%;
     padding: 0.5em 1em;
     justify-content: center;
-    border: 1px solid;
+    border-bottom: 1px solid;
     flex-grow: 1;
     height: fit-content;
-    color: light-dark(purple,pink);
+    border-radius: 0 1em 0 0;
+    background-color: light-dark(#cc88ff,#750f68);
 }
 
 #recipe-title {
@@ -22,9 +26,11 @@
     width: 25%;
     justify-content: center;
     padding: 0.5em 1em;
-    border: 1px solid;
+    border-bottom: 1px solid;
     flex-grow: 1;
     height: fit-content;
+    border-radius: 1em 0 0 0;
+    background-color: light-dark(#cc88ff,#750f68);
 }
 
 #recipe-steps {
@@ -33,6 +39,7 @@
 }
 
 /* indents any notes underneath each step */
+/*noinspection CssInvalidFunction*/
 #recipe-steps > li > ul > li {
     margin-left: 1.2em;
     color: light-dark(gray,gray);
@@ -43,7 +50,33 @@
     margin-left: 1.25em;
 }
 
-#items-list {
+#recipe-items-list {
     font-family: "Consolas", sans-serif;
     margin-left: 1.25em;
+}
+
+#recipe-items-list > li > input[type="checkbox"] {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+#recipe-items-list > li > input[type="checkbox"]:checked + label {
+    color: light-dark(#1f9117,#26f9ab);
+    font-weight: 100;
+}
+
+#recipe-steps > li > input[type="radio"] {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+#recipe-steps > li > label {
+    transition-duration: 0s;
+}
+
+#recipe-steps > li > input[type="radio"]:checked + label {
+    color: light-dark(#2633ab,#ffb6f4);
+    font-weight: 700;
 }

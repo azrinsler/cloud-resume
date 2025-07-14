@@ -1,18 +1,25 @@
-import { RecipeCard } from "./components/RecipeCard.tsx";
+import RecipeCard  from "./components/RecipeCard.tsx";
 import testRecipeJson from './json/test-recipe.json' with { type : 'json' }
 import Sidebar from "./components/Sidebar.tsx";
 import sidebarIcon from './assets/cookbook-icon.svg'
 import sidebarIconBlack from './assets/cookbook-icon-black.svg'
-const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+import {useState} from "react";
+import type {Recipe} from "./interfaces/Recipe.ts";
 
-// @ts-expect-error // leave me alone about the namespace holy shit
-const testRecipe = testRecipeJson as RecipeCard.Recipe
+
+const testRecipe = testRecipeJson as Recipe
 
 export function App() {
-  return (
+    // sets current mode based on user preference and adds a listener in case they change their mind
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const [isDarkMode, setDarkMode] = useState(prefersDarkMode)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        setDarkMode(event.matches)
+    });
+    return (
       <>
           <Sidebar
-              icon={<img src={ prefersDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
+              icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
               title={<span>Simple Recipes</span>}
               content={[
                   <div>About</div>,

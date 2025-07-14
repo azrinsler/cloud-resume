@@ -1,42 +1,26 @@
-interface Recipe {
-    title: string;
-    ingredients: Ingredient[];
-    items: string[];
-    steps: RecipeStep[]
-}
+import * as React from "react";
+import type {Recipe} from "../interfaces/Recipe.ts";
 
-interface Ingredient {
-    name: string;
-    unit: string;
-    amount?: number;
-}
-
-interface RecipeStep {
-    ordinal: number;
-    description: string;
-    notes?: string[];
-}
-
-export function RecipeCard ({title, ingredients, items, steps} : Recipe) {
-    const stepsOrdered = steps.sort((a,b)=>a.ordinal-b.ordinal)
+const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
+    const stepsOrdered = recipe.steps.sort((a,b)=>a.ordinal-b.ordinal)
     return (
         <>
             <div id="recipe-card">
                 <div className="flex-row" style={{width:'100%'}}>
                     <div id="recipe-title" className="flex-row">
-                        <h2>{title}</h2>
+                        <h2>{recipe.title}</h2>
                     </div>
                     <div id="simple-title" className="flex-row no-mobile">
                         <h2>Simple Recipes</h2>
                     </div>
                 </div>
                 <div className="flex-row" style={{flexGrow:1,minHeight:'25lh'}}>
-                    <div className="flex-column" style={{minWidth:'200px',width:'25%',border:'1px solid',flexGrow:2,padding:'1em'}}>
+                    <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px solid',flexGrow:2,padding:'1em'}}>
                         <div>
                             <h3>Ingredients</h3>
                             <hr/>
                             <ul id="ingredients-list">
-                                { ingredients.map(ingredient=>
+                                { recipe.ingredients.map(ingredient=>
                                     <li key={ingredient.name}>
                                         <div className="flex-row">
                                             <span>{ingredient.name}</span>
@@ -51,22 +35,26 @@ export function RecipeCard ({title, ingredients, items, steps} : Recipe) {
                         <div>
                             <h3>Items</h3>
                             <hr/>
-                            <ul id="items-list">
-                                { items.map(item=>
-                                    <li key={item}>{item}</li>
+                            <ul id="recipe-items-list">
+                                { recipe.items.map(item=>
+                                    <li key={item}>
+                                        <input id={item} type='checkbox' />
+                                        <label htmlFor={item}>{item}</label>
+                                    </li>
                                 )}
                             </ul>
                         </div>
                     </div>
-                    <div className="flex-column" style={{minWidth:'200px',width:'70%',border:'1px solid',flexGrow:1,padding:'1em'}}>
+                    <div className="flex-column" style={{minWidth:'200px',width:'70%',flexGrow:1,padding:'1em'}}>
                         <h3>Steps</h3>
                         <hr/>
                         <ul id="recipe-steps">
                             { stepsOrdered.map(step=>
                                 <li key={step.ordinal}>
-                                    {step.description}
-                                    <ul>
-                                        { step.notes?.map(note=> <li key={note}>{note}</li>) }
+                                    <input type='radio' name='selected-step' id={'step'+step.ordinal} value={step.description}/>
+                                    <label htmlFor={'step'+step.ordinal}>{step.description}</label>
+                                    <ul style={{cursor:'default'}}>
+                                        {step.notes?.map(note => <li key={note}>{note}</li>)}
                                     </ul>
                                 </li>
                             )}
@@ -77,3 +65,4 @@ export function RecipeCard ({title, ingredients, items, steps} : Recipe) {
         </>
     )
 }
+export default RecipeCard

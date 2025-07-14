@@ -72,6 +72,7 @@ h2, h3 {
     text-align: center;
 }
 
+/*noinspection CssInvalidFunction*/
 .button:hover {
     background-color: light-dark(#535bf2, #2a1c40);
     font-weight:700;

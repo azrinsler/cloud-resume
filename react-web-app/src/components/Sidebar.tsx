@@ -13,7 +13,6 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
     const [isOpen, setOpen] = useState(startOpen)
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
-
     return (
         <div
             id='sidebar'
