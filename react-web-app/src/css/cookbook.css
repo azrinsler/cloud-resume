@@ -9,7 +9,7 @@
 }
 
 /*noinspection CssInvalidFunction*/
-#simple-title {
+#recipe-title {
     min-width: 200px;
     width: 70%;
     padding: 0.5em 1em;
@@ -19,9 +19,11 @@
     height: fit-content;
     border-radius: 0 1em 0 0;
     background-color: light-dark(#cc88ff,#750f68);
+    border-left: 1px solid;
 }
 
-#recipe-title {
+/*noinspection CssInvalidFunction*/
+#simple-title {
     min-width: 200px;
     width: 25%;
     justify-content: center;
@@ -61,6 +63,7 @@
     width: 0;
 }
 
+/*noinspection CssInvalidFunction*/
 #recipe-items-list > li > input[type="checkbox"]:checked + label {
     color: light-dark(#1f9117,#26f9ab);
     font-weight: 100;
@@ -76,6 +79,7 @@
     transition-duration: 0s;
 }
 
+/*noinspection CssInvalidFunction*/
 #recipe-steps > li > input[type="radio"]:checked + label {
     color: light-dark(#2633ab,#ffb6f4);
     font-weight: 700;

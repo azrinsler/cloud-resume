@@ -69,7 +69,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
                 <ul style={{ listStyleType:'none', width:'100%'}}>
                     {
                         props.content.map( item=>
-                            <li className='button'>{item}</li>
+                            <li className='button' key={'sidebarLi' + props.content.indexOf(item)}>{item}</li>
                         )
                     }
                 </ul>
