@@ -55,12 +55,25 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                 }
             }
 
+            var responseBody =  "No recipe with id $recipeId found"
             if (queryResponse.items().isNotEmpty()) {
                 log.log("Query Response: ${queryResponse.items()[0]}")
                 val foundRecipe = queryResponse.items()[0] as Map<String, AttributeValue>
                 val title = foundRecipe["title"]?.s()
-                val title2 = foundRecipe.getValue("title").s()
-                log.log("Title: $title or $title2")
+                log.log("Title: $title")
+                val ingredients = foundRecipe["ingredients"]?.l()
+                // log.log("Ingredients: $ingredients")
+                val items = foundRecipe["items"]?.l()?.map { it.s() }
+                log.log("Items: $items")
+                val steps = foundRecipe["steps"]?.l()
+                // log.log("Steps: $steps")
+
+                responseBody = """
+                    {
+                    "title": "$title",
+                    "ingredients": $ingredients
+                    }
+                """.trimIndent()
             }
 
             // respond to the original request after sending the message to queue
@@ -73,8 +86,7 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                     )
                 )
                 statusCode = 200
-                body =  if (queryResponse.items().isEmpty()) "No recipe with id $recipeId found"
-                        else JacksonWrapper.readJson(queryResponse.items()[0])
+                body = responseBody
             }
             return response
         }
