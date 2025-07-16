@@ -19,7 +19,7 @@ resource "aws_lambda_function" "kotlin_lambda_function" {
 }
 
 # gives permission for api gateway to invoke the kotlin lambda
-resource "aws_lambda_permission" "gateway_lambda_permission" {
+resource "aws_lambda_permission" "gateway_kotlin_lambda_permission" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.kotlin_lambda_function.function_name
@@ -48,7 +48,7 @@ resource "aws_lambda_function" "get_recipe_lambda_function" {
 }
 
 # gives permission for api gateway to invoke the kotlin lambda
-resource "aws_lambda_permission" "gateway_lambda_permission" {
+resource "aws_lambda_permission" "gateway_get_recipe_lambda_permission" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.get_recipe_lambda_function.function_name
