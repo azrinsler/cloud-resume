@@ -67,7 +67,8 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                     )
                 )
                 statusCode = 200
-                body = JacksonWrapper.readJson(queryResponse.items()[0])
+                body =  if (queryResponse.items().isEmpty()) "No recipe with id $recipeId found"
+                        else JacksonWrapper.readJson(queryResponse.items()[0])
             }
             return response
         }
