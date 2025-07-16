@@ -42,7 +42,7 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
             val queryRequest = QueryRequest.builder()
                 .tableName("Recipes")
                 .keyConditionExpression("recipe_id = :recipe_id")
-                .expressionAttributeValues( mapOf(":recipe_id" to AttributeValue.builder().s(recipeId).build()) )
+                .expressionAttributeValues( mapOf(":recipe_id" to AttributeValue.builder().s("12345").build()) )
                 .build()
 
             val queryResponse = dynamoDbClient.use {
