@@ -32,7 +32,7 @@ resource "aws_lambda_permission" "gateway_kotlin_lambda_permission" {
 resource "aws_lambda_function" "get_recipe_lambda_function" {
   function_name = var.get_recipe_lambda_class
   s3_bucket = aws_s3_bucket.packaged_source_bucket.id
-  s3_key    = aws_s3_object.kotlin_lambda_source.key
+  s3_key    = aws_s3_object.get_recipe_lambda_source.key
   # Supported Runtimes: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported
   runtime = "java21"
   handler = "azrinsler.aws.${var.get_recipe_lambda_class}"
