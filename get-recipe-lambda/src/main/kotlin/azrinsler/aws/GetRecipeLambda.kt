@@ -28,8 +28,8 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
 
             val recipeKey = "recipeId"
             var recipeId =
-                if (inputAsJson[recipeKey].isTextual)   inputAsJson[recipeKey].toString()
-                else                                    inputAsJson[recipeKey].asText()
+                if (inputAsJson[recipeKey].isTextual)   inputAsJson[recipeKey].asText()
+                else                                    inputAsJson[recipeKey].toString()
 
             if (recipeId.isEmpty())
                 recipeId = UUID.randomUUID().toString()
@@ -65,11 +65,7 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
 
                 val ingredients = foundRecipe["ingredients"]?.l()?.map {
                     val ingredient = it.m()
-                    """{ 
-                        |"name": "${ingredient["name"]?.s()}", 
-                        |"unit": "${ingredient["unit"]?.s()}", 
-                        |"amount": "${ingredient["amount"]?.n()}" 
-                        | }""".trimMargin()
+                    """{ "name": "${ingredient["name"]?.s()}", "unit": "${ingredient["unit"]?.s()}", "amount": "${ingredient["amount"]?.n()}" }"""
                 }
                 log.log("Ingredients: $ingredients")
 
@@ -78,20 +74,11 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
 
                 val steps = foundRecipe["steps"]?.l()?.map {
                     val step = it.m()
-                    """{ 
-                        |"ordinal": "${step["ordinal"]?.n()}",
-                        |"description": "${step["description"]?.s()}",
-                        |"notes": [${step["notes"]?.l()?.map { note -> "\"${note.s()}\"" }}]
-                        | }""".trimMargin()
+                    """{ "ordinal": "${step["ordinal"]?.n()}", "description": "${step["description"]?.s()}", "notes": ${ if (step["notes"]?.l()?.isNotEmpty() == true) step["notes"]?.l()?.map { note -> "\"${note.s()}\"" } else "[]"} }"""
                 }
                 log.log("Steps: $steps")
 
-                responseBody = """{ 
-                    |"title": "$title",
-                    |"ingredients": $ingredients,
-                    |"items": $items,
-                    |"steps": $steps 
-                    | }""".trimMargin()
+                responseBody = """{ "title": "$title", "ingredients": $ingredients, "items": $items, "steps": $steps }"""
             }
 
             // respond to the original request after sending the message to queue
