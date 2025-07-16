@@ -58,7 +58,7 @@ resource "aws_apigatewayv2_route" "primary_gateway_kotlin_route" {
 }
 
 # sends all POST requests to the get recipe lambda to the... you get it
-resource "aws_apigatewayv2_route" "primary_gateway_kotlin_route" {
+resource "aws_apigatewayv2_route" "primary_gateway_get_recipe_route" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
   route_key = "POST /${aws_lambda_function.get_recipe_lambda_function.function_name}"
   target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_get_recipe_lambda_integration.id}"
