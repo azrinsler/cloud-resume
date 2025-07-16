@@ -74,8 +74,17 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                 log.log("Ingredients: $ingredients")
                 val items = foundRecipe["items"]?.l()?.map { it.s() }
                 log.log("Items: $items")
-                val steps = foundRecipe["steps"]?.l()?.map { it.m() } as List<Map<String, AttributeValue>>
-                // log.log("Steps: $steps")
+                val steps = foundRecipe["steps"]?.l()?.map {
+                    val step = it.m()
+                    """
+                    {
+                        "ordinal": "${step["ordinal"]?.n()}",
+                        "description": "${step["description"]?.s()}",
+                        "notes": "${step["notes"]?.l()?.map { note -> note.s() }}"
+                    }
+                    """.trimIndent()
+                }
+                log.log("Steps: $steps")
 
                 responseBody =  """
                                 {
