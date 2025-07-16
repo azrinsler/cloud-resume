@@ -57,43 +57,41 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
 
             var responseBody =  "No recipe with id $recipeId found"
             if (queryResponse.items().isNotEmpty()) {
-                log.log("Query Response: ${queryResponse.items()[0]}")
+                log.log("Recipe Found")
                 val foundRecipe = queryResponse.items()[0] as Map<String, AttributeValue>
+
                 val title = foundRecipe["title"]?.s()
                 log.log("Title: $title")
+
                 val ingredients = foundRecipe["ingredients"]?.l()?.map {
                     val ingredient = it.m()
-                    """
-                    {
-                        "name": "${ingredient["name"]?.s()}",
-                        "unit": "${ingredient["unit"]?.s()}",
-                        "amount": "${ingredient["amount"]?.n()}"
-                    }
-                    """.trimIndent()
+                    """{ 
+                        |"name": "${ingredient["name"]?.s()}", 
+                        |"unit": "${ingredient["unit"]?.s()}", 
+                        |"amount": "${ingredient["amount"]?.n()}" 
+                        | }""".trimMargin()
                 }
                 log.log("Ingredients: $ingredients")
-                val items = foundRecipe["items"]?.l()?.map { it.s() }
+
+                val items = foundRecipe["items"]?.l()?.map { "\"${it.s()}\"" }
                 log.log("Items: $items")
+
                 val steps = foundRecipe["steps"]?.l()?.map {
                     val step = it.m()
-                    """
-                    {
-                        "ordinal": "${step["ordinal"]?.n()}",
-                        "description": "${step["description"]?.s()}",
-                        "notes": "${step["notes"]?.l()?.map { note -> note.s() }}"
-                    }
-                    """.trimIndent()
+                    """{ 
+                        |"ordinal": "${step["ordinal"]?.n()}",
+                        |"description": "${step["description"]?.s()}",
+                        |"notes": [${step["notes"]?.l()?.map { note -> "\"${note.s()}\"" }}]
+                        | }""".trimMargin()
                 }
                 log.log("Steps: $steps")
 
-                responseBody =  """
-                                {
-                                    "title": "$title",
-                                    "ingredients": $ingredients,
-                                    "items": $items,
-                                    "steps": $steps
-                                }
-                                """.trimIndent()
+                responseBody = """{ 
+                    |"title": "$title",
+                    |"ingredients": $ingredients,
+                    |"items": $items,
+                    |"steps": $steps 
+                    | }""".trimMargin()
             }
 
             // respond to the original request after sending the message to queue
