@@ -55,7 +55,9 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                 }
             }
 
-            log.log("Query Response: ${queryResponse.items()}")
+            log.log("Query Response 1: ${queryResponse.items()}")
+            log.log("Query Response 2: ${queryResponse.items()[0]}")
+            log.log("Query Response 3: ${JacksonWrapper.readJson(queryResponse.items()[0]) as Map<*,*>}")
 
             // respond to the original request after sending the message to queue
             with (response) {
