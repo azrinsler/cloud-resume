@@ -55,9 +55,13 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                 }
             }
 
-            log.log("Query Response 1: ${queryResponse.items()}")
-            log.log("Query Response 2: ${queryResponse.items()[0]}")
-            log.log("Query Response 3: ${JacksonWrapper.readJson(queryResponse.items()[0]) as Map<*,*>}")
+            if (queryResponse.items().isNotEmpty()) {
+                log.log("Query Response: ${queryResponse.items()[0]}")
+                val foundRecipe = queryResponse.items()[0] as Map<String, AttributeValue>
+                val title = foundRecipe["title"]?.s()
+                val title2 = foundRecipe.getValue("title").s()
+                log.log("Title: $title or $title2")
+            }
 
             // respond to the original request after sending the message to queue
             with (response) {
