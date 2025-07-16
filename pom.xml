@@ -13,8 +13,10 @@
     </properties>
 
     <modules>
-        <module>kotlin-lambda</module>
         <module>kotlin-utility</module>
+
+        <module>kotlin-lambda</module>
+        <module>get-recipe-lambda</module>
     </modules>
 
     <dependencyManagement>

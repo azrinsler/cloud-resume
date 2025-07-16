@@ -5,7 +5,7 @@
     flex-wrap: wrap;
     background-color: light-dark(#ffffff,#0f0f0d);
     max-width: 70em;
-    border-radius:1em;
+    border-radius:0.35em;
 }
 
 /*noinspection CssInvalidFunction*/
@@ -17,7 +17,7 @@
     border-bottom: 1px solid;
     flex-grow: 1;
     height: fit-content;
-    border-radius: 0 1em 0 0;
+    border-radius: 0 0.35em 0 0;
     background-color: light-dark(#cc88ff,#750f68);
     border-left: 1px solid;
 }
@@ -31,7 +31,7 @@
     border-bottom: 1px solid;
     flex-grow: 1;
     height: fit-content;
-    border-radius: 1em 0 0 0;
+    border-radius: 0.35em 0 0 0;
     background-color: light-dark(#cc88ff,#750f68);
 }
 

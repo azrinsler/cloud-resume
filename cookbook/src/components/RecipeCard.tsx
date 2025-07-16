@@ -11,7 +11,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                     <div id="simple-title" className="flex-row no-mobile">
                         <h2>Simple Recipes</h2>
                     </div>
-                    <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'1em 1em 0 0'} : {}}>
+                    <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
                         <h2>{recipe.title}</h2>
                     </div>
                 </div>

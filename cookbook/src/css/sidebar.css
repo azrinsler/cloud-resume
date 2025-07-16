@@ -20,6 +20,7 @@
     text-align: center;
 }
 
-.sidebar-button {
-
+/*noinspection CssInvalidFunction*/
+#sidebar-content > ul > .button:hover {
+    color: light-dark(#b81bd9, #ec91ff);
 }
