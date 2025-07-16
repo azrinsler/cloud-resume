@@ -61,19 +61,30 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                 val foundRecipe = queryResponse.items()[0] as Map<String, AttributeValue>
                 val title = foundRecipe["title"]?.s()
                 log.log("Title: $title")
-                val ingredients = foundRecipe["ingredients"]?.l()
-                // log.log("Ingredients: $ingredients")
+                val ingredients = foundRecipe["ingredients"]?.l()?.map {
+                    val ingredient = it.m()
+                    """
+                    {
+                        "name": "${ingredient["name"]?.s()}",
+                        "unit": "${ingredient["unit"]?.s()}",
+                        "amount": "${ingredient["amount"]?.n()}"
+                    }
+                    """.trimIndent()
+                }
+                log.log("Ingredients: $ingredients")
                 val items = foundRecipe["items"]?.l()?.map { it.s() }
                 log.log("Items: $items")
-                val steps = foundRecipe["steps"]?.l()
+                val steps = foundRecipe["steps"]?.l()?.map { it.m() } as List<Map<String, AttributeValue>>
                 // log.log("Steps: $steps")
 
-                responseBody = """
-                    {
-                    "title": "$title",
-                    "ingredients": $ingredients
-                    }
-                """.trimIndent()
+                responseBody =  """
+                                {
+                                    "title": "$title",
+                                    "ingredients": $ingredients,
+                                    "items": $items,
+                                    "steps": $steps
+                                }
+                                """.trimIndent()
             }
 
             // respond to the original request after sending the message to queue
