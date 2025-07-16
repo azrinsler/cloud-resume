@@ -55,6 +55,7 @@ class GetRecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                 }
             }
 
+            // re-assembles the recipe JSON out of the DynamoDB document fields
             var responseBody =  "No recipe with id $recipeId found"
             if (queryResponse.items().isNotEmpty()) {
                 log.log("Recipe Found")
