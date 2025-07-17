@@ -11,7 +11,7 @@ import About from "./components/About.tsx";
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
-    // const [sidebarOption, setSidebarOption] = useState("recipeCard")
+    const [sidebarOption, setSidebarOption] = useState("about")
     const [data, setData] = useState(testRecipe);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -46,6 +46,7 @@ export function App() {
                         setData(data);
                         console.log(data);
                         setLoading(false);
+                        setSidebarOption("recipe")
                     }
                 })
                 .catch((err) => {
@@ -64,7 +65,7 @@ export function App() {
               icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
               title={<span>Simple Recipes</span>}
               content={[
-                  <div /*onClick={() => setSidebarOption("about")}*/>About</div>,
+                  <div><span onClick={() => { setSidebarOption("about") } }>About</span></div>,
                   <div /*onClick={() => setSidebarOption("new")}*/>New Recipe</div>,
                   <div /*onClick={() => setSidebarOption("search")}*/>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
@@ -74,8 +75,8 @@ export function App() {
           </Sidebar>
           <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
               {
-                  // sidebarOption == "about"
-                  loading
+                  sidebarOption == "about"
+                  // loading
                       ? <About></About>
                       : <RecipeCard
                           title={data.title}
