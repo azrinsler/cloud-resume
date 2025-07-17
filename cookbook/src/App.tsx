@@ -69,7 +69,7 @@ export function App() {
                   <div /*onClick={() => setSidebarOption("new")}*/>New Recipe</div>,
                   <div /*onClick={() => setSidebarOption("search")}*/>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div onClick={() => setSidebarOption("jokes")}>Donate</div>
+                  <div onClick={() => { setSidebarOption("jokes") } }>Donate</div>
               ]}
           >
           </Sidebar>
