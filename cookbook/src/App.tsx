@@ -5,11 +5,13 @@ import sidebarIcon from './assets/cookbook-icon.svg'
 import sidebarIconBlack from './assets/cookbook-icon-black.svg'
 import {useEffect, useState} from "react";
 import type {Recipe} from "./interfaces/Recipe.ts";
+import About from "./components/About.tsx";
 
 
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
+    const [sidebarOption, setSidebarOption] = useState("recipeCard")
     const [data, setData] = useState(testRecipe);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -54,7 +56,6 @@ export function App() {
 
     }, [data, loading] );
 
-    if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
@@ -63,21 +64,25 @@ export function App() {
               icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
               title={<span>Simple Recipes</span>}
               content={[
-                  <div>About</div>,
-                  <div>New Recipe</div>,
-                  <div>Recipe Search</div>,
+                  <div onClick={() => setSidebarOption("about")}>About</div>,
+                  <div onClick={() => setSidebarOption("new")}>New Recipe</div>,
+                  <div onClick={() => setSidebarOption("search")}>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div>Donate</div>
+                  <div onClick={() => setSidebarOption("jokes")}>Donate</div>
               ]}
           >
           </Sidebar>
           <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
-              <RecipeCard
-                  title={data.title}
-                  ingredients={data.ingredients}
-                  items={data.items}
-                  steps={data.steps}>
-              </RecipeCard>
+              {
+                  sidebarOption == "about"
+                      ? <About></About>
+                      : <RecipeCard
+                          title={data.title}
+                          ingredients={data.ingredients}
+                          items={data.items}
+                          steps={data.steps}>
+                        </RecipeCard>
+              }
           </div>
       </>
   )
