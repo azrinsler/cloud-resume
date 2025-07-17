@@ -35,7 +35,7 @@ variable "site_relative_root" {
 
 variable "cookbook_relative_root" {
   type = string
-  default = "./cookbook"
+  default = "./cookbook/dist"
 }
 
 variable "site_name" {

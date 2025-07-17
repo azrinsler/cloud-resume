@@ -96,66 +96,66 @@ resource "aws_s3_object" "site_bucket_content" {
 /* S3 STUFFS FOR REACT COOKBOOK */
 /**********************************************/
 # NOTE: COMMENTED OUT BECAUSE RIGHT NOW IT BASICALLY JUST UPLOADS THE MODULE AND NOT A FUNCTIONING SITE!
-# # this bucket to hold the statically hosted site files
-# resource "aws_s3_bucket" "cookbook_bucket" {
-#   bucket = var.cookbook_bucket_name
-#   force_destroy = true
-# }
-#
-# # this may or may not be required to apply bucket policy successfully... keeping it just in case
-# resource "aws_s3_bucket_public_access_block" "cookbook_bucket_access_block" {
-#   bucket = aws_s3_bucket.cookbook_bucket.id
-#   block_public_acls       = false
-#   block_public_policy     = false
-#   ignore_public_acls      = false
-#   restrict_public_buckets = false
-# }
-#
-# # enabling versioning should hopefully help encourage cloudfront to keep its cache up-to-date
-# resource "aws_s3_bucket_versioning" "cookbook_bucket_versioning" {
-#   bucket = aws_s3_bucket.cookbook_bucket.id
-#   versioning_configuration {
-#     status = "Enabled"
-#   }
-# }
-#
-# # this IAM policy gets converted into a JSON string for our bucket_policy below
-# data "aws_iam_policy_document" "cookbook_bucket_iam" {
-#   statement {
-#     sid    = "PublicReadGetObject"
-#     effect = "Allow"
-#     resources = [
-#       aws_s3_bucket.cookbook_bucket.arn,
-#       "${aws_s3_bucket.cookbook_bucket.arn}/*"
-#     ]
-#     actions = ["s3:GetObject"]
-#     principals {
-#       type        = "*"
-#       identifiers = ["*"]
-#     }
-#   }
-#   depends_on = [aws_s3_bucket_public_access_block.cookbook_bucket_access_block]
-# }
-# # it is necessary to grant public read access in order for the statically hosted site to work as expected
-# resource "aws_s3_bucket_policy" "cookbook_bucket_policy" {
-#   bucket = aws_s3_bucket.cookbook_bucket.id
-#   policy = data.aws_iam_policy_document.cookbook_bucket_iam.json
-# }
-#
-# # tells aws that this bucket is hosting a static website
-# resource "aws_s3_bucket_website_configuration" "cookbook_bucket_site_config" {
-#   bucket = aws_s3_bucket.cookbook_bucket.id
-#   index_document {
-#     suffix =  var.site_homepage
-#   }
-# }
-#
-# # this programmatically puts everything in the site folder up to S3, using file extension to determine content type
-# resource "aws_s3_object" "cookbook_bucket_content" {
-#   for_each = fileset(var.cookbook_relative_root, "**")
-#   bucket = aws_s3_bucket.cookbook_bucket.id
-#   key = each.value
-#   source = "${var.cookbook_relative_root}/${each.value}"
-#   etag = filemd5("${var.cookbook_relative_root}/${each.value}")
-#   content_type = lookup(local.mime_types, regex("\\.([^.]+$)", each.key)[0], null)
-# }
+# this bucket to hold the statically hosted site files
+resource "aws_s3_bucket" "cookbook_bucket" {
+  bucket = var.cookbook_bucket_name
+  force_destroy = true
+}
+
+# this may or may not be required to apply bucket policy successfully... keeping it just in case
+resource "aws_s3_bucket_public_access_block" "cookbook_bucket_access_block" {
+  bucket = aws_s3_bucket.cookbook_bucket.id
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+# enabling versioning should hopefully help encourage cloudfront to keep its cache up-to-date
+resource "aws_s3_bucket_versioning" "cookbook_bucket_versioning" {
+  bucket = aws_s3_bucket.cookbook_bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# this IAM policy gets converted into a JSON string for our bucket_policy below
+data "aws_iam_policy_document" "cookbook_bucket_iam" {
+  statement {
+    sid    = "PublicReadGetObject"
+    effect = "Allow"
+    resources = [
+      aws_s3_bucket.cookbook_bucket.arn,
+      "${aws_s3_bucket.cookbook_bucket.arn}/*"
+    ]
+    actions = ["s3:GetObject"]
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+  }
+  depends_on = [aws_s3_bucket_public_access_block.cookbook_bucket_access_block]
+}
+# it is necessary to grant public read access in order for the statically hosted site to work as expected
+resource "aws_s3_bucket_policy" "cookbook_bucket_policy" {
+  bucket = aws_s3_bucket.cookbook_bucket.id
+  policy = data.aws_iam_policy_document.cookbook_bucket_iam.json
+}
+
+# tells aws that this bucket is hosting a static website
+resource "aws_s3_bucket_website_configuration" "cookbook_bucket_site_config" {
+  bucket = aws_s3_bucket.cookbook_bucket.id
+  index_document {
+    suffix =  var.site_homepage
+  }
+}
+
+# this programmatically puts everything in the site folder up to S3, using file extension to determine content type
+resource "aws_s3_object" "cookbook_bucket_content" {
+  for_each = fileset(var.cookbook_relative_root, "**")
+  bucket = aws_s3_bucket.cookbook_bucket.id
+  key = each.value
+  source = "${var.cookbook_relative_root}/${each.value}"
+  etag = filemd5("${var.cookbook_relative_root}/${each.value}")
+  content_type = lookup(local.mime_types, regex("\\.([^.]+$)", each.key)[0], null)
+}
