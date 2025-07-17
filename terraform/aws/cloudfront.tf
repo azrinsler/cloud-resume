@@ -2,7 +2,11 @@
 resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
   origin {
     domain_name = aws_s3_bucket.site_bucket.bucket_regional_domain_name
-    origin_id = "S3-Origin"
+    origin_id = "Site-Origin"
+  }
+  origin {
+    domain_name = aws_s3_bucket.cookbook_bucket.bucket_regional_domain_name
+    origin_id = "Cookbook-Origin"
   }
   origin {
     domain_name = "${aws_apigatewayv2_api.primary_gateway.id}.execute-api.us-east-1.amazonaws.com"
@@ -22,17 +26,33 @@ resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
   enabled = true
   default_root_object = var.site_homepage
 
-  # for accessing the site (S3 Origin)
+  # for accessing the site (Site Origin)
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-Origin"
+    target_origin_id = "Site-Origin"
 
     viewer_protocol_policy = "redirect-to-https"
 
     min_ttl = 0
     default_ttl = 3600
     max_ttl = 86400
+
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+
+  # for accessing cookbook
+  ordered_cache_behavior {
+    path_pattern           = "/cookbook/*"
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "Cookbook-Origin"
+    viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
       query_string = false
