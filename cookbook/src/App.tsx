@@ -22,34 +22,37 @@ export function App() {
     });
 
     useEffect(() => {
-        fetch("https://api.azrinsler.com/GetRecipeLambda", {
-                    signal: AbortSignal.timeout(120 * 1000),
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "https://api.azrinsler.com/GetRecipeLambda"
-                    },
-                    body: JSON.stringify({ "recipeId": "12345" })
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
+        if (loading) {
+            fetch("https://api.azrinsler.com/GetRecipeLambda", {
+                signal: AbortSignal.timeout(120 * 1000),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "https://api.azrinsler.com/GetRecipeLambda"
+                },
+                body: JSON.stringify({ "recipeId": "12345" })
             })
-            .then((jsonData) => {
-                if (jsonData != null) {
-                    const data = jsonData as Recipe
-                    setData(data);
-                    console.log(data);
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((jsonData) => {
+                    if (jsonData != null) {
+                        const data = jsonData as Recipe
+                        setData(data);
+                        console.log(data);
+                        setLoading(false);
+                    }
+                })
+                .catch((err) => {
+                    setError(err.message);
                     setLoading(false);
-                }
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false);
-            });
-    }, [data] );
+                });
+        }
+
+    }, [data, loading] );
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
