@@ -10,5 +10,6 @@ locals {
     "css"  = "text/css"
     "js"   = "application/javascript"
     "pdf"  = "application/pdf"
+    "svg"  = "image/svg+xml"
   }
 }

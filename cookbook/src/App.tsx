@@ -10,7 +10,7 @@ import type {Recipe} from "./interfaces/Recipe.ts";
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState(testRecipe);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -38,9 +38,12 @@ export function App() {
                 return response.json();
             })
             .then((jsonData) => {
-                setData(jsonData);
-                setLoading(false);
-                console.log(data);
+                if (jsonData != null) {
+                    const data = jsonData as Recipe
+                    setData(data);
+                    console.log(data);
+                    setLoading(false);
+                }
             })
             .catch((err) => {
                 setError(err.message);
@@ -67,10 +70,10 @@ export function App() {
           </Sidebar>
           <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
               <RecipeCard
-                  title={testRecipe.title}
-                  ingredients={testRecipe.ingredients}
-                  items={testRecipe.items}
-                  steps={testRecipe.steps}>
+                  title={data.title}
+                  ingredients={data.ingredients}
+                  items={data.items}
+                  steps={data.steps}>
               </RecipeCard>
           </div>
       </>
