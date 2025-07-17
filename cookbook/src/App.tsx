@@ -34,25 +34,25 @@ export function App() {
                 },
                 body: JSON.stringify({ "recipeId": "12345" })
             })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((jsonData) => {
-                    if (jsonData != null) {
-                        const data = jsonData as Recipe
-                        setData(data);
-                        console.log(data);
-                        setLoading(false);
-                        setSidebarOption("recipe")
-                    }
-                })
-                .catch((err) => {
-                    setError(err.message);
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((jsonData) => {
+                if (jsonData != null) {
+                    const data = jsonData as Recipe
+                    setData(data);
+                    console.log(data);
                     setLoading(false);
-                });
+                    setSidebarOption("recipe")
+                }
+            })
+            .catch((err) => {
+                setError(err.message);
+                setLoading(false);
+            });
         }
 
     }, [data, loading] );
@@ -69,7 +69,7 @@ export function App() {
                   <div /*onClick={() => setSidebarOption("new")}*/>New Recipe</div>,
                   <div /*onClick={() => setSidebarOption("search")}*/>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div /*onClick={() => setSidebarOption("jokes")}*/>Donate</div>
+                  <div onClick={() => setSidebarOption("jokes")}>Donate</div>
               ]}
           >
           </Sidebar>
