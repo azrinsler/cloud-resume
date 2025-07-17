@@ -9,7 +9,6 @@ resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
   origin {
     domain_name = aws_s3_bucket.cookbook_bucket.bucket_regional_domain_name
     origin_id = "Cookbook-Origin"
-    origin_path = "/cookbook"
   }
 
   origin {
