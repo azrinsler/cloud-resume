@@ -1,5 +1,6 @@
 package azrinsler.aws
 
+import JacksonWrapper
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
@@ -10,6 +11,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException
 import software.amazon.awssdk.services.dynamodb.model.QueryRequest
+import software.amazon.awssdk.services.dynamodb.model.ScanRequest
 
 
 val region : Region = Region.US_EAST_1
@@ -57,6 +59,21 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
                         with (response) {
                             statusCode = 404
                             body = "No recipe with id $recipeId found"
+                        }
+                    }
+                }
+                "getRecipes" -> {
+                    val responseBody = getRecipeTitles()
+                    if (responseBody.isNotEmpty()) { // return an 'ok' response with whatever our search turned up
+                        with (response) {
+                            statusCode = 200
+                            body = responseBody
+                        }
+                    }
+                    else { // return 'resource not found'
+                        with (response) {
+                            statusCode = 404
+                            body = "No recipes found..? That can't be right."
                         }
                     }
                 }
@@ -117,5 +134,29 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
             responseBody = """{ "title": "$title", "ingredients": $ingredients, "items": $items, "steps": $steps }"""
         }
         return responseBody
+    }
+
+    fun getRecipeTitles() : String {
+        val dynamoDbClient = DynamoDbClient.builder()
+            .region(region)
+            .credentialsProvider(DefaultCredentialsProvider.create())
+            .build()
+
+        val queryRequest = ScanRequest.builder()
+            .tableName("Recipes")
+            .projectionExpression("recipe_id, title")
+            .build()
+
+        val queryResponse = dynamoDbClient.scan(queryRequest)
+
+        // assembles an array of the results returned as little JSON objects:  [{ id, title },{ id, title },etc.]
+        var response = ""
+        for (item in queryResponse.items()) {
+            val id = item["recipe_id"]!!.s()
+            val title = item["title"]!!.s()
+            val json = """{ "id": "$id", "title": "$title" }"""
+            response = if (response.isNotEmpty()) "$response, $json" else json
+        }
+        return "[$response]"
     }
 }

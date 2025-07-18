@@ -30,13 +30,13 @@ resource "aws_lambda_permission" "gateway_kotlin_lambda_permission" {
 # RECIPE LAMBDA
 # the actual runtime for this function is Kotlin, but it compiles to Java and that's what AWS cares about
 resource "aws_lambda_function" "recipe_lambda_function" {
-  function_name = var.get_recipe_lambda_class
+  function_name = var.recipe_lambda_class
   s3_bucket = aws_s3_bucket.packaged_source_bucket.id
-  s3_key    = aws_s3_object.get_recipe_lambda_source.key
+  s3_key    = aws_s3_object.recipe_lambda_source.key
   # Supported Runtimes: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported
   runtime = "java21"
-  handler = "azrinsler.aws.${var.get_recipe_lambda_class}"
-  source_code_hash = filebase64sha256(local.get_recipe_lambda_path)
+  handler = "azrinsler.aws.${var.recipe_lambda_class}"
+  source_code_hash = filebase64sha256(local.recipe_lambda_path)
   role = aws_iam_role.lambda_exec.arn
   timeout = 30 // specified in seconds
   // memory defaults to 128 which is too small for a Kotlin function using heavy dependencies like aws sdk and jackson

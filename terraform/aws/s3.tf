@@ -17,11 +17,11 @@ resource "aws_s3_object" "kotlin_lambda_source" {
 }
 
 # aws lambda requires source code be packaged w/ dependencies as a jar/zip file
-resource "aws_s3_object" "get_recipe_lambda_source" {
+resource "aws_s3_object" "recipe_lambda_source" {
   bucket = aws_s3_bucket.packaged_source_bucket.id
-  key    = "${var.get_recipe_lambda_artifact}.zip"
-  source = local.get_recipe_lambda_path
-  etag = filemd5(local.get_recipe_lambda_path)
+  key    = "${var.recipe_lambda_artifact}.zip"
+  source = local.recipe_lambda_path
+  etag = filemd5(local.recipe_lambda_path)
 }
 
 /**********************************************/

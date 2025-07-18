@@ -6,6 +6,7 @@ import sidebarIconBlack from './assets/cookbook-icon-black.svg'
 import {useEffect, useState} from "react";
 import type {Recipe} from "./interfaces/Recipe.ts";
 import About from "./components/About.tsx";
+import Browse from "./components/Browse.tsx";
 
 
 const testRecipe = testRecipeJson as Recipe
@@ -65,6 +66,7 @@ export function App() {
               content={[
                   <div onClick={ () => { setSidebarOption("about") } }>About</div>,
                   <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                  <div onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
                   <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
                   <div onClick={ () => { setSidebarOption("donate") } }
@@ -81,14 +83,19 @@ export function App() {
               {
                   loading
                       ? <span>Preheating</span>
-                      : sidebarOption == "about"
-                          ? <About></About>
-                          : <RecipeCard
-                              title={data.title}
-                              ingredients={data.ingredients}
-                              items={data.items}
-                              steps={data.steps}>
-                          </RecipeCard>
+
+                  : sidebarOption == "about"
+                      ? <About></About>
+
+                  : sidebarOption == "browse"
+                      ? <Browse></Browse>
+
+                  : <RecipeCard
+                      title={data.title}
+                      ingredients={data.ingredients}
+                      items={data.items}
+                      steps={data.steps}>
+                  </RecipeCard>
               }
           </div>
       </>

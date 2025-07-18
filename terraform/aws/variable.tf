@@ -13,7 +13,7 @@ variable "packaged_kotlin_relative_root" {
   default = "./kotlin-lambda/target"
 }
 
-variable "packaged_get_recipe_relative_root" {
+variable "packaged_recipe_lambda_relative_root" {
   type = string
   default = "./recipe-lambda/target"
 }
@@ -53,7 +53,7 @@ variable "kotlin_lambda_class" {
   default = "KotlinLambda"
 }
 
-variable "get_recipe_lambda_class" {
+variable "recipe_lambda_class" {
   type = string
   default = "RecipeLambda"
 }
@@ -63,7 +63,7 @@ variable "kotlin_lambda_artifact" {
   default = "kotlin-lambda"
 }
 
-variable "get_recipe_lambda_artifact" {
+variable "recipe_lambda_artifact" {
   type = string
   default = "recipe-lambda"
 }
@@ -73,7 +73,7 @@ variable "kotlin_lambda_version" {
   default = "OH-SNAPSHOT"
 }
 
-variable "get_recipe_lambda_version" {
+variable "recipe_lambda_version" {
   type = string
   default = "O"
 }
