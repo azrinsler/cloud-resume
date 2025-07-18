@@ -24,6 +24,7 @@ export function App() {
     });
 
     useEffect(() => {
+        // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
             fetch("https://api.azrinsler.com/GetRecipeLambda", {
                 signal: AbortSignal.timeout(120 * 1000),
@@ -31,7 +32,7 @@ export function App() {
                 headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "https://api.azrinsler.com/GetRecipeLambda"
-                },
+                }, // recipe 12345 is a test recipe for stovetop rice... about as basic as it gets
                 body: JSON.stringify({ "recipeId": "12345" })
             })
             .then((response) => {
@@ -54,7 +55,6 @@ export function App() {
                 setLoading(false);
             });
         }
-
     }, [data, loading] );
 
     if (error) return <p>Error: {error}</p>;
@@ -69,21 +69,22 @@ export function App() {
                   <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
                   <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div onClick={ () => { setSidebarOption("jokes") } }>Donate</div>
+                  <div onClick={ () => { setSidebarOption("jokes") } }>{ sidebarOption == "jokes" ? "Don't" : "Donate" }</div>
               ]}
           >
           </Sidebar>
           <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
               {
-                  sidebarOption == "about"
-                  // loading
-                      ? <About></About>
-                      : <RecipeCard
-                          title={data.title}
-                          ingredients={data.ingredients}
-                          items={data.items}
-                          steps={data.steps}>
-                        </RecipeCard>
+                  loading
+                      ? <span>Preheating</span>
+                      : sidebarOption == "about"
+                          ? <About></About>
+                          : <RecipeCard
+                              title={data.title}
+                              ingredients={data.ingredients}
+                              items={data.items}
+                              steps={data.steps}>
+                            </RecipeCard>
               }
           </div>
       </>
