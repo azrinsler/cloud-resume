@@ -26,14 +26,14 @@ export function App() {
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
-            fetch("https://api.azrinsler.com/GetRecipeLambda", {
+            fetch("https://api.azrinsler.com/RecipeLambda", {
                 signal: AbortSignal.timeout(120 * 1000),
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "https://api.azrinsler.com/GetRecipeLambda"
+                    "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
                 }, // recipe 12345 is a test recipe for stovetop rice... about as basic as it gets
-                body: JSON.stringify({ "recipeId": "12345" })
+                body: JSON.stringify({ "operation":"searchById","recipeId":"12345" })
             })
             .then((response) => {
                 if (!response.ok) {

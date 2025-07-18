@@ -16,7 +16,7 @@
         <module>kotlin-utility</module>
 
         <module>kotlin-lambda</module>
-        <module>get-recipe-lambda</module>
+        <module>recipe-lambda</module>
     </modules>
 
     <dependencyManagement>

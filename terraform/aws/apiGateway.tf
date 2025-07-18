@@ -43,9 +43,9 @@ resource "aws_apigatewayv2_integration" "primary_gateway_kotlin_lambda_integrati
   integration_method = "POST"
 }
 
-resource "aws_apigatewayv2_integration" "primary_gateway_get_recipe_lambda_integration" {
+resource "aws_apigatewayv2_integration" "primary_gateway_recipe_lambda_integration" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
-  integration_uri    = aws_lambda_function.get_recipe_lambda_function.invoke_arn
+  integration_uri    = aws_lambda_function.recipe_lambda_function.invoke_arn
   integration_type   = "AWS_PROXY"
   integration_method = "POST"
 }
@@ -58,10 +58,10 @@ resource "aws_apigatewayv2_route" "primary_gateway_kotlin_route" {
 }
 
 # sends all POST requests to the get recipe lambda to the... you get it
-resource "aws_apigatewayv2_route" "primary_gateway_get_recipe_route" {
+resource "aws_apigatewayv2_route" "primary_gateway_recipe_route" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
-  route_key = "POST /${aws_lambda_function.get_recipe_lambda_function.function_name}"
-  target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_get_recipe_lambda_integration.id}"
+  route_key = "POST /${aws_lambda_function.recipe_lambda_function.function_name}"
+  target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_recipe_lambda_integration.id}"
 }
 
 # defines a custom domain name. note that this is separate from (and in addition to) our Route53 custom domain!

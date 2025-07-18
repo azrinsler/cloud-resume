@@ -38,6 +38,18 @@ resource "aws_dynamodb_table" "recipes_table" {
     type = "S"
   }
 
+  # GSI uses 'email' as a new partition key
+  attribute {
+    name = "title"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name               = "title-index"
+    hash_key           = "title"
+    projection_type    = "ALL"  # or KEYS_ONLY or INCLUDE
+  }
+
   # purposefully underpowered for development
   on_demand_throughput {
     max_read_request_units = 1

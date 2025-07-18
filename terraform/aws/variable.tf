@@ -15,7 +15,7 @@ variable "packaged_kotlin_relative_root" {
 
 variable "packaged_get_recipe_relative_root" {
   type = string
-  default = "./get-recipe-lambda/target"
+  default = "./recipe-lambda/target"
 }
 
 variable "packaged_python_relative_root" {
@@ -55,7 +55,7 @@ variable "kotlin_lambda_class" {
 
 variable "get_recipe_lambda_class" {
   type = string
-  default = "GetRecipeLambda"
+  default = "RecipeLambda"
 }
 
 variable "kotlin_lambda_artifact" {
@@ -65,7 +65,7 @@ variable "kotlin_lambda_artifact" {
 
 variable "get_recipe_lambda_artifact" {
   type = string
-  default = "get-recipe-lambda"
+  default = "recipe-lambda"
 }
 
 variable "kotlin_lambda_version" {

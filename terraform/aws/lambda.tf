@@ -27,9 +27,9 @@ resource "aws_lambda_permission" "gateway_kotlin_lambda_permission" {
   source_arn = "${aws_apigatewayv2_api.primary_gateway.execution_arn}/*/*"
 }
 
-# GET RECIPE LAMBDA
+# RECIPE LAMBDA
 # the actual runtime for this function is Kotlin, but it compiles to Java and that's what AWS cares about
-resource "aws_lambda_function" "get_recipe_lambda_function" {
+resource "aws_lambda_function" "recipe_lambda_function" {
   function_name = var.get_recipe_lambda_class
   s3_bucket = aws_s3_bucket.packaged_source_bucket.id
   s3_key    = aws_s3_object.get_recipe_lambda_source.key
@@ -48,10 +48,10 @@ resource "aws_lambda_function" "get_recipe_lambda_function" {
 }
 
 # gives permission for api gateway to invoke the kotlin lambda
-resource "aws_lambda_permission" "gateway_get_recipe_lambda_permission" {
+resource "aws_lambda_permission" "gateway_recipe_lambda_permission" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.get_recipe_lambda_function.function_name
+  function_name = aws_lambda_function.recipe_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn = "${aws_apigatewayv2_api.primary_gateway.execution_arn}/*/*"
 }
