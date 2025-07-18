@@ -65,11 +65,11 @@ export function App() {
               icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
               title={<span>Simple Recipes</span>}
               content={[
-                  <div><span onClick={() => { setSidebarOption("about") } }>About</span></div>,
-                  <div /*onClick={() => setSidebarOption("new")}*/>New Recipe</div>,
-                  <div /*onClick={() => setSidebarOption("search")}*/>Recipe Search</div>,
+                  <div onClick={ () => { setSidebarOption("about") } }>About</div>,
+                  <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                  <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div onClick={() => { setSidebarOption("jokes") } }>Donate</div>
+                  <div onClick={ () => { setSidebarOption("jokes") } }>Donate</div>
               ]}
           >
           </Sidebar>
