@@ -1,6 +1,8 @@
 import * as React from "react";
 import {useState} from "react";
 
+import '../css/sidebar.css'
+
 interface BasicLayoutProps extends React.PropsWithChildren {
     icon: React.ReactElement
     title: React.ReactElement
