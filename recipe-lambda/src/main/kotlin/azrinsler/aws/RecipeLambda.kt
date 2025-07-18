@@ -38,7 +38,10 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
             log.log("Request Body: ${event.body}")
             val inputAsJson = JacksonWrapper.readTree(event.body)
 
-            val operation = inputAsJson["operation"].toString()
+            val operation =
+                if (inputAsJson["operation"].isTextual) inputAsJson["operation"].asText().also { log.log("Operation is Textual") }
+                else inputAsJson["operation"].toString()
+
             log.log("Operation: $operation")
 
             when (operation) {
