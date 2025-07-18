@@ -57,8 +57,6 @@ export function App() {
         }
     }, [data, loading] );
 
-    if (error) return <p>Error: {error}</p>;
-
     return (
       <>
           <Sidebar
@@ -78,16 +76,15 @@ export function App() {
           </Sidebar>
           <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
               {
-                  loading
-                      ? <span>Preheating</span>
-                      : sidebarOption == "about"
-                          ? <About></About>
-                          : <RecipeCard
-                              title={data.title}
-                              ingredients={data.ingredients}
-                              items={data.items}
-                              steps={data.steps}>
-                            </RecipeCard>
+                  error ? <p>Error: {error}</p>
+                      : loading ? <span>Preheating</span>
+                          : sidebarOption == "about" ? <About></About>
+                              : <RecipeCard
+                                  title={data.title}
+                                  ingredients={data.ingredients}
+                                  items={data.items}
+                                  steps={data.steps}>
+                                </RecipeCard>
               }
           </div>
       </>
