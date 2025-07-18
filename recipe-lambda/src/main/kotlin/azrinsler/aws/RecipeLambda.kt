@@ -53,12 +53,14 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
 
                     val responseBody = searchById(recipeId)
                     if (responseBody.isNotEmpty()) { // return an 'ok' response with whatever our search turned up
+                        log.log("Recipe found")
                         with (response) {
                             statusCode = 200
                             body = responseBody
                         }
                     }
                     else { // return 'resource not found'
+                        log.log("Recipe was not found")
                         with (response) {
                             statusCode = 404
                             body = "No recipe with id $recipeId found"
@@ -68,12 +70,14 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
                 "getRecipes" -> {
                     val responseBody = getRecipeTitles()
                     if (responseBody.isNotEmpty()) { // return an 'ok' response with whatever our search turned up
+                        log.log("Recipes Found: ${responseBody.count { it == '{'} }")
                         with (response) {
                             statusCode = 200
                             body = responseBody
                         }
                     }
                     else { // return 'resource not found'
+                        log.log("Failed to get recipes")
                         with (response) {
                             statusCode = 404
                             body = "No recipes found..? That can't be right."
@@ -81,6 +85,7 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
                     }
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
+                    log.log("Unrecognized operation: $operation")
                     with (response) {
                         statusCode = 400
                         body = "Unrecognized operation: $operation"
