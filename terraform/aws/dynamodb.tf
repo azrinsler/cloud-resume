@@ -103,7 +103,7 @@ resource "aws_dynamodb_table_item" "ranch_sauce" {
             "items": {"L": [{"S":"Container w/ Lid"}, {"S":"Something to stir with"}] },
             "steps": {"L": [
               {"M": { "ordinal":{"N":"0"}, "description":{"S":"Mince or crush the fresh garlic."} } },
-              {"M": { "ordinal":{"N":"1"}, "description":{"S":"Mix all the things together in the container."} }, "notes":{"L":[{"S":"Use freshly cracked/ground peppercorn if possible - it is stronger than black pepper."}]} } },
+              {"M": { "ordinal":{"N":"1"}, "description":{"S":"Mix all the things together in the container."}, "notes":{"L":[{"S":"Use freshly cracked/ground peppercorn if possible - it is stronger than black pepper."}]} } },
               {"M": { "ordinal":{"N":"2"}, "description":{"S":"Cover and chill for at least 1-2 hours."}, "notes":{"L":[{"S":"Flavor will continue to develop over time."}]} } }
             ] }
           }
