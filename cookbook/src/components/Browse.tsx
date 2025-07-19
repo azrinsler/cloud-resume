@@ -28,9 +28,8 @@ const Browse : () => React.JSX.Element = () => {
             })
             .then((jsonData) => {
                 if (jsonData != null) {
-                    console.log("getRecipes Response JSON");
                     console.log(jsonData);
-                    setData(JSON.parse(jsonData));
+                    setData(jsonData);
                     setLoading(false);
                 }
             })
@@ -41,6 +40,6 @@ const Browse : () => React.JSX.Element = () => {
         }
     }, [data, loading] );
 
-    return error ? <span>{error}</span> : loading ? <span>Loading</span> : <div>{data}</div>
+    return error ? <span>{error}</span> : loading ? <span>Loading</span> : <div>data goes here</div>
 }
 export default Browse
