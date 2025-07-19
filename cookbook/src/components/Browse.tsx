@@ -1,12 +1,11 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import type {GetRecipeResponse} from "../interfaces/GetRecipeResponse.ts";
 
 const Browse : () => React.JSX.Element = () => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [data, setData] = useState<GetRecipeResponse>();
+    const [data, setData] = useState<[{id:string,title:string}]>();
 
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
@@ -28,8 +27,7 @@ const Browse : () => React.JSX.Element = () => {
             })
             .then((jsonData) => {
                 console.log(jsonData);
-                const getRecipeResponse = jsonData as GetRecipeResponse;
-                setData(getRecipeResponse);
+                setData(jsonData);
                 setLoading(false);
             })
             .catch((err) => {
@@ -46,7 +44,7 @@ const Browse : () => React.JSX.Element = () => {
                     ? <span>{error}</span>
                 : loading
                     ? <span>Loading</span>
-                : data?.recipes?.map(recipe=> <p>{recipe.title}</p>)
+                : data!.map(recipe=> <p>{recipe.title}</p>)
             }
         </>
     )
