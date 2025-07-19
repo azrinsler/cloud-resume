@@ -34,8 +34,8 @@ export function App() {
                 headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
-                }, // recipe 12345 is a test recipe for stovetop rice... about as basic as it gets
-                body: JSON.stringify({ "operation":"searchById","recipeId":"12345" })
+                }, // recipe 0 is a test recipe for stovetop rice... about as basic as it gets
+                body: JSON.stringify({ "operation":"searchById","recipeId":"0" })
             })
             .then((response) => {
                 if (!response.ok) {
