@@ -10,7 +10,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
         <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
             <div id="recipe-card">
                 <div className="flex-row" style={{width:'100%'}}>
-                    <div id="simple-title" className="flex-row no-mobile">
+                    <div id="simple-title" className="flex-row" style={isMobile ? {display:'none'} : {}}>
                         <h2>Simple Recipes</h2>
                     </div>
                     <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>

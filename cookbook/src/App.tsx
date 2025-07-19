@@ -76,10 +76,10 @@ export function App() {
 
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
-        if (loading) {
+        if (loading && sidebarOption == 'recipe') {
             fetchRecipe(recipeId);
         }
-    }, [fetchRecipe, loading, recipeId]);
+    }, [fetchRecipe, loading, recipeId, sidebarOption]);
 
 
     return (
@@ -91,6 +91,7 @@ export function App() {
                   <div onClick={ () => { setSidebarOption("about") } }>About</div>,
                   <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
                   <div onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
+                  <div onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
                   <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
                   <div onMouseLeave={ () => { setJokeOption("") } }
@@ -102,23 +103,29 @@ export function App() {
           </Sidebar>
           <div className='flex-column' style={{flexGrow:'1'}}>
               {
-                  loading
-                      ? <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
-                          <h1>Preheating</h1>
-                      </div>
-                  : sidebarOption == "about"
+                  sidebarOption == "about"
                       ? <About></About>
+                  : sidebarOption == "new"
+                      ? <></>
                   : sidebarOption == "browse"
                       ? <Browse recipeCallback={fetchRecipe}></Browse>
-                  : <>
-                        { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe:</p></> : <></> }
-                        <RecipeCard
+                  : sidebarOption == "recipe" && loading
+                      ? <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
+                          <h1>Preheating</h1>
+                        </div>
+                  : sidebarOption == "recipe"
+                      ? <>
+                          { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe:</p></> : <></> }
+                          <RecipeCard
                               title={data.title}
                               ingredients={data.ingredients}
                               items={data.items}
                               steps={data.steps}>
-                        </RecipeCard>
-                  </>
+                          </RecipeCard>
+                        </>
+                  : sidebarOption == "search"
+                      ? <></>
+                  : <>Unknown Sidebar Option Selected</>
               }
           </div>
       </>
