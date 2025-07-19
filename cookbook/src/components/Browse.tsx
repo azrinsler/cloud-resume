@@ -28,7 +28,8 @@ const Browse : () => React.JSX.Element = () => {
             })
             .then((jsonData) => {
                 if (jsonData != null) {
-                    console.log("getRecipes Response JSON: " + jsonData);
+                    console.log("getRecipes Response JSON")
+                    console.log(jsonData);
                     setData(jsonData);
                     setLoading(false);
                 }
