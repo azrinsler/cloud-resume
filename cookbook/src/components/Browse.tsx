@@ -2,7 +2,11 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import type {GetRecipeResponse} from "../interfaces/GetRecipeResponse.ts";
 
-const Browse : () => React.JSX.Element = () => {
+interface BrowseProps {
+    recipeCallback: (recipe: string) => void
+}
+
+const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallback}: BrowseProps) => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -16,46 +20,47 @@ const Browse : () => React.JSX.Element = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
                 },
-                body: JSON.stringify({ "operation":"getRecipes" })
+                body: JSON.stringify({
+                    "operation": "getRecipes"
+                })
             })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((json) => {
-                console.log(json);
-                const getRecipeResponse = json as GetRecipeResponse;
-                setData(getRecipeResponse);
-                setLoading(false);
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false);
-            });
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((json) => {
+                    console.log(json);
+                    const getRecipeResponse = json as GetRecipeResponse;
+                    setData(getRecipeResponse);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    setError(err.message);
+                    setLoading(false);
+                });
         }
-    }, [loading] );
+    }, [loading]);
 
     return (
         <>
             {
                 error
                     ? <span>{error}</span>
-                : loading
-                    ? <span>Loading</span>
-                : data != undefined
-                    ? <div>
-                        <h2>Recipes</h2>
-                        <ul> {
-                            data.recipes.map(recipe=>
-                                <li key={recipe.id}>{recipe.title}</li>
-                            )
-                        } </ul>
-                    </div>
-                : <>No Recipes Found</>
+                    : loading
+                        ? <span>Loading</span>
+                        : data != undefined
+                            ? <div>
+                                <h2>Recipes</h2>
+                                <ul> {
+                                    data.recipes.map(recipe =>
+                                        <li key={recipe.id} onClick={() => {recipeCallback(recipe.id)}}>{recipe.title}</li>
+                                    )
+                                } </ul>
+                            </div>
+                            : <>No Recipes Found</>
             }
         </>
     )

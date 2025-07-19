@@ -12,7 +12,7 @@ import Browse from "./components/Browse.tsx";
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
-    const [recipeId] = useState("0")
+    const [recipeId, setRecipeId] = useState("0")
     const [sidebarOption, setSidebarOption] = useState("about")
     const [jokeOption, setJokeOption] = useState("")
     const [data, setData] = useState(testRecipe);
@@ -28,6 +28,7 @@ export function App() {
 
     const cacheRecipe = useCallback((recipe: string) => {
         console.log("cacheRecipe(" + recipe + ")")
+        setRecipeId(recipe)
         fetch("https://api.azrinsler.com/RecipeLambda", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -36,7 +37,7 @@ export function App() {
             },
             body: JSON.stringify({
                 "operation": "searchById",
-                "recipeId": recipe
+                "recipeId": recipeId
             })
         })
         .then((response) => {
@@ -58,8 +59,13 @@ export function App() {
             setError(err.message);
             setLoading(false)
         });
-    }, []);
-    
+    }, [recipeId]);
+
+    // I think this should set loading to true any time the recipe id changes?
+    useEffect(() => {
+        setLoading(true)
+    }, [recipeId]);
+
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
@@ -97,6 +103,7 @@ export function App() {
 //  }, [data, loading] );
     }, [cacheRecipe, loading, recipeId]);
 
+
     return (
       <>
           <Sidebar
@@ -104,9 +111,11 @@ export function App() {
               title={<span>Simple Recipes</span>}
               content={[
                   <div onClick={ () => { setSidebarOption("about") } }>About</div>,
-                  <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                  // <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                  <div onClick={ () => { setRecipeId("0") } }>New Recipe</div>,
                   <div onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
-                  <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
+                  // <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
+                  <div onClick={ () => { setRecipeId("1") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
                   <div onMouseLeave={ () => { setJokeOption("") } }
                        onMouseEnter={ () => { setJokeOption("donate") } }>
@@ -122,7 +131,7 @@ export function App() {
                   : sidebarOption == "about"
                       ? <About></About>
                   : sidebarOption == "browse"
-                      ? <Browse></Browse>
+                      ? <Browse recipeCallback={cacheRecipe}></Browse>
                   : <div>
                         { error ? <p>Error: {error}</p> : <></> }
                         <RecipeCard
