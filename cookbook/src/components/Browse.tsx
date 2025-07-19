@@ -26,9 +26,9 @@ const Browse : () => React.JSX.Element = () => {
                 }
                 return response.json();
             })
-            .then((jsonData) => {
-                console.log(jsonData);
-                const getRecipeResponse = jsonData as GetRecipeResponse;
+            .then((json) => {
+                console.log(json);
+                const getRecipeResponse = json as GetRecipeResponse;
                 setData(getRecipeResponse);
                 setLoading(false);
             })

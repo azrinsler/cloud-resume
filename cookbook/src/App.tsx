@@ -3,7 +3,7 @@ import testRecipeJson from './json/test-recipe.json' with { type : 'json' }
 import Sidebar from "./components/Sidebar.tsx";
 import sidebarIcon from './assets/cookbook-icon.svg'
 import sidebarIconBlack from './assets/cookbook-icon-black.svg'
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import type {Recipe} from "./interfaces/Recipe.ts";
 import About from "./components/About.tsx";
 import Browse from "./components/Browse.tsx";
@@ -25,39 +25,74 @@ export function App() {
         setDarkMode(event.matches)
     });
 
+    const cacheRecipe = useCallback((recipe: string) => {
+        console.log("cacheRecipe(" + recipe + ")")
+        fetch("https://api.azrinsler.com/RecipeLambda", {
+            signal: AbortSignal.timeout(120 * 1000),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
+            },
+            body: JSON.stringify({ "operation":"searchById","recipeId":recipe })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((json) => {
+            if (json != null) {
+                const jsonData = json as Recipe;
+                setData(jsonData);
+                console.log(jsonData);
+                setLoading(false);
+                setSidebarOption("recipe");
+            }
+        })
+        .catch((err) => {
+            setError(err.message);
+            setLoading(false)
+        });
+    }, []);
+    
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
-            fetch("https://api.azrinsler.com/RecipeLambda", {
-                signal: AbortSignal.timeout(120 * 1000),
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
-                }, // recipe 0 is a test recipe for stovetop rice... about as basic as it gets
-                body: JSON.stringify({ "operation":"searchById","recipeId":"0" })
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((jsonData) => {
-                if (jsonData != null) {
-                    const data = jsonData as Recipe;
-                    setData(data);
-                    console.log(data);
-                    setLoading(false);
-                    setSidebarOption("recipe");
-                }
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false);
-            });
+            cacheRecipe("0")
+//         fetch("https://api.azrinsler.com/RecipeLambda", {
+//             signal: AbortSignal.timeout(120 * 1000),
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
+//             }, // recipe 0 is a test recipe for stovetop rice... about as basic as it gets
+//             body: JSON.stringify({ "operation":"searchById","recipeId":"0" })
+//         })
+//         .then((response) => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then((json) => {
+//             if (json != null) {
+//                 const jsonData = json as Recipe;
+//                 setData(jsonData);
+//                 console.log(jsonData);
+//                 setLoading(false);
+//                 setSidebarOption("recipe");
+//             }
+//         })
+//         .catch((err) => {
+//             setError(err.message);
+//             setLoading(false);
+//         });
+            
         }
-    }, [data, loading] );
+//  }, [data, loading] );
+    }, [cacheRecipe, loading]);
 
     return (
       <>
