@@ -26,11 +26,9 @@ const Browse : () => React.JSX.Element = () => {
                 return response.json();
             })
             .then((jsonData) => {
-                if (jsonData != null) {
-                    console.log(jsonData);
-                    setData(jsonData);
-                    setLoading(false);
-                }
+                console.log(jsonData);
+                setData(null);
+                setLoading(false);
             })
             .catch((err) => {
                 setError(err.message);
@@ -39,6 +37,16 @@ const Browse : () => React.JSX.Element = () => {
         }
     }, [data, loading] );
 
-    return ( error ? <span>{error}</span> : loading ? <span>Loading</span> : <div>{data}</div> )
+    return (
+        <>
+            {
+                error
+                    ? <span>{error}</span>
+                : loading
+                    ? <span>Loading</span>
+                    : <div>{data}</div>
+            }
+        </>
+    )
 }
 export default Browse
