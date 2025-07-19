@@ -44,7 +44,7 @@ const Browse : () => React.JSX.Element = () => {
                     ? <span>{error}</span>
                 : loading
                     ? <span>Loading</span>
-                    : <div>{data}</div>
+                : <div>{data}</div>
             }
         </>
     )

@@ -45,11 +45,11 @@ export function App() {
             })
             .then((jsonData) => {
                 if (jsonData != null) {
-                    const data = jsonData as Recipe
+                    const data = jsonData as Recipe;
                     setData(data);
                     console.log(data);
                     setLoading(false);
-                    setSidebarOption("recipe")
+                    setSidebarOption("recipe");
                 }
             })
             .catch((err) => {
