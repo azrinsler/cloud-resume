@@ -5,7 +5,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
     const stepsOrdered = recipe.steps.sort((a,b)=>a.ordinal-b.ordinal)
     return (
-        <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em',flexGrow:'1'}}>
+        <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
             <div id="recipe-card">
                 <div className="flex-row" style={{width:'100%'}}>
                     <div id="simple-title" className="flex-row no-mobile">

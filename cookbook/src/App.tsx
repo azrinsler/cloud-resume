@@ -94,7 +94,7 @@ export function App() {
           <div className='flex-column' style={{flexGrow:'1'}}>
               {
                   loading
-                      ? <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em',flexGrow:'1'}}>
+                      ? <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
                           <h1>Preheating</h1>
                       </div>
                   : sidebarOption == "about"
