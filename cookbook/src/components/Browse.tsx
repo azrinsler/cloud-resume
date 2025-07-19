@@ -47,11 +47,14 @@ const Browse : () => React.JSX.Element = () => {
                 : loading
                     ? <span>Loading</span>
                 : data != undefined
-                    ? <ul> {
-                        data.recipes.map(recipe=>
-                            <li key={recipe.id}>{recipe.title}</li>
-                        )
-                    } </ul>
+                    ? <div>
+                        <h2>Recipes</h2>
+                        <ul> {
+                            data.recipes.map(recipe=>
+                                <li key={recipe.id}>{recipe.title}</li>
+                            )
+                        } </ul>
+                    </div>
                 : <>No Recipes Found</>
             }
         </>
