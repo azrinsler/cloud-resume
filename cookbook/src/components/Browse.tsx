@@ -28,7 +28,7 @@ const Browse : () => React.JSX.Element = () => {
             })
             .then((jsonData) => {
                 console.log(jsonData);
-                const getRecipeResponse = jsonData as GetRecipeResponse
+                const getRecipeResponse = jsonData as GetRecipeResponse;
                 setData(getRecipeResponse);
                 setLoading(false);
             })
@@ -46,7 +46,7 @@ const Browse : () => React.JSX.Element = () => {
                     ? <span>{error}</span>
                 : loading
                     ? <span>Loading</span>
-                : <div>{ data?.recipes?.map(recipe=> <p>{recipe.title}</p>) }</div>
+                : data?.recipes?.map(recipe=> <p>{recipe.title}</p>)
             }
         </>
     )
