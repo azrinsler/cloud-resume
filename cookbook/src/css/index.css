@@ -97,6 +97,25 @@ h2, h3 {
     opacity: 0;
 }
 
+/*noinspection CssInvalidFunction*/
+.hatched-background {
+    background:
+            repeating-linear-gradient(
+                -45deg,
+                light-dark(#7974d4, #1b1040),
+                light-dark(#7974d4, #1b1040) 1px,
+                transparent 1px,
+                transparent 15px
+            ),
+            repeating-linear-gradient(
+                45deg,
+                light-dark(#749cd4,#401037),
+                light-dark(#749cd4,#401037) 1px,
+                transparent 1px,
+                transparent 15px
+            );
+}
+
 /* mobile-specific settings to help things fit better on tiny screens */
 @media (max-width: 700px) {
     * {
