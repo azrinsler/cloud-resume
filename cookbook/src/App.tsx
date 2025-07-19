@@ -78,7 +78,6 @@ export function App() {
           >
           </Sidebar>
           <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
-
               {
                   loading
                       ? <span>Preheating</span>
