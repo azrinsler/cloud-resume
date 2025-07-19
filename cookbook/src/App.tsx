@@ -8,7 +8,6 @@ import type {Recipe} from "./interfaces/Recipe.ts";
 import About from "./components/About.tsx";
 import Browse from "./components/Browse.tsx";
 
-
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
@@ -26,7 +25,7 @@ export function App() {
         setDarkMode(event.matches)
     });
 
-    const cacheRecipe = useCallback((recipe: string) => {
+    const fetchRecipe = useCallback((recipe: string) => {
         console.log("cacheRecipe(" + recipe + ")")
         setRecipeId(recipe)
         fetch("https://api.azrinsler.com/RecipeLambda", {
@@ -69,39 +68,9 @@ export function App() {
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
-            cacheRecipe(recipeId);
-//         fetch("https://api.azrinsler.com/RecipeLambda", {
-//             signal: AbortSignal.timeout(120 * 1000),
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
-//             }, // recipe 0 is a test recipe for stovetop rice... about as basic as it gets
-//             body: JSON.stringify({ "operation":"searchById","recipeId":"0" })
-//         })
-//         .then((response) => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then((json) => {
-//             if (json != null) {
-//                 const jsonData = json as Recipe;
-//                 setData(jsonData);
-//                 console.log(jsonData);
-//                 setLoading(false);
-//                 setSidebarOption("recipe");
-//             }
-//         })
-//         .catch((err) => {
-//             setError(err.message);
-//             setLoading(false);
-//         });
-
+            fetchRecipe(recipeId);
         }
-//  }, [data, loading] );
-    }, [cacheRecipe, loading, recipeId]);
+    }, [fetchRecipe, loading, recipeId]);
 
 
     return (
@@ -111,11 +80,9 @@ export function App() {
               title={<span>Simple Recipes</span>}
               content={[
                   <div onClick={ () => { setSidebarOption("about") } }>About</div>,
-                  // <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
-                  <div onClick={ () => { setRecipeId("0") } }>New Recipe</div>,
+                  <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
                   <div onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
-                  // <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
-                  <div onClick={ () => { setRecipeId("1") } }>Recipe Search</div>,
+                  <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
                   <div onMouseLeave={ () => { setJokeOption("") } }
                        onMouseEnter={ () => { setJokeOption("donate") } }>
@@ -124,23 +91,23 @@ export function App() {
               ]}
           >
           </Sidebar>
-          <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
+          <div className='flex-column' style={{flexGrow:'1'}}>
               {
                   loading
-                      ? <span>Preheating</span>
+                      ? <h1>Preheating</h1>
                   : sidebarOption == "about"
                       ? <About></About>
                   : sidebarOption == "browse"
-                      ? <Browse recipeCallback={cacheRecipe}></Browse>
-                  : <div>
-                        { error ? <p>Error: {error}</p> : <></> }
+                      ? <Browse recipeCallback={fetchRecipe}></Browse>
+                  : <>
+                        { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe:</p></> : <></> }
                         <RecipeCard
                               title={data.title}
                               ingredients={data.ingredients}
                               items={data.items}
                               steps={data.steps}>
                         </RecipeCard>
-                  </div>
+                  </>
               }
           </div>
       </>

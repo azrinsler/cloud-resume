@@ -1,0 +1,18 @@
+#browse-recipes {
+
+}
+
+#browse-recipes > ul {
+    list-style-type: none;
+}
+
+#browse-recipes > ul > li {
+    text-wrap: nowrap;
+    cursor: pointer;
+    margin: 2px 0 1px 0;
+}
+
+/*noinspection CssInvalidFunction*/
+#browse-recipes > ul > li:hover {
+    color: light-dark(#b81bd9, #ec91ff);
+}

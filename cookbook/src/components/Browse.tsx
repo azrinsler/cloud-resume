@@ -2,6 +2,11 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import type {GetRecipeResponse} from "../interfaces/GetRecipeResponse.ts";
 
+import testJson from '../json/test-get-recipe-response.json' with { type : 'json' }
+const testResponse = testJson as GetRecipeResponse
+
+import '../css/browse.css'
+
 interface BrowseProps {
     recipeCallback: (recipe: string) => void
 }
@@ -15,6 +20,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
+            console.log("getRecipes()")
             fetch("https://api.azrinsler.com/RecipeLambda", {
                 signal: AbortSignal.timeout(120 * 1000),
                 method: "POST",
@@ -47,20 +53,17 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
     return (
         <>
             {
-                error
-                    ? <span>{error}</span>
-                    : loading
-                        ? <span>Loading</span>
-                        : data != undefined
-                            ? <div>
-                                <h2>Recipes</h2>
-                                <ul> {
-                                    data.recipes.map(recipe =>
-                                        <li key={recipe.id} onClick={() => {recipeCallback(recipe.id)}}>{recipe.title}</li>
-                                    )
-                                } </ul>
-                            </div>
-                            : <>No Recipes Found</>
+                loading
+                    ? <span>Loading</span>
+                    : <div id="browse-recipes" className={"flex-column"}>
+                            <h1 style={{textAlign:'center', borderBottom:'1px solid'}}>Recipes</h1>
+                            { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
+                            <ul style={{marginLeft:'1em'}}> {
+                                (data || testResponse).recipes.map(recipe =>
+                                    <li key={recipe.id} onClick={() => {recipeCallback(recipe.id)}}><h3>{recipe.title}</h3></li>
+                                )
+                            } </ul>
+                        </div>
             }
         </>
     )

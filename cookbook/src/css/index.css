@@ -4,6 +4,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
 }
 
 * { /* globally disable margin and padding so we can control these values more granularly by element */
