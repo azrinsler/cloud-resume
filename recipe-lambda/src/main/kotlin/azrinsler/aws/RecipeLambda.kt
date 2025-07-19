@@ -165,6 +165,6 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
             val json = """{ "id": "$id", "title": "$title" }"""
             response = if (response.isNotEmpty()) "$response, $json" else json
         }
-        return "[$response]"
+        return """{ "recipes": [$response] }"""
     }
 }
