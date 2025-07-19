@@ -6,7 +6,7 @@ const Browse : () => React.JSX.Element = () => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [data, setData] = useState();
+    const [data, setData] = useState(null);
 
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
@@ -28,8 +28,8 @@ const Browse : () => React.JSX.Element = () => {
             })
             .then((jsonData) => {
                 if (jsonData != null) {
-                    console.log(jsonData);
-                    setData(data);
+                    console.log("getRecipes Response JSON: " + jsonData);
+                    setData(jsonData);
                     setLoading(false);
                 }
             })
