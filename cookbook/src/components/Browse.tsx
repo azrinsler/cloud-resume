@@ -27,7 +27,7 @@ const Browse : () => React.JSX.Element = () => {
             })
             .then((jsonData) => {
                 console.log(jsonData);
-                setData(null);
+                setData(jsonData);
                 setLoading(false);
             })
             .catch((err) => {
