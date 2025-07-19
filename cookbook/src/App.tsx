@@ -88,12 +88,15 @@ export function App() {
                       ? <About></About>
                   : sidebarOption == "browse"
                       ? <Browse></Browse>
-                  : <RecipeCard
-                      title={data.title}
-                      ingredients={data.ingredients}
-                      items={data.items}
-                      steps={data.steps}>
-                  </RecipeCard>
+                  : <div>
+                        { error ? <p>Error: {error}</p> : <></> }
+                        <RecipeCard
+                              title={data.title}
+                              ingredients={data.ingredients}
+                              items={data.items}
+                              steps={data.steps}>
+                        </RecipeCard>
+                  </div>
               }
           </div>
       </>
