@@ -101,14 +101,14 @@ h2, h3 {
 .hatched-background {
     background:
             repeating-linear-gradient(
-                -45deg,
+                -30deg,
                 light-dark(#7974d4, #1b1040),
                 light-dark(#7974d4, #1b1040) 1px,
                 transparent 1px,
                 transparent 15px
             ),
             repeating-linear-gradient(
-                45deg,
+                60deg,
                 light-dark(#749cd4,#401037),
                 light-dark(#749cd4,#401037) 1px,
                 transparent 1px,
