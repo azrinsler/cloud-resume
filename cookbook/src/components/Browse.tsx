@@ -37,7 +37,7 @@ const Browse : () => React.JSX.Element = () => {
                 setLoading(false);
             });
         }
-    }, [data, loading] );
+    }, [loading] );
 
     return (
         <>

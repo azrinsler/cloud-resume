@@ -12,6 +12,7 @@ import Browse from "./components/Browse.tsx";
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
+    const [recipeId] = useState("0")
     const [sidebarOption, setSidebarOption] = useState("about")
     const [jokeOption, setJokeOption] = useState("")
     const [data, setData] = useState(testRecipe);
@@ -32,9 +33,11 @@ export function App() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "https://api.azrinsler.com/RecipeLambda"
             },
-            body: JSON.stringify({ "operation":"searchById","recipeId":recipe })
+            body: JSON.stringify({
+                "operation": "searchById",
+                "recipeId": recipe
+            })
         })
         .then((response) => {
             if (!response.ok) {
@@ -60,7 +63,7 @@ export function App() {
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
-            cacheRecipe("0")
+            cacheRecipe(recipeId);
 //         fetch("https://api.azrinsler.com/RecipeLambda", {
 //             signal: AbortSignal.timeout(120 * 1000),
 //             method: "POST",
@@ -89,10 +92,10 @@ export function App() {
 //             setError(err.message);
 //             setLoading(false);
 //         });
-            
+
         }
 //  }, [data, loading] );
-    }, [cacheRecipe, loading]);
+    }, [cacheRecipe, loading, recipeId]);
 
     return (
       <>
