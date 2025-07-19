@@ -22,7 +22,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
             style={
                 isOpen
                     ? isMobile
-                        ? { width:'100vw', position:'absolute' }
+                        ? { width:'100vw', position:'absolute', overflow:'hidden' }
                         : { width:'200px' }
                     : isMobile
                         ? { width: '0', position:'absolute'}
@@ -49,7 +49,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
                 style={
                     isOpen
                         ? { opacity: '1' }
-                        : { opacity: '0' }
+                        : { opacity: '0', display:'none' }
                 }
             >
                 {props.icon}

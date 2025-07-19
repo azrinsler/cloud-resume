@@ -12,6 +12,7 @@ interface BrowseProps {
 }
 
 const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallback}: BrowseProps) => {
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -55,12 +56,12 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
             {
                 loading
                     ? <span>Loading</span>
-                    : <div id="browse-recipes" className={"flex-column"}>
+                    : <div id="browse-recipes" className="flex-column">
                             <h1 style={{textAlign:'center', borderBottom:'1px solid'}}>Recipes</h1>
                             { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
                             <ul style={{marginLeft:'1em'}}> {
                                 (data || testResponse).recipes.map(recipe =>
-                                    <li key={recipe.id} onClick={() => {recipeCallback(recipe.id)}}><h3>{recipe.title}</h3></li>
+                                    <li key={recipe.id}  onClick={() => {recipeCallback(recipe.id)}}><h3 style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</h3></li>
                                 )
                             } </ul>
                         </div>

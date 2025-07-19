@@ -11,8 +11,9 @@ import Browse from "./components/Browse.tsx";
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
-    const [recipeId, setRecipeId] = useState("0")
-    const [sidebarOption, setSidebarOption] = useState("about")
+    // we'll try caching a few of these in local storage as well, so if the user reloads they don't lose their place
+    const [recipeId, setRecipeId] = useState( localStorage.getItem("recipeId") || "0")
+    const [sidebarOption, setSidebarOption] = useState( localStorage.getItem("sidebarOption") || "about" )
     const [jokeOption, setJokeOption] = useState("")
     const [data, setData] = useState(testRecipe);
     const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ export function App() {
     const fetchRecipe = useCallback((recipe: string) => {
         console.log("cacheRecipe(" + recipe + ")")
         setRecipeId(recipe)
+        localStorage.setItem("recipeId", recipe)
         fetch("https://api.azrinsler.com/RecipeLambda", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -52,6 +54,7 @@ export function App() {
                 console.log(jsonData);
                 setLoading(false);
                 setSidebarOption("recipe");
+                localStorage.setItem("sidebarOption", "recipe")
             }
         })
         .catch((err) => {
@@ -60,10 +63,16 @@ export function App() {
         });
     }, [recipeId]);
 
-    // I think this should set loading to true any time the recipe id changes?
+    // I think this should set loading to true and cache our recipe id any time it changes?
     useEffect(() => {
         setLoading(true)
+        localStorage.setItem("recipeId", recipeId)
     }, [recipeId]);
+
+    // Also cache sidebarOption in local storage in the same way
+    useEffect(() => {
+        localStorage.setItem("sidebarOption", sidebarOption)
+    }, [sidebarOption]);
 
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently

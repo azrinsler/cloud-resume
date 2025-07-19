@@ -1,6 +1,8 @@
 import * as React from "react";
 import type {Recipe} from "../interfaces/Recipe.ts";
 
+import './css/recipe-card.css'
+
 const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
     const stepsOrdered = recipe.steps.sort((a,b)=>a.ordinal-b.ordinal)
