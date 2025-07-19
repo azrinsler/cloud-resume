@@ -40,6 +40,6 @@ const Browse : () => React.JSX.Element = () => {
     //
     // return error ? <span>{error}</span> : loading ? <span>Loading</span> : <div>data goes here</div>
 
-    return <div></div>
+    return <div>Browse Content</div>
 }
 export default Browse

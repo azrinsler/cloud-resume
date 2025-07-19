@@ -13,6 +13,7 @@ const testRecipe = testRecipeJson as Recipe
 
 export function App() {
     const [sidebarOption, setSidebarOption] = useState("about")
+    const [jokeOption, setJokeOption] = useState("")
     const [data, setData] = useState(testRecipe);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -69,9 +70,9 @@ export function App() {
                   <div onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
                   <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div onClick={ () => { setSidebarOption("donate") } }
-                       onMouseEnter={ () => { setSidebarOption("jokes") } }>
-                      { sidebarOption == "jokes" ? <>Don't</> : <>Donate</> }
+                  <div onMouseLeave={ () => { setJokeOption("") } }
+                       onMouseEnter={ () => { setJokeOption("donate") } }>
+                      { jokeOption == "donate" ? <>Don't</> : <>Donate</> }
                   </div>
               ]}
           >
@@ -83,13 +84,10 @@ export function App() {
               {
                   loading
                       ? <span>Preheating</span>
-
                   : sidebarOption == "about"
                       ? <About></About>
-
                   : sidebarOption == "browse"
                       ? <Browse></Browse>
-
                   : <RecipeCard
                       title={data.title}
                       ingredients={data.ingredients}
