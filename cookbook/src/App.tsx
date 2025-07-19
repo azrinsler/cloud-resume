@@ -78,9 +78,7 @@ export function App() {
           >
           </Sidebar>
           <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',padding:'1em'}}>
-              {
-                  error ? <p>Error: {error}</p> : <></>
-              }
+
               {
                   loading
                       ? <span>Preheating</span>
