@@ -38,7 +38,7 @@ export function App() {
             },
             body: JSON.stringify({
                 "operation": "searchById",
-                "recipeId": recipeId
+                "recipeId": recipe
             })
         })
         .then((response) => {
@@ -61,7 +61,7 @@ export function App() {
             setError(err.message);
             setLoading(false)
         });
-    }, [recipeId]);
+    }, []);
 
     // I think this should set loading to true and cache our recipe id any time it changes?
     useEffect(() => {
