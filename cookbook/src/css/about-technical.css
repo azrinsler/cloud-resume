@@ -1,0 +1,63 @@
+/*noinspection CssInvalidFunction*/
+#about-technical-images {
+    position: relative;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    min-height: 30vh;
+    height: 30vh;
+    background-color: light-dark(whitesmoke,black);
+    flex-wrap: nowrap;
+    place-self: center;
+}
+
+#about-technical-images > div > img {
+    max-height: 100%;
+}
+
+#about-technical-radio {
+    margin: 1em 0;
+}
+
+#about-technical-radio > input {
+    cursor: pointer;
+}
+
+/*noinspection CssInvalidFunction*/
+#about-technical-content {
+    flex-grow: 1;
+    width: 100%;
+    border: 1px solid;
+    padding: 0.5em;
+    background-color: light-dark(whitesmoke,black);
+    place-self: center;
+    overflow-y: scroll;
+}
+
+/*noinspection CssInvalidFunction*/
+.about-technical-arrow-button {
+    place-content: center;
+    position: sticky;
+    height: 100%;
+    background-color: light-dark(rgba(255,255,255,0.5), rgba(0,0,0,0.5));
+    cursor: pointer;
+    user-select: none; /* so users don't accidentally select/highlight button text when they meant to click on it */
+}
+
+/*noinspection CssInvalidFunction*/
+.about-technical-arrow-button:hover {
+    color: light-dark(#b81bd9, #ec91ff);
+}
+
+.about-technical-img {
+    margin: 2px 5px;
+    max-width: 90vw;
+}
+
+.about-technical-caption {
+    overflow-y: scroll;
+}
+
+.about-technical-caption > h2 {
+    text-align: center;
+}

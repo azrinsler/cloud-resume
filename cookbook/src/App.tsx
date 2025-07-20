@@ -5,7 +5,7 @@ import sidebarIcon from './assets/cookbook-icon.svg'
 import sidebarIconBlack from './assets/cookbook-icon-black.svg'
 import {useCallback, useEffect, useState} from "react";
 import type {Recipe} from "./interfaces/Recipe.ts";
-import About from "./components/About.tsx";
+import About from "./components/about/About.tsx";
 import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
 
@@ -102,7 +102,7 @@ export function App() {
               ]}
           >
           </Sidebar>
-          <div className='flex-column' style={{flexGrow:'1'}}>
+          <div className='flex-column' style={{flexGrow:'1', overflow:'hidden', maxHeight:'100vh'}}>
               {
                   sidebarOption == "about"
                       ? <About></About>
