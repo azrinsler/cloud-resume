@@ -7,6 +7,7 @@ import {useCallback, useEffect, useState} from "react";
 import type {Recipe} from "./interfaces/Recipe.ts";
 import About from "./components/About.tsx";
 import Browse from "./components/Browse.tsx";
+import Preheating from "./components/Preheating.tsx";
 
 const testRecipe = testRecipeJson as Recipe
 
@@ -106,13 +107,11 @@ export function App() {
                   sidebarOption == "about"
                       ? <About></About>
                   : sidebarOption == "new"
-                      ? <></>
+                      ? <>TODO</>
                   : sidebarOption == "browse"
                       ? <Browse recipeCallback={fetchRecipe}></Browse>
                   : sidebarOption == "recipe" && loading
-                      ? <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
-                          <h1>Preheating</h1>
-                        </div>
+                      ? <Preheating></Preheating>
                   : sidebarOption == "recipe"
                       ? <>
                           { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe:</p></> : <></> }
@@ -124,8 +123,8 @@ export function App() {
                           </RecipeCard>
                         </>
                   : sidebarOption == "search"
-                      ? <></>
-                  : <>Unknown Sidebar Option Selected</>
+                      ? <>TODO</>
+                  : <>Unknown Sidebar Option</>
               }
           </div>
       </>

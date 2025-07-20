@@ -2,6 +2,7 @@
 #sidebar {
     background-color: light-dark(#fffddf,#6952f2);
     height: 100vh;
+    transition-duration: 1s;
 }
 
 #sidebar-icon {
@@ -13,6 +14,7 @@
     font-size: 2em;
     background-color: transparent;
     z-index: 1;
+    transition-duration: 1s;
 }
 
 #sidebar-content {

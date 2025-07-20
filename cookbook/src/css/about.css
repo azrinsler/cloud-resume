@@ -1,7 +1,47 @@
 #about {
+    flex-grow: 1;
+}
 
+#about > h1 {
+    background-color: light-dark(#514eeb,#12000a);
+    border-bottom: 1px solid light-dark(#5285ff,#ffffff);
+}
+
+#about-simple-tab, #about-technical-tab {
+    width: 50%;
+    border-radius: 1em 1em 0 0;
+    border: 1px solid;
+    text-align: center;
+    line-height: 1.5em;
 }
 
 #about-content {
     padding: 1em;
+    background-color: light-dark(#fefff0,#1f0921);
+    flex-grow: 1;
+}
+
+#about-simple-tab > input[type="radio"], #about-technical-tab > input[type="radio"] {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+#about-simple-tab > label, #about-technical-tab > label {
+    border-radius: 1em 1em 0 0;
+    transition-duration: 0s;
+    font-size: 1.25em;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+#about-simple-tab > input[type="radio"]:checked + label, #about-technical-tab > input[type="radio"]:checked + label {
+    letter-spacing: 0.1em;
+    color: light-dark(#fffe78,#7312ff);
+    text-shadow:
+            -0.5px -0.5px 0 light-dark(#000000,#ffbaea),
+            0.5px -0.5px 0 light-dark(#000000,#ffbaea),
+            -0.5px  0.5px 0 light-dark(#000000,#ffbaea),
+            0.5px  0.5px 0 light-dark(#000000,#ffbaea);
 }

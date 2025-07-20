@@ -10,8 +10,6 @@
 * { /* globally disable margin and padding so we can control these values more granularly by element */
     margin: 0;
     padding: 0;
-    /* setting a default transition speed */
-    transition: all 1s;
 }
 
 a {
@@ -114,6 +112,15 @@ h2, h3 {
                 transparent 1px,
                 transparent 15px
             );
+}
+
+/*noinspection CssInvalidFunction*/
+.text-outline {
+    text-shadow:
+            -1px -1px 0 light-dark(#ffffff,#001000),
+            1px -1px 0 light-dark(#ffffff,#001000),
+            -1px  1px 0 light-dark(#ffffff,#001000),
+            1px  1px 0 light-dark(#ffffff,#001000);
 }
 
 /* mobile-specific settings to help things fit better on tiny screens */

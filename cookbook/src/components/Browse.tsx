@@ -6,6 +6,7 @@ import testJson from '../json/test-get-recipe-response.json' with { type : 'json
 const testResponse = testJson as GetRecipeResponse
 
 import '../css/browse.css'
+import Preheating from "./Preheating.tsx";
 
 interface BrowseProps {
     recipeCallback: (recipe: string) => void
@@ -55,7 +56,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
         <>
             {
                 loading
-                    ? <span>Loading</span>
+                    ? <Preheating></Preheating>
                     : <div id="browse-recipes" className="flex-column">
                             <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>Recipes</h1>
                             { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
