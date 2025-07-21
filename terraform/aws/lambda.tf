@@ -73,12 +73,6 @@ resource "aws_lambda_permission" "gateway_recipe_lambda_permission" {
   source_arn = "${aws_apigatewayv2_api.primary_gateway.execution_arn}/*/*"
 }
 
-# gives permissions for the recipe lambda to access xray for telemetry (put trace segments, put telemetry records)
-resource "aws_iam_role_policy_attachment" "lambda_xray" {
-  role       = aws_iam_role.lambda_exec.name
-  policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
-}
-
 # PYTHON LAMBDA
 data "archive_file" "python_lambda_package" {
   type = "zip"
