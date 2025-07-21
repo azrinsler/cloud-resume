@@ -128,6 +128,9 @@ export function App() {
                       ? <RecipeSearch></RecipeSearch>
                   : <>Unknown Sidebar Option</>
               }
+              <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>
+                  IMPORTANT: Please note that this is a DEV environment - new recipes may be lost any time the DB changes!
+              </div>
           </div>
       </>
   )

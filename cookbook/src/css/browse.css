@@ -1,5 +1,5 @@
 #browse-recipes {
-
+    flex-grow: 1;
 }
 
 #browse-recipes > ul {
