@@ -67,11 +67,11 @@ const About : () => React.JSX.Element = () => {
             <div className='flex-row' style={{paddingTop:'0.5em',borderBottom:'1px solid',flexWrap:'nowrap'}}>
                 <div id='about-simple-tab' onClick={()=>{setActiveTab('simple')}} style={activeTab == 'simple' ? {backgroundColor:'light-dark(#514eeb,#210012)'} : {}}>
                     <input type='radio' name='about-tab' id='about-simple-radio-input' value='simple' defaultChecked={true} />
-                    <label className={activeTab == 'simple' ? 'hatched-background text-outline' : ''} htmlFor='about-simple-radio-input'>Simple</label>
+                    <label htmlFor='about-simple-radio-input'>Simple</label>
                 </div>
                 <div id='about-technical-tab' onClick={()=>{setActiveTab('technical')}} style={activeTab == 'technical' ? {backgroundColor:'light-dark(#514eeb,#210012)'} : {}}>
                     <input type='radio' name='about-tab' id='about-technical-radio-input' value='technical'/>
-                    <label className={activeTab == 'technical' ? 'hatched-background' : ''} htmlFor='about-technical-radio-input'>Technical</label>
+                    <label htmlFor='about-technical-radio-input'>Technical</label>
                 </div>
             </div>
             <div id='about-content' className='flex-column'>
