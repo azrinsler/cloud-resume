@@ -42,11 +42,20 @@ resource "aws_lambda_function" "recipe_lambda_function" {
   // memory defaults to 128 which is too small for a Kotlin function using heavy dependencies like aws sdk and jackson
   // (by setting this to a higher value we can VASTLY improve our cold start times, in particular)
   memory_size = 1024 // specified in MB
+
   snap_start {
     apply_on = "PublishedVersions" // snap start improves cold start times but only works for specific runtimes/regions
   }
 
-  # Add the layer using dynamic interpolation
+  tracing_config {
+    mode = "Active" # Enables AWS X-Ray tracing
+  }
+
+  environment {
+    AWS_LAMBDA_EXEC_WRAPPER: "/opt/otel-stream-handler" # Used by the ADOT Layer to wrap the handler (wrapper layer)
+  }
+
+  # This is the AWS ADOT layer (aws distro for open telemetry)
   layers = [
     "arn:aws:lambda:us-east-1:901920570463:layer:aws-otel-java-wrapper-arm64-ver-1-32-0:6"
   ]
