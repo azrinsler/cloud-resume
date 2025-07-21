@@ -64,13 +64,19 @@ resource "aws_lambda_function" "recipe_lambda_function" {
   ]
 }
 
-# gives permission for api gateway to invoke the kotlin lambda
+# gives permission for api gateway to invoke the recipe lambda
 resource "aws_lambda_permission" "gateway_recipe_lambda_permission" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.recipe_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn = "${aws_apigatewayv2_api.primary_gateway.execution_arn}/*/*"
+}
+
+# gives permissions for the recipe lambda to access xray for telemetry (put trace segments, put telemetry records)
+resource "aws_iam_role_policy_attachment" "lambda_xray" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
 }
 
 # PYTHON LAMBDA
