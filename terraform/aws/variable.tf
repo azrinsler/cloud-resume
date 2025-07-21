@@ -1,8 +1,3 @@
-variable "site_bucket_name" {
-  type = string
-  default = "azrinsler-site-bucket"
-}
-
 variable "cookbook_bucket_name" {
   type = string
   default = "azrinsler-cookbook"
@@ -26,11 +21,6 @@ variable "packaged_python_relative_root" {
 variable "packaged_source_bucket_name" {
   type = string
   default = "azrinsler-packaged-source"
-}
-
-variable "site_relative_root" {
-  type = string
-  default = "./site"
 }
 
 variable "cookbook_relative_root" {

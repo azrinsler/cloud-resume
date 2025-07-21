@@ -1,12 +1,6 @@
 # this cloudfront distribution is used in combination w/ route53 to provide access to our S3-hosted site
 resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
   origin {
-    domain_name = aws_s3_bucket.site_bucket.bucket_regional_domain_name
-    origin_id = "Site-Origin"
-    origin_path = "/site"
-  }
-
-  origin {
     domain_name = aws_s3_bucket.cookbook_bucket.bucket_regional_domain_name
     origin_id = "Cookbook-Origin"
   }
@@ -40,22 +34,6 @@ resource "aws_cloudfront_distribution" "primary_cloudfront_distro" {
     min_ttl = 0
     default_ttl = 30
     max_ttl = 60
-
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
-  }
-
-  # for accessing site
-  ordered_cache_behavior {
-    path_pattern           = "/site/*"
-    allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "Site-Origin"
-    viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
       query_string = false
