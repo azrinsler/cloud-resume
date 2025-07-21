@@ -34,7 +34,7 @@ resource "aws_lambda_function" "recipe_lambda_function" {
   s3_bucket = aws_s3_bucket.packaged_source_bucket.id
   s3_key    = aws_s3_object.recipe_lambda_source.key
   # Supported Runtimes: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported
-  runtime = "java21"
+  runtime = "java17"
   handler = "azrinsler.aws.${var.recipe_lambda_class}"
   source_code_hash = filebase64sha256(local.recipe_lambda_path)
   role = aws_iam_role.lambda_exec.arn
@@ -59,7 +59,7 @@ resource "aws_lambda_function" "recipe_lambda_function" {
 
   # This is the AWS ADOT layer (aws distro for open telemetry)
   layers = [
-    "arn:aws:lambda:us-east-1:901920570463:layer:aws-otel-java-wrapper-x86_64-ver-1-32-0:6"
+    "arn:aws:lambda:us-east-1:901920570463:layer:aws-otel-java-wrapper-arm64-ver-1-32-0:6"
   ]
 }
 
