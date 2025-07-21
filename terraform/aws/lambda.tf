@@ -45,6 +45,11 @@ resource "aws_lambda_function" "recipe_lambda_function" {
   snap_start {
     apply_on = "PublishedVersions" // snap start improves cold start times but only works for specific runtimes/regions
   }
+
+  # Add the layer using dynamic interpolation
+  layers = [
+    "arn:aws:lambda:us-east-1:901920570463:layer:aws-otel-java-wrapper-arm64-ver-1-32-0:6"
+  ]
 }
 
 # gives permission for api gateway to invoke the kotlin lambda
