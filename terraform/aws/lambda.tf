@@ -59,7 +59,7 @@ resource "aws_lambda_function" "recipe_lambda_function" {
 
   # This is the AWS ADOT layer (aws distro for open telemetry)
   layers = [
-    "arn:aws:lambda:us-east-1:901920570463:layer:aws-otel-java-wrapper-arm64-ver-1-32-0:6"
+    "arn:aws:lambda:us-east-1:901920570463:layer:aws-otel-java-wrapper-x86_64-ver-1-32-0:6"
   ]
 }
 
