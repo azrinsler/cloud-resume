@@ -6,16 +6,16 @@ const AboutArchitecture: () => React.JSX.Element = () => {
         <div id='about-technical-architecture-caption' className='about-technical-caption flex-column'>
             <h2>High Level Architecture</h2>
 
-            <br/>&nbsp;<br/>
-
-            <h2>This simple-looking website is the result of a complex project.</h2>
-            <h4 style={{textAlign:'center'}}>Under the hood, it's a serverless, microservice-based web-app built in AWS using multiple languages.</h4>
-
-            <hr/>
+            <h2 style={{color:'darkgoldenrod',backgroundColor:'light-dark(#6c5da1,#732e54)'}}>This simple website is the result of a complex project.</h2>
+            <h4 style={{color:'goldenrod',textAlign:'center'}}>Under the hood, it's a serverless, microservice-based web-app built in AWS using multiple languages.</h4>
 
             <br/>&nbsp;<br/>
 
-            <div className='flex-row' style={ isMobile ? {flexWrap:'wrap'} : {flexWrap:'nowrap'}}>
+            <div className='flex-row' style={
+                    isMobile
+                        ? {flexWrap:'wrap', padding:'1em', backgroundColor:'light-dark(white,#0f080c)', border:'1px solid'}
+                        : {flexWrap:'nowrap', padding:'1em', backgroundColor:'light-dark(white,#0f080c)', border:'1px solid'}
+            }>
                 <div style={isMobile ? {width:'100%'} : {width:'50%'}}>
                     <h3>Frontend</h3>
                     <ul>

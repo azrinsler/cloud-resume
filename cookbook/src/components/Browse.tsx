@@ -2,7 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import type {GetRecipeResponse} from "../interfaces/GetRecipeResponse.ts";
 
-import testJson from '../json/test-get-recipe-response.json' with { type : 'json' }
+import testJson from '../json/test/test-get-recipe-response.json' with { type : 'json' }
 const testResponse = testJson as GetRecipeResponse
 
 import '../css/browse.css'

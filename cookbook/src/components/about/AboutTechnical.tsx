@@ -19,7 +19,7 @@ const AboutTechnical: React.FC<AboutTechnicalProps> = (props: AboutTechnicalProp
         console.log(activeImg);
         activeImg?.scrollIntoView({behavior:'smooth',inline:'center'})
         if (!isMobile)
-            activeImg!.style.border = '5px solid light-dark(blue,#63ff78)'
+            activeImg!.style.border = '5px solid light-dark(blue,white)'
         props.images.forEach((image) => {
             const thisImg = document.getElementById(image.props.id)
             if (thisImg != activeImg) {

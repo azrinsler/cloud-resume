@@ -1,3 +1,7 @@
+h2 {
+    font-size: 1.5em;
+}
+
 /*noinspection CssInvalidFunction*/
 #about-technical-images {
     position: relative;
@@ -27,9 +31,7 @@
 #about-technical-content {
     flex-grow: 1;
     width: 100%;
-    border: 1px solid;
     padding: 0.5em;
-    background-color: light-dark(whitesmoke,black);
     place-self: center;
     overflow-y: scroll;
 }
@@ -39,7 +41,7 @@
     place-content: center;
     position: sticky;
     height: 100%;
-    background-color: light-dark(rgba(255,255,255,0.5), rgba(0,0,0,0.5));
+    background-color: light-dark(rgba(255,255,255,0.5), #12000a85);
     cursor: pointer;
     user-select: none; /* so users don't accidentally select/highlight button text when they meant to click on it */
 }
@@ -60,4 +62,8 @@
 
 .about-technical-caption > h2 {
     text-align: center;
+}
+
+.about-technical-architecture-caption > div {
+    padding: 1em;
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import '../../css/about.css'
-import {useEffect, useState} from 'react';
+
 import AboutTechnical from "./AboutTechnical.tsx";
 
 import architectureDiagram from '../../assets/diagrams/architecture.drawio.png'
@@ -9,19 +9,17 @@ import frontendDiagram from '../../assets/diagrams/frontend.drawio.png'
 import backendDiagram from '../../assets/diagrams/backend.drawio.png'
 import networkDiagram from '../../assets/diagrams/networking.drawio.png'
 import devopsDiagram from '../../assets/diagrams/devops.drawio.png'
+
 import AboutArchitecture from "./AboutArchitecture.tsx";
 import AboutFrontend from "./AboutFrontend.tsx";
 import AboutBackend from "./AboutBackend.tsx";
 import AboutNetwork from "./AboutNetwork.tsx";
 import AboutDevOps from "./AboutDevOps.tsx";
 
+import {useState} from "react";
+
 const About : () => React.JSX.Element = () => {
     const [activeTab, setActiveTab] = useState('simple')
-
-    useEffect(()=>{
-
-    }
-    ,[activeTab]);
 
     const getTab = (tab: string) => {
         switch (tab) {
