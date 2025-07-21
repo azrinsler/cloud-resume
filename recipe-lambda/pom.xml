@@ -9,7 +9,7 @@
 
     <properties>
         <argLine/>
-        <jvm.version>17</jvm.version>
+        <jvm.version>21</jvm.version>
         <kotlin.version>2.1.20</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <maven.compiler.source>${jvm.version}</maven.compiler.source>
