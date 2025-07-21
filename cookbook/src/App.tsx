@@ -9,7 +9,6 @@ import About from "./components/about/About.tsx";
 import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
 import NewRecipe from "./components/NewRecipe.tsx";
-import RecipeSearch from "./components/RecipeSearch.tsx";
 
 const testRecipe = testRecipeJson as Recipe
 
@@ -95,7 +94,6 @@ export function App() {
                   <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
                   <div onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
                   <div onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
-                  <div onClick={ () => { setSidebarOption("search") } }>Recipe Search</div>,
                   <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
                   <div onMouseLeave={ () => { setJokeOption("") } }
                        onMouseEnter={ () => { setJokeOption("donate") } }>
@@ -124,8 +122,6 @@ export function App() {
                               steps={data.steps}>
                           </RecipeCard>
                         </>
-                  : sidebarOption == "search"
-                      ? <RecipeSearch></RecipeSearch>
                   : <>Unknown Sidebar Option</>
               }
               <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>

@@ -18,6 +18,14 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState<GetRecipeResponse>();
+    const [searchTerm, setSearchTerm] = useState("")
+
+    const filteredTitles = (data || testResponse).recipes.filter(recipe => searchMatches(recipe.title))
+
+    function searchMatches (term: string) : boolean {
+        const pattern = new RegExp('.*(' + searchTerm + ').*', 'i')
+        return pattern.test(term)
+    }
 
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
@@ -58,14 +66,24 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 loading
                     ? <Preheating></Preheating>
                     : <div id="browse-recipes" className="flex-column">
-                            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>All Recipes</h1>
-                            { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
-                            <ul style={{marginLeft:'1em'}}> {
-                                (data || testResponse).recipes.map(recipe =>
-                                    <li key={recipe.id}  onClick={() => {recipeCallback(recipe.id)}}><h3 style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</h3></li>
-                                )
-                            } </ul>
+                        <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>Browse Recipes</h1>
+                        <div className='flex-row' style={{placeContent:'center',placeItems:'center',padding:'1em',borderBottom:'1px solid'}}>
+                            <label htmlFor='browse-recipes-search' style={{fontSize:'1.25em'}}>Title:&nbsp;</label>
+                            <input
+                                id='browse-recipes-search'
+                                type='text' name='browse-recipes-search'
+                                style={{width:'80%',textAlign:'center'}}
+                                onChange={e => setSearchTerm(e.target.value)}
+                                placeholder='Filter by Title'
+                            />
                         </div>
+                        { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
+                        <ul style={{marginLeft:'1em'}}> {
+                            filteredTitles.map(recipe =>
+                                <li key={recipe.id}  onClick={() => {recipeCallback(recipe.id)}}><h3 style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</h3></li>
+                            )
+                        } </ul>
+                    </div>
             }
         </>
     )
