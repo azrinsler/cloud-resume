@@ -52,7 +52,9 @@ resource "aws_lambda_function" "recipe_lambda_function" {
   }
 
   environment {
-    AWS_LAMBDA_EXEC_WRAPPER = "/opt/otel-stream-handler" # Used by the ADOT Layer to wrap the handler (wrapper layer)
+    variables = {
+      AWS_LAMBDA_EXEC_WRAPPER = "/opt/otel-stream-handler" # Used by the ADOT Layer to wrap the handler (wrapper layer)
+    }
   }
 
   # This is the AWS ADOT layer (aws distro for open telemetry)
