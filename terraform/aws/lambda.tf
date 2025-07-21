@@ -53,6 +53,7 @@ resource "aws_lambda_function" "recipe_lambda_function" {
 
   environment {
     variables = {
+      # https://aws-otel.github.io/docs/getting-started/lambda/lambda-java (may want to try otel-proxy-handler at some point)
       AWS_LAMBDA_EXEC_WRAPPER = "/opt/otel-handler" # Used by the ADOT Layer to wrap the handler (wrapper layer)
     }
   }

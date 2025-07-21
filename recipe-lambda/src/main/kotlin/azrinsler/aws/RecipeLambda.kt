@@ -5,6 +5,10 @@ import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
+import io.opentelemetry.api.trace.Span
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient
@@ -13,13 +17,21 @@ import software.amazon.awssdk.services.dynamodb.model.DynamoDbException
 import software.amazon.awssdk.services.dynamodb.model.QueryRequest
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest
 
-
-val region : Region = Region.US_EAST_1
-
 @Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
 class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+    val logger : Logger = LoggerFactory.getLogger(RecipeLambda::class.java)
+    val region : Region = Region.US_EAST_1
+
+
     override fun handleRequest(event: APIGatewayProxyRequestEvent, context: Context): APIGatewayProxyResponseEvent {
-        val log = context.logger.also { it.log("Recipe Lambda Handler - API Gateway Proxy Request Event received.") }
+        // OpenTelemetry span context information - helps AWS correlate logs to traces
+        val span = Span.current()
+        if (span.spanContext.isValid) {
+            MDC.put("traceId", span.spanContext.traceId)
+            MDC.put("spanId", span.spanContext.spanId)
+        }
+
+        logger.trace("Recipe Lambda Handler - API Gateway Proxy Request Event received.")
 
         val response = APIGatewayProxyResponseEvent()
 
@@ -35,32 +47,32 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
 
         try {
 
-            log.log("Request Body: ${event.body}")
+            logger.info("Request Body: ${event.body}")
             val inputAsJson = JacksonWrapper.readTree(event.body)
 
             val operation =
-                if (inputAsJson["operation"].isTextual) inputAsJson["operation"].asText().also { log.log("Operation is Textual") }
+                if (inputAsJson["operation"].isTextual) inputAsJson["operation"].asText().also { logger.trace("Operation is Textual") }
                 else inputAsJson["operation"].toString()
 
-            log.log("Operation: $operation")
+            logger.info("Operation: $operation")
 
             when (operation) {
                 "searchById" -> {
                     val recipeKey = "recipeId"
                     val recipeId =
-                        if (inputAsJson[recipeKey].isTextual)   inputAsJson[recipeKey].asText().also { log.log("Recipe ID is Textual") }
+                        if (inputAsJson[recipeKey].isTextual)   inputAsJson[recipeKey].asText().also { logger.trace("Recipe ID is Textual") }
                         else                                    inputAsJson[recipeKey].toString()
 
                     val responseBody = searchById(recipeId)
                     if (responseBody.isNotEmpty()) { // return an 'ok' response with whatever our search turned up
-                        log.log("Recipe found")
+                        logger.info("Recipe found")
                         with (response) {
                             statusCode = 200
                             body = responseBody
                         }
                     }
                     else { // return 'resource not found'
-                        log.log("Recipe was not found")
+                        logger.warn("Recipe was not found")
                         with (response) {
                             statusCode = 404
                             body = "No recipe with id $recipeId found"
@@ -70,14 +82,14 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
                 "getRecipes" -> {
                     val responseBody = getRecipeTitles()
                     if (responseBody.isNotEmpty()) { // return an 'ok' response with whatever our search turned up
-                        log.log("Recipes Found: ${responseBody.count { it == '{'} }")
+                        logger.info("Recipes Found: ${responseBody.count { it == '{'} }")
                         with (response) {
                             statusCode = 200
                             body = responseBody
                         }
                     }
                     else { // return 'resource not found'
-                        log.log("Failed to get recipes")
+                        logger.warn("Failed to get recipes")
                         with (response) {
                             statusCode = 404
                             body = "No recipes found..? That can't be right."
@@ -85,7 +97,7 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
                     }
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
-                    log.log("Unrecognized operation: $operation")
+                    logger.warn("Unrecognized operation: $operation")
                     with (response) {
                         statusCode = 400
                         body = "Unrecognized operation: $operation"
@@ -95,7 +107,7 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
             return response
         }
         catch (e: Exception) {
-            log.log("Failure! ${e.message}")
+            logger.error("Failure! ${e.message}")
             throw e
         }
     }
