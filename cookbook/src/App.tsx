@@ -8,6 +8,8 @@ import type {Recipe} from "./interfaces/Recipe.ts";
 import About from "./components/about/About.tsx";
 import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
+import NewRecipe from "./components/NewRecipe.tsx";
+import RecipeSearch from "./components/RecipeSearch.tsx";
 
 const testRecipe = testRecipeJson as Recipe
 
@@ -107,7 +109,7 @@ export function App() {
                   sidebarOption == "about"
                       ? <About></About>
                   : sidebarOption == "new"
-                      ? <>TODO</>
+                      ? <NewRecipe></NewRecipe>
                   : sidebarOption == "browse"
                       ? <Browse recipeCallback={fetchRecipe}></Browse>
                   : sidebarOption == "recipe" && loading
@@ -123,7 +125,7 @@ export function App() {
                           </RecipeCard>
                         </>
                   : sidebarOption == "search"
-                      ? <>TODO</>
+                      ? <RecipeSearch></RecipeSearch>
                   : <>Unknown Sidebar Option</>
               }
           </div>

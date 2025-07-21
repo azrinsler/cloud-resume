@@ -58,7 +58,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 loading
                     ? <Preheating></Preheating>
                     : <div id="browse-recipes" className="flex-column">
-                            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>Recipes</h1>
+                            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>All Recipes</h1>
                             { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
                             <ul style={{marginLeft:'1em'}}> {
                                 (data || testResponse).recipes.map(recipe =>
