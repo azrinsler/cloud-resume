@@ -30,8 +30,11 @@ class NewRecipeLambda : RequestHandler<SQSEvent, Unit> {
 
         logger.trace("${this::class.simpleName} RequestHandler - SQSEvent received.")
 
-        event.records.forEach { record ->
-            handleRecord(record)
+        logger.info("Records: ${event.records.size}")
+        if (event.records.isNotEmpty()) {
+            event.records.forEach { record ->
+                handleRecord(record)
+            }
         }
     }
 
