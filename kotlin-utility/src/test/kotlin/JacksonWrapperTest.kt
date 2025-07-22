@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
 import java.math.BigInteger
 
-
 class JacksonWrapperTest
 {
     @Test

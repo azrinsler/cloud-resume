@@ -22,7 +22,6 @@ val queueUrl = "https://sqs.$region.amazonaws.com/$accountId/$queueName"
 
 @Suppress("unused") // Though this uses a generic RequestStreamHandler, it is intended for SQSEvent inputs
 class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparently fails due to a casing mistake: Records vs. records)
-
     val logger : Logger = LoggerFactory.getLogger(this::class.java)
 
     override fun handleRequest(input : InputStream, output : OutputStream, context: Context) {
@@ -42,7 +41,10 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
         logger.info("Records: ${records.size()}")
 
         for (record in records) {
-            logger.info("Record Body: ${record["body"]}")
+            val recordJson = record["body"].toString()
+            logger.info("Record Body: $recordJson")
+            val recipe = JacksonWrapper.readJson(recordJson) as Recipe
+            logger.info("Recipe: $recipe")
         }
     }
 

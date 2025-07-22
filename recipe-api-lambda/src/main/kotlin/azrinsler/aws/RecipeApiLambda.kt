@@ -96,6 +96,10 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         }
                     }
                 }
+                "newRecipe" -> {
+                    // TODO
+                    // send to SQS: new-recipe-input-queue
+                }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
                     logger.warn("Unrecognized operation: $operation")
                     with (response) {
