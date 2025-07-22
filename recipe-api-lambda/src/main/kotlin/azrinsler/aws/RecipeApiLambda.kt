@@ -16,12 +16,19 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException
 import software.amazon.awssdk.services.dynamodb.model.QueryRequest
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest
+import software.amazon.awssdk.services.sqs.SqsClient
+import software.amazon.awssdk.services.sqs.model.SendMessageRequest
+
+
+const val accountId = "477850672676"
+const val newRecipeQueueName = "new-recipe-input-queue"
 
 @Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
 class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     val logger : Logger = LoggerFactory.getLogger(RecipeApiLambda::class.java)
     val region : Region = Region.US_EAST_1
 
+    val newRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$newRecipeQueueName"
 
     override fun handleRequest(event: APIGatewayProxyRequestEvent, context: Context): APIGatewayProxyResponseEvent {
         // OpenTelemetry span context information - helps AWS correlate logs to traces
@@ -97,8 +104,29 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                     }
                 }
                 "newRecipe" -> {
-                    // TODO
-                    // send to SQS: new-recipe-input-queue
+                    val sqsClient = SqsClient.builder()
+                        .region(region)
+                        .credentialsProvider(DefaultCredentialsProvider.create())
+                        .build()
+
+                    val recipeBody = inputAsJson["recipe"].asText()
+
+                    sqsClient.use {
+                        val sendMsgRequest = SendMessageRequest.builder()
+                            .queueUrl(newRecipeQueueUrl)
+                            .messageBody("Hello from Java!")
+                            .delaySeconds(5)
+                            .build()
+
+                        val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
+
+                        with (response) {
+                            statusCode = 202
+                            body = "Recipe was successfully sent to queue for additional handling. Assuming there " +
+                                    "are no issues, it should start appearing in search results momentarily. " +
+                                    "Message ID: ${sqsResponse.messageId()}"
+                        }
+                    }
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
                     logger.warn("Unrecognized operation: $operation")
