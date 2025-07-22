@@ -47,8 +47,4 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
             logger.info("Recipe: $recipe")
         }
     }
-
-    fun handleRecord (record: SQSEvent.SQSMessage) {
-        logger.info(record.body)
-    }
 }

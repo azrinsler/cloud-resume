@@ -1,6 +1,11 @@
 # log group for "java" (kotlin) lambda
-resource "aws_cloudwatch_log_group" "kotlin_lambda_logs" {
+resource "aws_cloudwatch_log_group" "new_recipe_lambda_logs" {
   name = "/aws/lambda/${aws_lambda_function.new_recipe_lambda_function.function_name}"
+  retention_in_days = 1
+}
+
+resource "aws_cloudwatch_log_group" "recipe_api_lambda_logs" {
+  name = "/aws/lambda/${aws_lambda_function.recipe_api_lambda_function.function_name}"
   retention_in_days = 1
 }
 
