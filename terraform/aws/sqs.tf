@@ -39,11 +39,11 @@ resource "aws_sqs_queue" "new_recipe_input_dlq" {
   name = "new-recipe-input-dlq"
 }
 
-resource "aws_sqs_queue_redrive_allow_policy" "python_lambda_queue_redrive_allow_policy" {
+resource "aws_sqs_queue_redrive_allow_policy" "new_recipe_lambda_queue_redrive_allow_policy" {
   queue_url = aws_sqs_queue.python_lambda_dlq.id
 
   redrive_allow_policy = jsonencode({
     redrivePermission = "byQueue",
-    sourceQueueArns   = [aws_sqs_queue.python_lambda_queue.arn]
+    sourceQueueArns   = [aws_sqs_queue.new_recipe_input_queue.arn]
   })
 }
