@@ -2,7 +2,6 @@ package azrinsler.aws
 
 import JacksonWrapper
 import com.amazonaws.services.lambda.runtime.Context
-import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler
 import com.amazonaws.services.lambda.runtime.events.SQSEvent
 import io.opentelemetry.api.trace.Span
@@ -10,8 +9,10 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import software.amazon.awssdk.regions.Region
+import java.io.BufferedReader
 import java.io.InputStream
 import java.io.OutputStream
+import kotlin.text.Charsets.UTF_8
 
 const val accountId = "477850672676"
 const val tableName = "" // todo
@@ -33,7 +34,7 @@ class NewRecipeLambda : RequestStreamHandler {
         }
         logger.trace("${this::class.simpleName} RequestHandler - Input received.")
 
-        val inputString = input.readAllBytes().toString()
+        val inputString = input.bufferedReader(UTF_8).use(BufferedReader::readText)
 
         logger.info("Input String: $inputString")
 
