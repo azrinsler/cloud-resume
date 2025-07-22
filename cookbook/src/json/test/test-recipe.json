@@ -4,22 +4,22 @@
     {
       "name": "Butter",
       "unit": "Cup (2 Sticks)",
-      "amount": 1
+      "amount": "1"
     },
     {
       "name": "Sugar",
       "unit": "Cups",
-      "amount": 2
+      "amount": "2"
     },
     {
       "name": "Flour",
       "unit": "Cups",
-      "amount": 2
+      "amount": "2"
     },
     {
       "name": "Butterscotch Chips",
       "unit": "Cup",
-      "amount": 1
+      "amount": "1"
     },
     {
       "name": "Salt Flakes",
@@ -28,27 +28,27 @@
     {
       "name": "Salt",
       "unit": "tsp.",
-      "amount": 2
+      "amount": "2"
     },
     {
       "name": "Cinnamon",
       "unit": "tsp.",
-      "amount": 1
+      "amount": "1"
     },
     {
       "name": "Baking Powder",
       "unit": "tsp.",
-      "amount": 2
+      "amount": "2"
     },
     {
       "name": "Baking Soda",
       "unit": "tbsp.",
-      "amount": 1
+      "amount": "1"
     },
     {
       "name": "Vanilla Extract",
       "unit": "tsp.",
-      "amount": 1.5
+      "amount": "1 1/2"
     }
   ],
   "items": [

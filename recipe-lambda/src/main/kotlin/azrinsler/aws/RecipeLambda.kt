@@ -142,7 +142,7 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
 
             val ingredients = foundRecipe["ingredients"]?.l()?.map {
                 val ingredient = it.m()
-                """{ "name": "${ingredient["name"]?.s()}", "unit": "${ingredient["unit"]?.s()}", "amount": "${ingredient["amount"]?.n()}" }"""
+                """{ "name": "${ingredient["name"]?.s()}", "unit": "${ingredient["unit"]?.s()}", "amount": "${ingredient["amount"]?.s()}" }"""
             }
 
             val items = foundRecipe["items"]?.l()?.map { "\"${it.s()}\"" }
