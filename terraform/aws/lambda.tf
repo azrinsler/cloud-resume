@@ -6,7 +6,7 @@ resource "aws_lambda_function" "new_recipe_lambda_function" {
   s3_key    = aws_s3_object.new_recipe_lambda_source.key
   # Supported Runtimes: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported
   runtime = "java21"
-  handler = "azrinsler.aws.${var.new_recipe_lambda_class}"
+  handler = "azrinsler.aws.${var.new_recipe_lambda_class}::handleRequest"
   source_code_hash = filebase64sha256(local.new_recipe_lambda_path)
   role = aws_iam_role.lambda_exec.arn
   timeout = 30 // specified in seconds
