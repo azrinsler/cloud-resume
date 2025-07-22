@@ -35,13 +35,14 @@ class NewRecipeLambda : RequestStreamHandler {
         logger.trace("${this::class.simpleName} RequestHandler - Input received.")
 
         val inputString = input.bufferedReader(UTF_8).use(BufferedReader::readText)
-
-        logger.info("Input String: $inputString")
-
         val inputJson = JacksonWrapper.readTree(inputString)
-        val records = inputJson.get("records")
+        val records = inputJson["records"]
 
-        logger.info("Records: $records")
+        logger.info("Records: ${records.size()}")
+
+        for (record in records) {
+            logger.info("Record Body: ${record["body"]}")
+        }
     }
 
     fun handleRecord (record: SQSEvent.SQSMessage) {
