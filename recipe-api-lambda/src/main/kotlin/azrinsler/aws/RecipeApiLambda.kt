@@ -1,6 +1,7 @@
 package azrinsler.aws
 
 import JacksonWrapper
+import Recipe
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
@@ -110,23 +111,31 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         .build()
 
                     val recipeBody = inputAsJson["recipe"].asText()
+                    // make sure we can read this input as a Recipe before accepting it
+                    val recipe = JacksonWrapper.readJson(recipeBody) as? Recipe
 
-                    sqsClient.use {
-                        val sendMsgRequest = SendMessageRequest.builder()
-                            .queueUrl(newRecipeQueueUrl)
-                            .messageBody("Hello from Java!")
-                            .delaySeconds(5)
-                            .build()
+                    if (recipe != null) {
+                        sqsClient.use {
+                            val sendMsgRequest = SendMessageRequest.builder()
+                                .queueUrl(newRecipeQueueUrl)
+                                .messageBody(recipeBody)
+                                .build()
 
-                        val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
+                            val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
 
-                        with (response) {
-                            statusCode = 202
-                            body = "Recipe was successfully sent to queue for additional handling. Assuming there " +
-                                    "are no issues, it should start appearing in search results momentarily. " +
-                                    "Message ID: ${sqsResponse.messageId()}"
+                            with (response) {
+                                statusCode = 202
+                                body = "Recipe was successfully sent to queue for additional handling. Assuming there " +
+                                        "are no issues, it should start appearing in search results momentarily. " +
+                                        "Message ID: ${sqsResponse.messageId()}"
+                            }
                         }
                     }
+                    else with (response) {
+                        statusCode = 422
+                        body = "Failed to parse input recipe as Recipe data class."
+                    }
+
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
                     logger.warn("Unrecognized operation: $operation")

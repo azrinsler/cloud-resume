@@ -1,9 +1,9 @@
 package azrinsler.aws
 
 import JacksonWrapper
+import Recipe
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler
-import com.amazonaws.services.lambda.runtime.events.SQSEvent
 import io.opentelemetry.api.trace.Span
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
