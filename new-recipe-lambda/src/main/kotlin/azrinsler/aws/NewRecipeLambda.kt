@@ -20,8 +20,8 @@ const val queueName = "" // todo
 val region: Region = Region.US_EAST_1
 val queueUrl = "https://sqs.$region.amazonaws.com/$accountId/$queueName"
 
-@Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
-class NewRecipeLambda : RequestStreamHandler {
+@Suppress("unused") // Though this uses a generic RequestStreamHandler, it is intended for SQSEvent inputs
+class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparently fails due to a casing mistake: Records vs. records)
 
     val logger : Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -32,11 +32,12 @@ class NewRecipeLambda : RequestStreamHandler {
             MDC.put("traceId", span.spanContext.traceId)
             MDC.put("spanId", span.spanContext.spanId)
         }
+
         logger.trace("${this::class.simpleName} RequestHandler - Input received.")
 
         val inputString = input.bufferedReader(UTF_8).use(BufferedReader::readText)
         val inputJson = JacksonWrapper.readTree(inputString)
-        val records = inputJson["records"]
+        val records = inputJson["Records"]
 
         logger.info("Records: ${records.size()}")
 
