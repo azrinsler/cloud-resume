@@ -30,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_policy" {
   policy_arn = each.key
 }
 
-# gives permissions for the recipe lambda to access xray for telemetry (put trace segments, put telemetry records)
+# gives permissions for the recipe api lambda to access xray for telemetry (put trace segments, put telemetry records)
 resource "aws_iam_role_policy_attachment" "lambda_xray" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"

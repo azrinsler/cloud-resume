@@ -19,7 +19,7 @@ const AboutArchitecture: () => React.JSX.Element = () => {
                 <div style={isMobile ? {width:'100%'} : {width:'50%'}}>
                     <h3>Frontend</h3>
                     <ul>
-                        <li>Written in React JS using Typescript/HTML/CSS</li>
+                        <li>Written in React using Typescript/HTML/CSS</li>
                     </ul>
 
                     <br/>&nbsp;<br/>

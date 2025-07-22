@@ -3,14 +3,14 @@ variable "cookbook_bucket_name" {
   default = "azrinsler-cookbook"
 }
 
-variable "packaged_kotlin_relative_root" {
+variable "packaged_new_recipe_relative_root" {
   type = string
-  default = "./kotlin-lambda/target"
+  default = "./new-recipe-lambda/target"
 }
 
-variable "packaged_recipe_lambda_relative_root" {
+variable "packaged_recipe_api_lambda_relative_root" {
   type = string
-  default = "./recipe-lambda/target"
+  default = "./recipe-api-lambda/target"
 }
 
 variable "packaged_python_relative_root" {
@@ -38,32 +38,32 @@ variable "site_homepage" {
   default = "index.html"
 }
 
-variable "kotlin_lambda_class" {
+variable "new_recipe_lambda_class" {
   type = string
-  default = "KotlinLambda"
+  default = "NewRecipeLambda"
 }
 
-variable "recipe_lambda_class" {
+variable "recipe_api_lambda_class" {
   type = string
-  default = "RecipeLambda"
+  default = "RecipeApiLambda"
 }
 
-variable "kotlin_lambda_artifact" {
+variable "new_recipe_lambda_artifact" {
   type = string
-  default = "kotlin-lambda"
+  default = "new-recipe-lambda"
 }
 
-variable "recipe_lambda_artifact" {
+variable "recipe_api_lambda_artifact" {
   type = string
-  default = "recipe-lambda"
+  default = "recipe-api-lambda"
 }
 
-variable "kotlin_lambda_version" {
+variable "new_recipe_lambda_version" {
   type = string
-  default = "OH-SNAPSHOT"
+  default = "O"
 }
 
-variable "recipe_lambda_version" {
+variable "recipe_api_lambda_version" {
   type = string
   default = "O"
 }

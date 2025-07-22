@@ -18,8 +18,8 @@ import software.amazon.awssdk.services.dynamodb.model.QueryRequest
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest
 
 @Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
-class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-    val logger : Logger = LoggerFactory.getLogger(RecipeLambda::class.java)
+class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+    val logger : Logger = LoggerFactory.getLogger(RecipeApiLambda::class.java)
     val region : Region = Region.US_EAST_1
 
 
@@ -31,7 +31,7 @@ class RecipeLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxy
             MDC.put("spanId", span.spanContext.spanId)
         }
 
-        logger.trace("Recipe Lambda Handler - API Gateway Proxy Request Event received.")
+        logger.trace("Recipe API Lambda Handler - API Gateway Proxy Request Event received.")
 
         val response = APIGatewayProxyResponseEvent()
 

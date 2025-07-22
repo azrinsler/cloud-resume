@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>azrinsler.aws</groupId>
-    <artifactId>recipe-lambda</artifactId>
+    <artifactId>recipe-api-lambda</artifactId>
     <version>O</version>
 
     <properties>

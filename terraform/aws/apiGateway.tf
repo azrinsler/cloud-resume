@@ -36,32 +36,18 @@ resource "aws_apigatewayv2_stage" "primary_gateway_stage" {
 }
 
 # lets AWS know that we're going to be backing this gateway with some lambdas
-resource "aws_apigatewayv2_integration" "primary_gateway_kotlin_lambda_integration" {
+resource "aws_apigatewayv2_integration" "primary_gateway_recipe_api_lambda_integration" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
-  integration_uri    = aws_lambda_function.kotlin_lambda_function.invoke_arn
+  integration_uri    = aws_lambda_function.recipe_api_lambda_function.invoke_arn
   integration_type   = "AWS_PROXY"
   integration_method = "POST"
 }
 
-resource "aws_apigatewayv2_integration" "primary_gateway_recipe_lambda_integration" {
+# sends all POST requests to the recipe api lambda to the... you get it
+resource "aws_apigatewayv2_route" "primary_gateway_recipe_api_route" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
-  integration_uri    = aws_lambda_function.recipe_lambda_function.invoke_arn
-  integration_type   = "AWS_PROXY"
-  integration_method = "POST"
-}
-
-# sends all POST requests to the kotlin lambda to the kotlin lambda
-resource "aws_apigatewayv2_route" "primary_gateway_kotlin_route" {
-  api_id = aws_apigatewayv2_api.primary_gateway.id
-  route_key = "POST /${aws_lambda_function.kotlin_lambda_function.function_name}"
-  target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_kotlin_lambda_integration.id}"
-}
-
-# sends all POST requests to the get recipe lambda to the... you get it
-resource "aws_apigatewayv2_route" "primary_gateway_recipe_route" {
-  api_id = aws_apigatewayv2_api.primary_gateway.id
-  route_key = "POST /${aws_lambda_function.recipe_lambda_function.function_name}"
-  target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_recipe_lambda_integration.id}"
+  route_key = "POST /${aws_lambda_function.recipe_api_lambda_function.function_name}"
+  target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_recipe_api_lambda_integration.id}"
 }
 
 # defines a custom domain name. note that this is separate from (and in addition to) our Route53 custom domain!
