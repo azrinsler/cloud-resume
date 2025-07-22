@@ -31,7 +31,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
             console.log("getRecipes()")
-            fetch("https://api.azrinsler.com/RecipeLambda", {
+            fetch("https://api.azrinsler.com/RecipeApiLambda", {
                 signal: AbortSignal.timeout(120 * 1000),
                 method: "POST",
                 headers: {
