@@ -8,16 +8,20 @@ import io.opentelemetry.api.trace.Span
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider
 import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.sqs.SqsClient
+import software.amazon.awssdk.services.sqs.model.SendMessageRequest
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.OutputStream
 import kotlin.text.Charsets.UTF_8
+import kotlin.use
 
 const val accountId = "477850672676"
-const val queueName = "" // todo
+const val queueName = "save-recipe-input-queue"
 val region: Region = Region.US_EAST_1
-val queueUrl = "https://sqs.$region.amazonaws.com/$accountId/$queueName"
+val saveRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$queueName"
 
 @Suppress("unused") // Though this uses a generic RequestStreamHandler, it is intended for SQSEvent inputs
 class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparently fails due to a casing mistake: Records vs. records)
@@ -31,7 +35,7 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
             MDC.put("spanId", span.spanContext.spanId)
         }
 
-        logger.trace("${this::class.simpleName} RequestHandler - Input received.")
+        logger.trace("${this::class.simpleName} RequestStreamHandler - Input received.")
 
         val inputString = input.bufferedReader(UTF_8).use(BufferedReader::readText)
         val inputJson = JacksonWrapper.readTree(inputString)
@@ -43,7 +47,33 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
             val recordJson = record["body"].asText()
             logger.info("Record Body: $recordJson")
             val recipe = JacksonWrapper.readJson(recordJson) as Recipe
-            logger.info("Recipe: $recipe")
+
+
+
+
+            // THIS IS WHERE WE WOULD DO OUR FANCY CHECKS AND/OR MODIFICATIONS BEFORE SENDING TO QUEUE, IF WE HAD ANY.
+
+
+
+            val recipeJson = JacksonWrapper.writeJson(recipe)
+
+            logger.info("Recipe JSON Output: $recipeJson")
+
+            val sqsClient = SqsClient.builder()
+                .region(region)
+                .credentialsProvider(DefaultCredentialsProvider.create())
+                .build()
+
+            sqsClient.use {
+                val sendMsgRequest = SendMessageRequest.builder()
+                    .queueUrl(saveRecipeQueueUrl)
+                    .messageBody(recipeJson)
+                    .build()
+
+                val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
+
+                logger.info("SQS Response Message ID: ${sqsResponse.messageId()}")
+            }
         }
     }
 }
