@@ -15,7 +15,6 @@ import java.io.OutputStream
 import kotlin.text.Charsets.UTF_8
 
 const val accountId = "477850672676"
-const val tableName = "" // todo
 const val queueName = "" // todo
 val region: Region = Region.US_EAST_1
 val queueUrl = "https://sqs.$region.amazonaws.com/$accountId/$queueName"

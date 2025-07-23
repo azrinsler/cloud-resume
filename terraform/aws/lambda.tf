@@ -89,24 +89,24 @@ resource "aws_lambda_permission" "gateway_recipe_api_lambda_permission" {
   source_arn = "${aws_apigatewayv2_api.primary_gateway.execution_arn}/*/*"
 }
 
-# PYTHON LAMBDA
-data "archive_file" "python_lambda_package" {
+# SAVE RECIPE LAMBDA
+data "archive_file" "save_recipe_lambda_package" {
   type = "zip"
-  source_file = "${var.packaged_python_relative_root}/PythonLambda.py"
-  output_path = "${var.packaged_python_relative_root}/python_lambda.zip"
+  source_file = "${var.packaged_save_recipe_lambda_relative_root}/SaveRecipeLambda.py"
+  output_path = "${var.packaged_save_recipe_lambda_relative_root}/save_recipe_lambda.zip"
 }
-resource "aws_lambda_function" "python_lambda_function" {
-  function_name = "PythonLambda"
-  filename      = "${var.packaged_python_relative_root}/python_lambda.zip"
-  source_code_hash = data.archive_file.python_lambda_package.output_base64sha256
+resource "aws_lambda_function" "save_recipe_lambda_function" {
+  function_name = "SaveRecipeLambda"
+  filename      = "${var.packaged_save_recipe_lambda_relative_root}/save_recipe_lambda.zip"
+  source_code_hash = data.archive_file.save_recipe_lambda_package.output_base64sha256
   role          = aws_iam_role.lambda_exec.arn
   runtime       = "python3.13"
-  handler       = "PythonLambda.lambda_handler"
+  handler       = "SaveRecipeLambda.lambda_handler"
   timeout       = 10 // specified in seconds
 }
 
 # Event source from SQS
-resource "aws_lambda_event_source_mapping" "python_lambda_sqs_event_source_mapping" {
-  event_source_arn = aws_sqs_queue.python_lambda_queue.arn
-  function_name    = aws_lambda_function.python_lambda_function.arn
+resource "aws_lambda_event_source_mapping" "save_recipe_lambda_sqs_event_source_mapping" {
+  event_source_arn = aws_sqs_queue.save_recipe_lambda_queue.arn
+  function_name    = aws_lambda_function.save_recipe_lambda_function.arn
 }

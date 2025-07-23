@@ -13,9 +13,9 @@ variable "packaged_recipe_api_lambda_relative_root" {
   default = "./recipe-api-lambda/target"
 }
 
-variable "packaged_python_relative_root" {
+variable "packaged_save_recipe_lambda_relative_root" {
   type = string
-  default = "./python-lambda"
+  default = "./save-recipe-lambda"
 }
 
 variable "packaged_source_bucket_name" {
