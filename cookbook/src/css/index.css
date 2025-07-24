@@ -75,6 +75,22 @@ li {
     text-align: center;
 }
 
+.x-button {
+    margin: 0.25em;
+    display: flex;
+    width: 1.25em;
+    height: 1.25em;
+    place-content: center;
+    place-items: center;
+    padding-bottom: 0.2em;
+}
+
+/*noinspection CssInvalidFunction*/
+.x-button:hover {
+    background-color: light-dark(red,darkred);
+    font-weight: 700;
+}
+
 .hide-scrollbar {
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
