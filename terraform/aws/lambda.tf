@@ -103,6 +103,24 @@ resource "aws_lambda_function" "save_recipe_lambda_function" {
   runtime       = "python3.13"
   handler       = "SaveRecipeLambda.lambda_handler"
   timeout       = 10 // specified in seconds
+
+
+  tracing_config {
+    mode = "Active" # Enables AWS X-Ray tracing
+  }
+
+  environment {
+    variables = {
+      # https://aws-otel.github.io/docs/getting-started/lambda/lambda-python
+      AWS_LAMBDA_EXEC_WRAPPER = "/opt/otel-instrument" # Used by the ADOT Layer to wrap the handler (wrapper layer)
+    }
+  }
+
+  architectures = ["arm64"]
+  # This is the AWS ADOT layer (aws distro for open telemetry)
+  layers = [
+    "arn:aws:lambda:us-east-1:901920570463:layer:aws-otel-python-arm64-ver-1-32-0:2"
+  ]
 }
 
 # Event source from SQS
