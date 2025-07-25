@@ -76,7 +76,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         logger.info("Recipe found")
                         with (response) {
                             statusCode = 200
-                            body = responseBody
+                            body = JacksonWrapper.writeJson(responseBody)
                         }
                     }
                     else { // return 'resource not found'
