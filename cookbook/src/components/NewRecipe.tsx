@@ -2,21 +2,26 @@ import * as React from "react";
 import {useRef, useState} from "react";
 
 import '../css/new-recipe.css'
+import RecipeIngredient from "./RecipeIngredient.tsx";
+import type {Recipe} from "../interfaces/Recipe.ts";
+import type {Ingredient} from "../interfaces/Ingredient.ts";
 
 const NewRecipe: () => React.JSX.Element = () => {
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
+    const titleRef = useRef<HTMLInputElement>(null)
     const addIngredientRef = useRef<HTMLInputElement>(null)
     const addItemRef = useRef<HTMLInputElement>(null)
     const addStepRef = useRef<HTMLInputElement>(null)
 
-    const [ingredients, setIngredients] = useState<string[]>([])
+    const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const [items, setItems] = useState<string[]>([])
     const [steps, setSteps] = useState<string[]>([])
 
     const addIngredient = () => {
-        const ingredientValue = addIngredientRef.current?.value || ""
+        const ingredientValue = { name: addIngredientRef.current?.value || '', amount: '', unit: '' }
         console.log(ingredientValue)
-        if (ingredientValue.length > 0 && ingredients.indexOf(ingredientValue) < 0) {
+        if (ingredientValue.name.length > 0 && ingredients.indexOf(ingredientValue) < 0) {
             setIngredients([...ingredients, ingredientValue])
             console.log("New ingredient added to ingredients list.")
         }
@@ -27,26 +32,40 @@ const NewRecipe: () => React.JSX.Element = () => {
         addIngredientRef.current!.value = ""
     }
 
-    const removeIngredient = (ingredientToRemove: string) => {
+    const removeIngredient = (ingredientToRemove: Ingredient) => {
         setIngredients(ingredients.filter(ingredient=> ingredient != ingredientToRemove))
     }
 
     const addItem = () => {
         const itemValue = addItemRef.current?.value || ""
-        console.log(itemValue)
+        const newItems = [...items, itemValue]
         if (itemValue.length > 0 && items.indexOf(itemValue) < 0) {
-            setItems([...items, itemValue])
+            setItems(newItems)
             console.log("New item added to items list.")
         }
         else {
             console.log("Item is already in items list.")
         }
-        console.log(items)
+        console.log(newItems)
         addItemRef.current!.value = ""
     }
 
+    const updateItem = (oldValue: string, newValue: string) => {
+        const newItems = [...items].map(item => {
+            if (item == oldValue) return newValue
+            else return item
+        })
+        setItems(newItems)
+        console.log(newItems)
+    }
+
     const removeItem = (itemToRemove: string) => {
-        setItems(items.filter(item => item != itemToRemove ))
+        console.log("old items")
+        console.log(items)
+        console.log("new items")
+        const newItems = items.filter(item => item != itemToRemove )
+        console.log(newItems)
+        setItems(newItems)
     }
 
     const addStep = () => {
@@ -64,7 +83,20 @@ const NewRecipe: () => React.JSX.Element = () => {
     }
 
     const removeStep = (stepToRemove: string) => {
-        setSteps(steps.filter(step=> step != stepToRemove))
+        const newSteps = steps.filter(step=> step != stepToRemove)
+        setSteps(newSteps)
+    }
+
+    const toRecipe = () : Recipe => {
+
+        const recipe = {
+            title: titleRef.current!.value,
+            ingredients: [],
+            items: items,
+            steps: []
+        }
+        console.log(recipe)
+        return recipe
     }
 
     return (
@@ -77,7 +109,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
                     <label htmlFor='new-recipe-title-text'></label>
-                    <input type='text' id='new-recipe-title-text' name='new-recipe-title-text' />
+                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' />
                 </div>
 
                 <br/>&nbsp;<br/>
@@ -102,10 +134,16 @@ const NewRecipe: () => React.JSX.Element = () => {
                             </div>
 
                             <ul id='new-recipe-ingredient-list'>
-                                { ingredients.map(ingredient =>
-                                    <li className='flex-row' key={ingredient} style={{placeItems:'center'}}>
-                                        <button className='x-button' style={{marginRight:'1em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
-                                        {ingredient}
+                                { ingredients.map((ingredient, index) =>
+                                    <li className='flex-row' key={'ingredient'+index} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
+                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
+                                        <RecipeIngredient
+                                            name={ingredient.name}
+                                            amount={ingredient.amount}
+                                            unit={ingredient.unit}
+                                            onChange={(ingredient:Ingredient)=>console.log(ingredient)}
+                                        >
+                                        </RecipeIngredient>
                                     </li>
                                 )}
                             </ul>
@@ -124,15 +162,20 @@ const NewRecipe: () => React.JSX.Element = () => {
                             />
                             <label htmlFor='new-recipe-add-item-text'>
                                 <button id='new-recipe-add-item-button' onClick={addItem}>Add Item</button>
-                                <span style={{flexGrow:'1'}}></span>
                             </label>
                         </div>
 
                         <ul id='new-recipe-item-list'>
-                            { items.map( item =>
+                            { items.map( (item) =>
                                 <li className='flex-row' key={item} style={{placeItems:'center'}}>
                                     <button className='x-button' style={{marginRight:'1em'}} onClick={()=>{removeItem(item)}}>x</button>
-                                    {item}
+                                    <input
+                                        type='text'
+                                        defaultValue={item}
+                                        onBlur={(event)=>{updateItem(item,event.target.value)}}
+                                        onKeyDown={(event)=>{ if (event.key == 'Enter') { event.currentTarget.blur() } } }
+                                        style={{backgroundColor: 'transparent', borderWidth: '0 0 1px 0', width:'100%'}}
+                                    />
                                 </li>
                             )}
                         </ul>
@@ -163,6 +206,8 @@ const NewRecipe: () => React.JSX.Element = () => {
                     </div>
                 </div>
             </div>
+
+            <button style={{margin:'0.25em'}}><h2 style={{textAlign:'center'}} onClick={toRecipe}>Submit Recipe</h2></button>
         </div>
     )
 }
