@@ -1,6 +1,7 @@
 package azrinsler.aws
 
 import JacksonWrapper
+import JacksonWrapper.writeJson
 import Recipe
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
@@ -76,7 +77,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         logger.info("Recipe found")
                         with (response) {
                             statusCode = 200
-                            body = JacksonWrapper.writeJson(responseBody)
+                            body = writeJson(responseBody)
                         }
                     }
                     else { // return 'resource not found'
@@ -183,20 +184,20 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
         if (queryResponse.items().isNotEmpty()) {
             val foundRecipe = queryResponse.items()[0] as Map<String, AttributeValue>
 
-            val title = foundRecipe["title"]?.s()
+            val title = writeJson(foundRecipe["title"]?.s()?:"")
 
             val ingredients = foundRecipe["ingredients"]?.l()?.map {
                 val ingredient = it.m()
-                """{ "name": "${ingredient["name"]?.s()}", "unit": "${ingredient["unit"]?.s()}", "amount": "${ingredient["amount"]?.s()}" }"""
+                """{ "name": ${writeJson(ingredient["name"]?.s()?:"")}, "unit": ${writeJson(ingredient["unit"]?.s()?:"")}, "amount": ${writeJson(ingredient["amount"]?.s()?:"")} }"""
             }
 
-            val items = foundRecipe["items"]?.l()?.map { "\"${it.s()}\"" }
+            val items = foundRecipe["items"]?.l()?.map { writeJson(it.s()) }
 
             val steps = foundRecipe["steps"]?.l()?.map {
                 val step = it.m()
-                """{ "ordinal": "${step["ordinal"]?.n()}", "description": "${step["description"]?.s()}", "notes": ${ if (step["notes"]?.l()?.isNotEmpty() == true) step["notes"]?.l()?.map { note -> "\"${note.s()}\"" } else "[]"} }"""
+                """{ "ordinal": ${writeJson(step["ordinal"]?.n()?:"")}, "description": ${writeJson(step["description"]?.s()?:"")}, "notes": ${ if (step["notes"]?.l()?.isNotEmpty() == true) step["notes"]?.l()?.map { note -> writeJson(note.s()) } else "[]"} }"""
             }
-            responseBody = """{ "title": "$title", "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+            responseBody = """{ "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
         }
         return responseBody
     }
@@ -217,8 +218,8 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
         // assembles an array of the results returned as little JSON objects:  [{ id, title },{ id, title },etc.]
         var response = ""
         for (item in queryResponse.items()) {
-            val id = JacksonWrapper.writeJson(item["recipe_id"]!!.s())
-            val title = JacksonWrapper.writeJson(item["title"]!!.s())
+            val id = writeJson(item["recipe_id"]!!.s())
+            val title = writeJson(item["title"]!!.s())
             val json = """{ "id": $id, "title": $title }"""
             response = if (response.isNotEmpty()) "$response, $json" else json
         }
