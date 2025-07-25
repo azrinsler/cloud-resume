@@ -93,7 +93,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         logger.info("Recipes Found: ${responseBody.count { it == '{'} }")
                         with (response) {
                             statusCode = 200
-                            body = JacksonWrapper.writeJson(responseBody)
+                            body = responseBody
                         }
                     }
                     else { // return 'resource not found'
@@ -217,8 +217,8 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
         // assembles an array of the results returned as little JSON objects:  [{ id, title },{ id, title },etc.]
         var response = ""
         for (item in queryResponse.items()) {
-            val id = item["recipe_id"]!!.s()
-            val title = item["title"]!!.s()
+            val id = JacksonWrapper.writeJson(item["recipe_id"]!!.s())
+            val title = JacksonWrapper.writeJson(item["title"]!!.s())
             val json = """{ "id": "$id", "title": "$title" }"""
             response = if (response.isNotEmpty()) "$response, $json" else json
         }
