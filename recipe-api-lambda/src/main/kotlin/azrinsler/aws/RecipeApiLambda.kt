@@ -93,7 +93,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         logger.info("Recipes Found: ${responseBody.count { it == '{'} }")
                         with (response) {
                             statusCode = 200
-                            body = responseBody
+                            body = JacksonWrapper.writeJson(responseBody)
                         }
                     }
                     else { // return 'resource not found'
@@ -129,9 +129,9 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
 
                             with (response) {
                                 statusCode = 202
-                                body = "Recipe was successfully sent to queue for additional handling. Assuming there " +
+                                body = "\"message\":\"Recipe was successfully sent to queue for additional handling. Assuming there " +
                                         "are no issues, it should start appearing in search results momentarily. " +
-                                        "Message ID: ${sqsResponse.messageId()}"
+                                        "Message ID: ${sqsResponse.messageId()}\""
                             }
                         }
                     }

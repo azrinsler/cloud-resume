@@ -48,9 +48,9 @@ def lambda_handler(event, context):
                         Item={
                             "recipe_id" : recipe_id,
                             "title" : recipe_title,
-                            "ingredients": recipe["ingredients"],
-                            "items": recipe["items"],
-                            "steps": recipe["steps"]
+                            "ingredients": [] if not recipe.get("ingredients") else recipe["ingredients"],
+                            "items": [] if not recipe.get("items") else recipe["items"],
+                            "steps": [] if not recipe.get("steps") else recipe["steps"]
                         }
                     )
 
@@ -71,9 +71,9 @@ def lambda_handler(event, context):
                         Item={
                             "recipe_id" : recipe_id,
                             "title" : recipe_title,
-                            "ingredients": recipe["ingredients"],
-                            "items": recipe["items"],
-                            "steps": recipe["steps"]
+                            "ingredients": [] if not recipe.get("ingredients") else recipe["ingredients"],
+                            "items": [] if not recipe.get("items") else recipe["items"],
+                            "steps": [] if not recipe.get("steps") else recipe["steps"]
                         }
                     )
 

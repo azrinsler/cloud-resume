@@ -5,7 +5,7 @@ import '../css/recipe-card.css'
 
 const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
-    const stepsOrdered = recipe.steps.sort((a,b)=>a.ordinal-b.ordinal)
+    const stepsOrdered = recipe.steps?.sort((a,b)=>a.ordinal-b.ordinal)
     return (
         <div className='flex-column' style={{width:'100%',flexGrow:'1'}}>
             <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>Current Recipe</h1>
