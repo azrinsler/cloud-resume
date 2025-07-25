@@ -54,7 +54,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             <h3>Steps</h3>
                             <hr/>
                             <ul id="recipe-steps">
-                                { stepsOrdered.map(step=>
+                                { stepsOrdered?.map(step=>
                                     <li key={step.ordinal}>
                                         <input type='radio' name='selected-step' id={'step'+step.ordinal} value={step.description}/>
                                         <label htmlFor={'step'+step.ordinal}>{step.description}</label>
