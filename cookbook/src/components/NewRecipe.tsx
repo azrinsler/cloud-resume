@@ -108,12 +108,12 @@ const NewRecipe: () => React.JSX.Element = () => {
     }
 
     return (
-        <div className='flex-column' style={{width:'100%',flexGrow:'1'}}>
+        <div className='flex-column' style={{width:'100%',flexGrow:'1',overflow:'hidden'}}>
             <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>New Recipe</h1>
 
             <br/>&nbsp;<br/>
 
-            <div id='new-recipe' className='flex-column' style={{flexGrow:'1'}}>
+            <div id='new-recipe' className='flex-column' style={isMobile? {overflowY:'scroll'} : {flexGrow:'1'}}>
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
                     <label htmlFor='new-recipe-title-text'></label>
@@ -122,26 +122,25 @@ const NewRecipe: () => React.JSX.Element = () => {
 
                 <br/>&nbsp;<br/>
 
-                <div className='flex-row' style={{flexGrow:'1'}}>
+                <div className='flex-row' style={{flexGrow:'1',maxHeight:'100%'}}>
 
                     <div className='flex-column' style={{minWidth:'40%',flexGrow:'1'}}>
                         <h3>Ingredients</h3>
 
-                        <div className='flex-column' style={{minHeight:'25%'}}>
-                            <div className='flex-row' style={{placeItems:'center'}}>
-                                <input
-                                    ref={addIngredientRef}
-                                    type='text'
-                                    id='new-recipe-add-ingredient-text'
-                                    name='new-recipe-add-ingredient-text'
-                                    onKeyDown={ event => { if (event.key == 'Enter') { addIngredient() } } }
-                                />
-                                <label htmlFor='new-recipe-add-ingredient-text'>
-                                    <button id='new-recipe-add-ingredient-button' onClick={addIngredient}>Add Ingredient</button>
-                                </label>
-                            </div>
-
-                            <ul id='new-recipe-ingredient-list'>
+                        <div className='flex-row' style={{placeItems:'center'}}>
+                            <input
+                                ref={addIngredientRef}
+                                type='text'
+                                id='new-recipe-add-ingredient-text'
+                                name='new-recipe-add-ingredient-text'
+                                onKeyDown={ event => { if (event.key == 'Enter') { addIngredient() } } }
+                            />
+                            <label htmlFor='new-recipe-add-ingredient-text'>
+                                <button id='new-recipe-add-ingredient-button' onClick={addIngredient}>Add Ingredient</button>
+                            </label>
+                        </div>
+                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30vh',overflowY:'scroll'}}>
+                            <ul id='new-recipe-ingredient-list' style={{}}>
                                 { ingredients.map((ingredient) =>
                                     <li className='flex-row' key={ingredient.name+'-'+ingredient.amount+'-'+ingredient.unit} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
                                         <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
@@ -172,21 +171,23 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 <button id='new-recipe-add-item-button' onClick={addItem}>Add Item</button>
                             </label>
                         </div>
-
-                        <ul id='new-recipe-item-list'>
-                            { items.map( (item) =>
-                                <li className='flex-row' key={item} style={{placeItems:'center'}}>
-                                    <button className='x-button' style={{marginRight:'1em'}} onClick={()=>{removeItem(item)}}>x</button>
-                                    <input
-                                        type='text'
-                                        defaultValue={item}
-                                        onBlur={(event)=>{updateItem(item,event.target.value)}}
-                                        onKeyDown={(event)=>{ if (event.key == 'Enter') { event.currentTarget.blur() } } }
-                                        style={{backgroundColor: 'transparent', borderWidth: '0 0 1px 0', width:'100%'}}
-                                    />
-                                </li>
-                            )}
-                        </ul>
+                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30vh',overflowY:'scroll'}}>
+                            <ul id='new-recipe-item-list' style={{}}>
+                                { items.map( (item) =>
+                                    <li className='flex-row' key={item} style={{placeItems:'center',flexWrap:'nowrap',margin:'0'}}>
+                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeItem(item)}}>x</button>
+                                        <input
+                                            type='text'
+                                            defaultValue={item}
+                                            onBlur={(event)=>{updateItem(item,event.target.value)}}
+                                            onKeyDown={(event)=>{ if (event.key == 'Enter') { event.currentTarget.blur() } } }
+                                            style={{backgroundColor: 'transparent', borderWidth: '0 0 1px 0', width:'100%'}}
+                                        />
+                                    </li>
+                                )}
+                            </ul>
+                            <br/>&nbsp;<br/>
+                        </div>
                     </div>
 
                     <div className='flex-column' style={{flexGrow:'2'}}>
@@ -205,8 +206,8 @@ const NewRecipe: () => React.JSX.Element = () => {
                         </div>
                         <ul id='new-recipe-step-list'>
                             { steps.map(step =>
-                                <li className='flex-row' key={step} style={{placeItems:'center'}}>
-                                    <button className='x-button' style={{marginRight:'1em'}} onClick={()=>{removeStep(step)}}>x</button>
+                                <li className='flex-row' key={step} style={{placeItems:'center',margin:'0'}}>
+                                    <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeStep(step)}}>x</button>
                                     {step}
                                 </li>
                             )}
@@ -215,7 +216,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 </div>
             </div>
 
-            <button style={{margin:'0.25em'}}><h2 style={{textAlign:'center'}} onClick={toRecipe}>Submit Recipe</h2></button>
+            <button style={{margin:'0.25em',position:'sticky',bottom:'0'}}><h2 style={{textAlign:'center'}} onClick={toRecipe}>Submit Recipe</h2></button>
         </div>
     )
 }

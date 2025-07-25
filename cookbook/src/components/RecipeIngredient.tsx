@@ -35,6 +35,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
                 defaultValue={ingredient.name}
                 style={{width: '60%', backgroundColor: 'transparent', borderWidth: '0 0 1px 0'}}
                 onBlur={()=>{ingredient.onChange(toIngredient())}}
+                onKeyDown={(event)=>{ if (event.key == 'Enter') { event.currentTarget.blur() } } }
             />
             <input
                 ref={amountRef}
@@ -58,6 +59,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
                         borderWidth: '0 0 1px 0'
                     }}
                 onBlur={()=>{ingredient.onChange(toIngredient())}}
+                onKeyDown={(event)=>{ if (event.key == 'Enter') { event.currentTarget.blur() } } }
             />
             <input
                 ref={unitRef}
@@ -80,6 +82,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
                         borderWidth: '0 0 1px 0'
                     }}
                 onBlur={()=>{ingredient.onChange(toIngredient())}}
+                onKeyDown={(event)=>{ if (event.key == 'Enter') { event.currentTarget.blur() } } }
             />
         </div>
     )
