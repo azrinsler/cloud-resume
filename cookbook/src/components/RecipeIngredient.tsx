@@ -20,9 +20,9 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
 
     function toIngredient() : Ingredient {
         return {
-            name: nameRef.current?.value || "Love",
+            name: nameRef.current?.value || '',
             amount: amountRef.current?.value,
-            unit: unitRef.current?.value || "Amounts"
+            unit: unitRef.current?.value || ''
         }
     }
 
@@ -40,6 +40,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
                 ref={amountRef}
                 type='text'
                 placeholder={isMobile ? 'amount' : 'How many?'}
+                defaultValue={ingredient.amount}
                 style={isMobile
                     ? {
                         width: '20%',
@@ -62,6 +63,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
                 ref={unitRef}
                 type='text'
                 placeholder={isMobile ? 'unit' : 'Measured in?'}
+                defaultValue={ingredient.unit}
                 style={isMobile
                     ? {
                         width: '20%',

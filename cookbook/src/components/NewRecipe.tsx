@@ -32,6 +32,14 @@ const NewRecipe: () => React.JSX.Element = () => {
         addIngredientRef.current!.value = ""
     }
 
+    const updateIngredient = (oldValue: Ingredient, newValue: Ingredient) => {
+        const newIngredients = [...ingredients].map(it => {
+            if (it == oldValue) return newValue
+            else return it
+        })
+        setIngredients(newIngredients)
+    }
+
     const removeIngredient = (ingredientToRemove: Ingredient) => {
         setIngredients(ingredients.filter(ingredient=> ingredient != ingredientToRemove))
     }
@@ -91,7 +99,7 @@ const NewRecipe: () => React.JSX.Element = () => {
 
         const recipe = {
             title: titleRef.current!.value,
-            ingredients: [],
+            ingredients: ingredients,
             items: items,
             steps: []
         }
@@ -109,7 +117,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
                     <label htmlFor='new-recipe-title-text'></label>
-                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' />
+                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' style={{textAlign:'center'}}/>
                 </div>
 
                 <br/>&nbsp;<br/>
@@ -134,14 +142,14 @@ const NewRecipe: () => React.JSX.Element = () => {
                             </div>
 
                             <ul id='new-recipe-ingredient-list'>
-                                { ingredients.map((ingredient, index) =>
-                                    <li className='flex-row' key={'ingredient'+index} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
+                                { ingredients.map((ingredient) =>
+                                    <li className='flex-row' key={ingredient.name+'-'+ingredient.amount+'-'+ingredient.unit} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
                                         <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
                                         <RecipeIngredient
                                             name={ingredient.name}
                                             amount={ingredient.amount}
                                             unit={ingredient.unit}
-                                            onChange={(ingredient:Ingredient)=>console.log(ingredient)}
+                                            onChange={(updatedIngredient:Ingredient)=>{updateIngredient(ingredient, updatedIngredient)}}
                                         >
                                         </RecipeIngredient>
                                     </li>
