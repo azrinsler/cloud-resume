@@ -20,7 +20,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
     const [data, setData] = useState<GetRecipeResponse>();
     const [searchTerm, setSearchTerm] = useState("")
 
-    const filteredTitles = (data || testResponse).recipes.filter(recipe => searchMatches(recipe.title))
+    const filteredTitles = (data || testResponse)?.recipes.filter(recipe => searchMatches(recipe.title))
 
     function searchMatches (term: string) : boolean {
         const pattern = new RegExp('.*(' + searchTerm + ').*', 'i')
@@ -48,6 +48,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                     return response.json();
                 })
                 .then((json) => {
+                    console.log("Response JSON:")
                     console.log(json);
                     const getRecipeResponse = json as GetRecipeResponse;
                     setData(getRecipeResponse);
