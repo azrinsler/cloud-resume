@@ -22,7 +22,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
         return {
             name: nameRef.current?.value || '',
             amount: amountRef.current?.value,
-            unit: unitRef.current?.value || 'amounts'
+            unit: unitRef.current?.value || ''
         }
     }
 

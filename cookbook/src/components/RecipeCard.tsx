@@ -30,7 +30,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                                             <div className="flex-row">
                                                 <span>{ingredient.name}</span>
                                                 <div style={{flexGrow:1}}></div>
-                                                <span style={{textWrap:'nowrap'}}>{ingredient.amount} {ingredient.unit}</span>
+                                                <span style={{textWrap:'nowrap'}}>{ingredient.amount||''} {ingredient.unit||''}</span>
                                             </div>
                                         </li>
                                     )}
