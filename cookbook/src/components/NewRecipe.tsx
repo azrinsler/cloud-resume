@@ -106,7 +106,6 @@ const NewRecipe: () => React.JSX.Element = () => {
     }
 
     const toRecipe = () : Recipe => {
-
         const recipe = {
             title: titleRef.current!.value,
             ingredients: ingredients,
@@ -115,6 +114,32 @@ const NewRecipe: () => React.JSX.Element = () => {
         }
         console.log(recipe)
         return recipe
+    }
+
+    const submitRecipe = (recipe: Recipe) => {
+        fetch("https://api.azrinsler.com/RecipeApiLambda", {
+            signal: AbortSignal.timeout(120 * 1000),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "operation": "newRecipe",
+                "recipe": recipe
+            })
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((json) => {
+                console.log(json);
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
     return (
@@ -232,7 +257,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 </div>
             </div>
 
-            <button style={{margin:'0.25em',position:'sticky',bottom:'0'}}><h2 style={{textAlign:'center'}} onClick={toRecipe}>Submit Recipe</h2></button>
+            <button style={{margin:'0.25em',position:'sticky',bottom:'0'}}><h2 style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
         </div>
     )
 }
