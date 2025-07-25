@@ -25,7 +25,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                                 <h3>Ingredients</h3>
                                 <hr/>
                                 <ul id="ingredients-list">
-                                    { recipe.ingredients.map(ingredient=>
+                                    { recipe.ingredients?.map(ingredient=>
                                         <li key={ingredient.name}>
                                             <div className="flex-row">
                                                 <span>{ingredient.name}</span>
@@ -41,7 +41,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                                 <h3>Items</h3>
                                 <hr/>
                                 <ul id="recipe-items-list">
-                                    { recipe.items.map(item=>
+                                    { recipe.items?.map(item=>
                                         <li key={item}>
                                             <input id={item} type='checkbox' />
                                             <label htmlFor={item}>{item}</label>
