@@ -219,7 +219,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
         for (item in queryResponse.items()) {
             val id = JacksonWrapper.writeJson(item["recipe_id"]!!.s())
             val title = JacksonWrapper.writeJson(item["title"]!!.s())
-            val json = """{ "id": "$id", "title": "$title" }"""
+            val json = """{ "id": $id, "title": $title }"""
             response = if (response.isNotEmpty()) "$response, $json" else json
         }
         return """{ "recipes": [$response] }"""
