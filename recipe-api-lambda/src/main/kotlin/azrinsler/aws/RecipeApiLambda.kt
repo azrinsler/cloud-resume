@@ -110,7 +110,14 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         .credentialsProvider(DefaultCredentialsProvider.create())
                         .build()
 
-                    val recipeBody = inputAsJson["recipe"].asText()
+                    val recipeBody = try { inputAsJson["recipe"].asText() }
+                                    catch (e: Exception) {
+                                        logger.info("Failed to get recipe body using inputAsJson.asText --> trying toString instead")
+                                        inputAsJson["recipe"].toString()
+                                    }
+
+                    logger.info("Recipe Body: $recipeBody")
+
                     // make sure we can read this input as a Recipe before accepting it
                     val recipe = JacksonWrapper.readJson(recipeBody) as? Recipe
 

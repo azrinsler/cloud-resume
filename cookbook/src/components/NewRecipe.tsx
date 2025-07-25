@@ -125,7 +125,7 @@ const NewRecipe: () => React.JSX.Element = () => {
             },
             body: JSON.stringify({
                 "operation": "newRecipe",
-                "recipe": '"' + JSON.stringify(recipe) + '"'
+                "recipe": recipe
             })
         })
             .then((response) => {
