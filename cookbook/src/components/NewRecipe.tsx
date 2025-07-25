@@ -5,6 +5,8 @@ import '../css/new-recipe.css'
 import RecipeIngredient from "./RecipeIngredient.tsx";
 import type {Recipe} from "../interfaces/Recipe.ts";
 import type {Ingredient} from "../interfaces/Ingredient.ts";
+import RecipeStep from "./RecipeStep.tsx";
+import type {Step} from "../interfaces/Step.ts";
 
 const NewRecipe: () => React.JSX.Element = () => {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
@@ -16,7 +18,7 @@ const NewRecipe: () => React.JSX.Element = () => {
 
     const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const [items, setItems] = useState<string[]>([])
-    const [steps, setSteps] = useState<string[]>([])
+    const [steps, setSteps] = useState<Step[]>([])
 
     const addIngredient = () => {
         const ingredientValue = { name: addIngredientRef.current?.value || '', amount: '', unit: '' }
@@ -77,9 +79,9 @@ const NewRecipe: () => React.JSX.Element = () => {
     }
 
     const addStep = () => {
-        const stepValue = addStepRef.current?.value || ""
+        const stepValue = { ordinal: steps.length, description: addStepRef.current?.value || "" }
         console.log(stepValue)
-        if (stepValue.length > 0 && steps.indexOf(stepValue) < 0) {
+        if (stepValue.description.length > 0 && steps.indexOf(stepValue) < 0) {
             setSteps([...steps, stepValue])
             console.log("New step added to steps list.")
         }
@@ -90,7 +92,15 @@ const NewRecipe: () => React.JSX.Element = () => {
         addStepRef.current!.value = ""
     }
 
-    const removeStep = (stepToRemove: string) => {
+    const updateStep = (oldValue: Step, newValue: Step) => {
+        const newSteps = [...steps].map(it => {
+            if (it == oldValue) return newValue
+            else return it
+        })
+        setSteps(newSteps)
+    }
+
+    const removeStep = (stepToRemove: Step) => {
         const newSteps = steps.filter(step=> step != stepToRemove)
         setSteps(newSteps)
     }
@@ -101,7 +111,7 @@ const NewRecipe: () => React.JSX.Element = () => {
             title: titleRef.current!.value,
             ingredients: ingredients,
             items: items,
-            steps: []
+            steps: steps
         }
         console.log(recipe)
         return recipe
@@ -204,14 +214,20 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 <button id='new-recipe-add-step-button' onClick={addStep}>Add Step</button>
                             </label>
                         </div>
-                        <ul id='new-recipe-step-list'>
-                            { steps.map(step =>
-                                <li className='flex-row' key={step} style={{placeItems:'center',margin:'0'}}>
-                                    <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeStep(step)}}>x</button>
-                                    {step}
-                                </li>
-                            )}
-                        </ul>
+                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'70vh',overflowY:'scroll'}}>
+                            <ul id='new-recipe-step-list' style={{flexGrow:'1'}}>
+                                { steps.map((step, index) =>
+                                    <li className='flex-row' key={step.ordinal+'-'+step.description} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
+                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeStep(step)}}>x</button>
+                                        <RecipeStep
+                                            ordinal={index}
+                                            description={ step.description }
+                                            onChange={(updatedStep:Step)=>{updateStep(step, updatedStep)}}>
+                                        </RecipeStep>
+                                    </li>
+                                )}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

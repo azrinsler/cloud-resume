@@ -85,11 +85,31 @@ li {
     place-items: center;
     padding-bottom: 0.2em;
     user-select: none; /* so users don't accidentally select/highlight button text when they meant to click on it */
+    place-self:start;
 }
 
 /*noinspection CssInvalidFunction*/
 .x-button:hover {
     background-color: light-dark(red,darkred);
+    font-weight: 700;
+}
+
+.plus-button {
+    cursor: pointer;
+    margin: 0.25em;
+    display: flex;
+    width: 1.25em;
+    height: 1.25em;
+    place-content: center;
+    place-items: center;
+    padding-bottom: 0.2em;
+    user-select: none; /* so users don't accidentally select/highlight button text when they meant to click on it */
+    border-radius: 0.25em;
+}
+
+/*noinspection CssInvalidFunction*/
+.plus-button:hover {
+    background-color: light-dark(green,darkgreen);
     font-weight: 700;
 }
 
