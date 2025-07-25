@@ -47,10 +47,10 @@ def lambda_handler(event, context):
                     recipeTable.put_item(
                         Item={
                             "recipe_id" : recipe_id,
-                            "title" : recipe_title,
-                            "ingredients": recipe["ingredients"],
-                            "items": recipe["items"],
-                            "steps": recipe["steps"]
+                            "title" : json.dumps(recipe_title),
+                            "ingredients": json.dumps(recipe["ingredients"]),
+                            "items": json.dumps(recipe["items"]),
+                            "steps": json.dumps(recipe["steps"])
                         }
                     )
 
@@ -70,10 +70,10 @@ def lambda_handler(event, context):
                     recipeTable.put_item(
                         Item={
                             "recipe_id" : recipe_id,
-                            "title" : recipe_title,
-                            "ingredients": recipe["ingredients"],
-                            "items": recipe["items"],
-                            "steps": recipe["steps"]
+                            "title" : json.dumps(recipe_title),
+                            "ingredients": json.dumps(recipe["ingredients"]),
+                            "items": json.dumps(recipe["items"]),
+                            "steps": json.dumps(recipe["steps"])
                         }
                     )
 
