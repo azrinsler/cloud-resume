@@ -130,23 +130,29 @@ const NewRecipe: () => React.JSX.Element = () => {
                 "recipe": JSON.stringify(recipe)
             })
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((json) => {
-                console.log(json);
-                // reset input fields, so it's clear the submission went through
-                titleRef.current!.value = ''
-                setIngredients([])
-                setItems([])
-                setSteps([])
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log(response);
+            // reset input fields, so it's clear the submission went through
+            titleRef.current!.value = ''
+            setIngredients([])
+            setItems([])
+            setSteps([])
+//            return response.json();
+        })
+        // .then((json) => {
+        //     console.log(json);
+        //     // reset input fields, so it's clear the submission went through
+        //     titleRef.current!.value = ''
+        //     setIngredients([])
+        //     setItems([])
+        //     setSteps([])
+        // })
+        .catch((err) => {
+            console.log(err)
+        });
     }
 
     return (
