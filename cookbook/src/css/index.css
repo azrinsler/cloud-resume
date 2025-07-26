@@ -26,7 +26,7 @@ body {
     width:100vw;
     min-height:100vh;
     display: flex;
-    background-color: light-dark(#535bf2, #080004);
+    background-color: light-dark(#fffcf2, #080004);
 }
 
 h1 {
@@ -99,10 +99,15 @@ li {
 
 /*noinspection CssInvalidFunction*/
 .happy-button {
-    background-color: #104a40;
+    background-color: light-dark(#1c7845,#104a40);
     border: 1px solid light-dark(black,#159094);
     border-radius: 0.25em;
     cursor: pointer;
+}
+
+/*noinspection CssInvalidFunction*/
+.happy-button:hover {
+    background-color: light-dark(gray,#073830);
 }
 
 .plus-button {

@@ -46,5 +46,5 @@
 /*noinspection CssInvalidFunction*/
 #about-simple-tab > input[type="radio"]:checked + label, #about-technical-tab > input[type="radio"]:checked + label {
     letter-spacing: 0.1em;
-    color: light-dark(#ffb461,#feff95);
+    color: light-dark(black,#feff95);
 }

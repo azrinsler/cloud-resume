@@ -115,13 +115,13 @@ export function App() {
                       ? <Preheating></Preheating>
                   : sidebarOption == "recipe"
                       ? <>
-                          { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe:</p></> : <></> }
                           <RecipeCard
                               title={data?.title}
                               ingredients={data?.ingredients}
                               items={data?.items}
                               steps={data?.steps}>
                           </RecipeCard>
+                          { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
                         </>
                   : <>Unknown Sidebar Option</>
               }
