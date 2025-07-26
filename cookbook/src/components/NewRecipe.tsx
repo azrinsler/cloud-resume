@@ -15,6 +15,7 @@ const NewRecipe: () => React.JSX.Element = () => {
     const addIngredientRef = useRef<HTMLInputElement>(null)
     const addItemRef = useRef<HTMLInputElement>(null)
     const addStepRef = useRef<HTMLInputElement>(null)
+    const submitButtonRef = useRef<HTMLButtonElement>(null)
 
     const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const [items, setItems] = useState<string[]>([])
@@ -119,6 +120,11 @@ const NewRecipe: () => React.JSX.Element = () => {
     }
 
     const submitRecipe = (recipe: Recipe) => {
+        // disable button to prevent multi-clicks
+        submitButtonRef.current!.disabled = true
+        const existingInnerHtml = submitButtonRef.current!.innerHTML
+        submitButtonRef.current!.innerHTML = "<h2>Recipe Submitted...</h2>"
+
         fetch("https://api.azrinsler.com/RecipeApiLambda", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -140,18 +146,13 @@ const NewRecipe: () => React.JSX.Element = () => {
             setIngredients([])
             setItems([])
             setSteps([])
-//            return response.json();
+            submitButtonRef.current!.disabled = false
+            submitButtonRef.current!.innerHTML = existingInnerHtml
         })
-        // .then((json) => {
-        //     console.log(json);
-        //     // reset input fields, so it's clear the submission went through
-        //     titleRef.current!.value = ''
-        //     setIngredients([])
-        //     setItems([])
-        //     setSteps([])
-        // })
         .catch((err) => {
             console.log(err)
+            submitButtonRef.current!.disabled = false
+            submitButtonRef.current!.innerHTML = existingInnerHtml
         });
     }
 
@@ -270,7 +271,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 </div>
             </div>
 
-            <button style={{margin:'0.25em',position:'sticky',bottom:'0'}}><h2 style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
+            <button ref={submitButtonRef} style={{margin:'0.25em',position:'sticky',bottom:'0'}}><h2 style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
         </div>
     )
 }
