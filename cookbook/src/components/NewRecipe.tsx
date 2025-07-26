@@ -138,6 +138,11 @@ const NewRecipe: () => React.JSX.Element = () => {
             })
             .then((json) => {
                 console.log(json);
+                // reset input fields, so it's clear the submission went through
+                titleRef.current!.value = ''
+                setIngredients([])
+                setItems([])
+                setSteps([])
             })
             .catch((err) => {
                 console.log(err)
