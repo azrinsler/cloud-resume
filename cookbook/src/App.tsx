@@ -57,6 +57,7 @@ export function App() {
                 setLoading(false);
                 setSidebarOption("recipe");
                 localStorage.setItem("sidebarOption", "recipe")
+                setError(null)
             }
         })
         .catch((err) => {
