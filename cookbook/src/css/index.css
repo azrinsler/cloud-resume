@@ -26,7 +26,7 @@ body {
     width:100vw;
     min-height:100vh;
     display: flex;
-    background-color: light-dark(#535bf2, #12000a);
+    background-color: light-dark(#535bf2, #080004);
 }
 
 h1 {
@@ -34,7 +34,7 @@ h1 {
     line-height: 1.1;
 }
 
-h2, h3 {
+h1, h2, h3 {
     font-family: "Copperplate Gothic Bold", "sans-serif";
 }
 
@@ -75,6 +75,7 @@ li {
     text-align: center;
 }
 
+/*noinspection CssInvalidFunction*/
 .x-button {
     cursor: pointer;
     margin: 0.25em;
@@ -86,12 +87,22 @@ li {
     padding-bottom: 0.2em;
     user-select: none; /* so users don't accidentally select/highlight button text when they meant to click on it */
     place-self:start;
+    background-color: light-dark(red,#cc1554);
+    border-color: light-dark(black,red)
 }
 
 /*noinspection CssInvalidFunction*/
 .x-button:hover {
     background-color: light-dark(red,darkred);
     font-weight: 700;
+}
+
+/*noinspection CssInvalidFunction*/
+.happy-button {
+    background-color: #104a40;
+    border: 1px solid light-dark(black,#159094);
+    border-radius: 0.25em;
+    cursor: pointer;
 }
 
 .plus-button {
@@ -110,7 +121,14 @@ li {
 /*noinspection CssInvalidFunction*/
 .plus-button:hover {
     background-color: light-dark(green,darkgreen);
-    font-weight: 700;
+    font-weight: 900;
+}
+
+/*noinspection CssInvalidFunction*/
+.text-input {
+    padding: 0.25em;
+    margin: 0.25em;
+    border: 1px solid light-dark(gray, gray)
 }
 
 .hide-scrollbar {
@@ -154,6 +172,7 @@ li {
                 transparent 1px,
                 transparent 15px
             );
+    background-color: light-dark(white, #1a0013)
 }
 
 /*noinspection CssInvalidFunction*/

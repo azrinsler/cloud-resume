@@ -3,8 +3,6 @@
 }
 
 #new-recipe-title-text, #new-recipe-add-ingredient-text, #new-recipe-add-item-text, #new-recipe-add-step-text {
-    padding: 0.25em;
-    margin: 0.25em;
     flex-grow: 1;
 }
 
@@ -15,4 +13,10 @@
 #new-recipe-add-ingredient-button, #new-recipe-add-item-button, #new-recipe-add-step-button {
     padding: 0.25em;
     width: 10em;
+}
+
+#new-recipe-submit-button {
+    margin: 0.25em;
+    position: sticky;
+    bottom: 0;
 }

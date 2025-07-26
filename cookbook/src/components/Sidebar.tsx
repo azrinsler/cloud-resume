@@ -23,10 +23,10 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
                 isOpen
                     ? isMobile
                         ? { width:'100vw', position:'absolute', overflow:'hidden' }
-                        : { width:'200px' }
+                        : { width:'200px', borderRight:'2px solid light-dark(black,#e883ff)' }
                     : isMobile
                         ? { width: '0', position:'absolute'}
-                        : { width: '0' }
+                        : { width: '0', borderRight:'0px solid transparent' }
             }
         >
             <div

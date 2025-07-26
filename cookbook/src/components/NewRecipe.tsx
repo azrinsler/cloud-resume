@@ -158,7 +158,7 @@ const NewRecipe: () => React.JSX.Element = () => {
 
     return (
         <div className='flex-column' style={{width:'100%',flexGrow:'1',overflow:'hidden'}}>
-            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid'}}>New Recipe</h1>
+            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)'}}>New Recipe</h1>
 
             <br/>&nbsp;<br/>
 
@@ -166,7 +166,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
                     <label htmlFor='new-recipe-title-text'></label>
-                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' style={{textAlign:'center'}}/>
+                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' className='text-input' style={{textAlign:'center'}}/>
                 </div>
 
                 <br/>&nbsp;<br/>
@@ -183,9 +183,10 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 id='new-recipe-add-ingredient-text'
                                 name='new-recipe-add-ingredient-text'
                                 onKeyDown={ event => { if (event.key == 'Enter') { addIngredient() } } }
+                                className='text-input'
                             />
                             <label htmlFor='new-recipe-add-ingredient-text'>
-                                <button id='new-recipe-add-ingredient-button' onClick={addIngredient}>Add Ingredient</button>
+                                <button id='new-recipe-add-ingredient-button' className='happy-button' onClick={addIngredient}>Add Ingredient</button>
                             </label>
                         </div>
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30vh',overflowY:'scroll'}}>
@@ -197,8 +198,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                                             name={ingredient.name}
                                             amount={ingredient.amount}
                                             unit={ingredient.unit}
-                                            onChange={(updatedIngredient:Ingredient)=>{updateIngredient(ingredient, updatedIngredient)}}
-                                        >
+                                            onChange={(updatedIngredient:Ingredient)=>{updateIngredient(ingredient, updatedIngredient)}}>
                                         </RecipeIngredient>
                                     </li>
                                 )}
@@ -215,9 +215,10 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 id='new-recipe-add-item-text'
                                 name='new-recipe-add-item-text'
                                 onKeyDown={ event => { if (event.key == 'Enter') { addItem() } } }
+                                className='text-input'
                             />
                             <label htmlFor='new-recipe-add-item-text'>
-                                <button id='new-recipe-add-item-button' onClick={addItem}>Add Item</button>
+                                <button id='new-recipe-add-item-button' className='happy-button' onClick={addItem}>Add Item</button>
                             </label>
                         </div>
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30vh',overflowY:'scroll'}}>
@@ -248,9 +249,10 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 id='new-recipe-add-step-text'
                                 name='new-recipe-add-step-text'
                                 onKeyDown={ event => { if (event.key == 'Enter') { addStep() } } }
+                                className='text-input'
                             />
                             <label htmlFor='new-recipe-add-step-text'>
-                                <button id='new-recipe-add-step-button' onClick={addStep}>Add Step</button>
+                                <button id='new-recipe-add-step-button' className='happy-button' onClick={addStep}>Add Step</button>
                             </label>
                         </div>
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'70vh',overflowY:'scroll'}}>
@@ -271,7 +273,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 </div>
             </div>
 
-            <button ref={submitButtonRef} style={{margin:'0.25em',position:'sticky',bottom:'0'}}><h2 style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
+            <button id='new-recipe-submit-button' ref={submitButtonRef} className='happy-button'><h2 className='text-outline' style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
         </div>
     )
 }

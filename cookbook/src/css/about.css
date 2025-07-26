@@ -22,7 +22,6 @@
 /*noinspection CssInvalidFunction*/
 #about-content {
     padding: 1em;
-    background-color: light-dark(#fefff0,#1f0921);
     flex-grow: 1;
     max-width: 100vw;
     max-height: 100vh;

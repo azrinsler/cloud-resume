@@ -81,6 +81,6 @@
 
 /*noinspection CssInvalidFunction*/
 #recipe-steps > li > input[type="radio"]:checked + label {
-    color: light-dark(#2633ab,#ffb6f4);
+    color: light-dark(#2633ab,#ff80ec);
     font-weight: 700;
 }
