@@ -20,6 +20,8 @@ const NewRecipe: () => React.JSX.Element = () => {
     const [items, setItems] = useState<string[]>([])
     const [steps, setSteps] = useState<Step[]>([])
 
+    const stepsOrdered = steps?.sort((a,b)=>a.ordinal-b.ordinal)
+
     const addIngredient = () => {
         const ingredientValue = { name: addIngredientRef.current?.value || '', amount: '', unit: '' }
         console.log(ingredientValue)
@@ -241,7 +243,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                         </div>
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'70vh',overflowY:'scroll'}}>
                             <ul id='new-recipe-step-list' style={{flexGrow:'1'}}>
-                                { steps.map((step, index) =>
+                                { stepsOrdered.map((step, index) =>
                                     <li className='flex-row' key={step.ordinal+'-'+step.description} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
                                         <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeStep(step)}}>x</button>
                                         <RecipeStep

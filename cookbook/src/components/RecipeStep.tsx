@@ -14,7 +14,6 @@ interface RecipeStepProps {
 export const RecipeStep: (step: RecipeStepProps) => React.JSX.Element = (step: RecipeStepProps) => {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
-    const ordinalRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLInputElement>(null)
     const noteRef = useRef<HTMLInputElement>(null)
 
@@ -51,7 +50,7 @@ export const RecipeStep: (step: RecipeStepProps) => React.JSX.Element = (step: R
 
     function toStep() : Step {
         return {
-            ordinal: Number(ordinalRef.current?.value || 0),
+            ordinal: step.ordinal,
             description: descriptionRef.current?.value || '',
             notes: notes
         }
