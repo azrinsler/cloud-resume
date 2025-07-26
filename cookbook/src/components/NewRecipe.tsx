@@ -249,7 +249,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'70vh',overflowY:'scroll'}}>
                             <ul id='new-recipe-step-list' style={{flexGrow:'1'}}>
                                 { stepsOrdered.map((step, index) =>
-                                    <li className='flex-row' key={step.ordinal+'-'+step.description} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
+                                    <li className='flex-row' key={step.ordinal} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
                                         <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeStep(step)}}>x</button>
                                         <RecipeStep
                                             ordinal={index}
