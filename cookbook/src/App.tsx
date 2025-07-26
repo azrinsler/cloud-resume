@@ -51,7 +51,7 @@ export function App() {
         })
         .then((json) => {
             if (json != null) {
-                const jsonData = json as Recipe;
+                const jsonData = JSON.parse(json) as Recipe;
                 setData(jsonData);
                 console.log(jsonData);
                 setLoading(false);

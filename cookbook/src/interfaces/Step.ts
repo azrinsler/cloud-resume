@@ -1,5 +1,5 @@
 export interface Step {
     ordinal: number;
-    description: string;
+    description?: string;
     notes?: string[];
 }
