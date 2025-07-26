@@ -41,23 +41,23 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                     "operation": "getRecipes"
                 })
             })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((json) => {
-                    console.log("Response JSON:")
-                    console.log(json);
-                    const getRecipeResponse = json as GetRecipeResponse;
-                    setData(getRecipeResponse);
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    setError(err.message);
-                    setLoading(false);
-                });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((json) => {
+                console.log("Response JSON:")
+                console.log(json);
+                const getRecipeResponse = json as GetRecipeResponse;
+                setData(getRecipeResponse);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(err.message);
+                setLoading(false);
+            });
         }
     }, [loading]);
 

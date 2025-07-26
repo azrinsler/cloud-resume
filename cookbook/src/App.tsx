@@ -32,6 +32,7 @@ export function App() {
         console.log("cacheRecipe(" + recipe + ")")
         setRecipeId(recipe)
         localStorage.setItem("recipeId", recipe)
+        setLoading(true)
         fetch("https://api.azrinsler.com/RecipeApiLambda", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
