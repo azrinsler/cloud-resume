@@ -1,5 +1,5 @@
 import * as React from "react";
-import type {Recipe} from "../interfaces/Recipe.ts";
+import type {Recipe} from "./interfaces/Recipe.ts";
 
 import '../css/recipe-card.css'
 
@@ -8,7 +8,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     const stepsOrdered = recipe.steps?.sort((a,b)=>a.ordinal-b.ordinal)
     return (
         <div className='flex-column' style={{width:'100%',flexGrow:'1'}}>
-            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Current Recipe</h1>
+            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Recipe</h1>
             <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
                 <div id="recipe-card">
                     <div className="flex-row" style={{width:'100%'}}>

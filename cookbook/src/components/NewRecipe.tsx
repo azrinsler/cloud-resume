@@ -3,10 +3,10 @@ import {useRef, useState} from "react";
 
 import '../css/new-recipe.css'
 import RecipeIngredient from "./RecipeIngredient.tsx";
-import type {Recipe} from "../interfaces/Recipe.ts";
-import type {Ingredient} from "../interfaces/Ingredient.ts";
+import type {Recipe} from "./interfaces/Recipe.ts";
+import type {Ingredient} from "./interfaces/Ingredient.ts";
 import RecipeStep from "./RecipeStep.tsx";
-import type {Step} from "../interfaces/Step.ts";
+import type {Step} from "./interfaces/Step.ts";
 
 const NewRecipe: () => React.JSX.Element = () => {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)

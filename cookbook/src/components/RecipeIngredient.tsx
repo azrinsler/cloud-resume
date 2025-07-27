@@ -1,5 +1,5 @@
 import * as React from "react";
-import type {Ingredient} from "../interfaces/Ingredient.ts";
+import type {Ingredient} from "./interfaces/Ingredient.ts";
 import {useRef} from "react";
 
 import '../css/ingredient.css'

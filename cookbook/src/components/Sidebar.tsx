@@ -35,7 +35,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
             >
                 <span
                     id="sidebar-toggle"
-                    className='button'
+                    className='button text-outline'
                     style={
                         isOpen
                             ? { rotate:'90deg' }

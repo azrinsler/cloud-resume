@@ -2,7 +2,7 @@ import * as React from "react";
 import {useRef, useState} from "react";
 
 import '../css/ingredient.css'
-import type {Step} from "../interfaces/Step.ts";
+import type {Step} from "./interfaces/Step.ts";
 
 interface RecipeStepProps {
     ordinal: number,

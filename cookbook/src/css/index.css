@@ -183,10 +183,10 @@ li {
 /*noinspection CssInvalidFunction*/
 .text-outline {
     text-shadow:
-            -1px -1px 0 light-dark(#ffffff,#000000),
-            1px -1px 0 light-dark(#ffffff,#000000),
-            -1px  1px 0 light-dark(#ffffff,#000000),
-            1px  1px 0 light-dark(#ffffff,#000000);
+            -0.5px -0.5px 0 light-dark(#ffffff,#000000),
+            0.5px -0.5px 0 light-dark(#ffffff,#000000),
+            -0.5px  0.5px 0 light-dark(#ffffff,#000000),
+            0.5px  0.5px 0 light-dark(#ffffff,#000000);
 }
 
 /* mobile-specific settings to help things fit better on tiny screens */

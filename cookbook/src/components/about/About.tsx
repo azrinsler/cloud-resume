@@ -4,11 +4,11 @@ import '../../css/about.css'
 
 import AboutTechnical from "./AboutTechnical.tsx";
 
-import architectureDiagram from '../../assets/diagrams/architecture.drawio.png'
-import frontendDiagram from '../../assets/diagrams/frontend.drawio.png'
+import architectureDiagram from '../../assets/diagrams/architecture.drawio.svg'
+import frontendDiagram from '../../assets/diagrams/frontend.drawio.svg'
 import backendDiagram from '../../assets/diagrams/backend.drawio.png'
-import networkDiagram from '../../assets/diagrams/networking.drawio.png'
-import devopsDiagram from '../../assets/diagrams/devops.drawio.png'
+import networkDiagram from '../../assets/diagrams/networking.drawio.svg'
+import devopsDiagram from '../../assets/diagrams/devops.drawio.svg'
 
 import AboutArchitecture from "./AboutArchitecture.tsx";
 import AboutFrontend from "./AboutFrontend.tsx";

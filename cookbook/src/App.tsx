@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar.tsx";
 import sidebarIcon from './assets/cookbook-icon.svg'
 import sidebarIconBlack from './assets/cookbook-icon-black.svg'
 import {useCallback, useEffect, useState} from "react";
-import type {Recipe} from "./interfaces/Recipe.ts";
+import type {Recipe} from "./components/interfaces/Recipe.ts";
 import About from "./components/about/About.tsx";
 import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
