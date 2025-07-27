@@ -6,7 +6,7 @@ const AboutArchitecture: () => React.JSX.Element = () => {
         <div id='about-technical-architecture-caption' className='about-technical-caption flex-column'>
             <h2>High Level Architecture</h2>
 
-            <h2 style={{color:'darkgoldenrod',backgroundColor:'light-dark(#6c5da1,#732e54)'}}>This simple website is the result of a complex project.</h2>
+            <h2 style={{color:'darkgoldenrod',backgroundColor:'light-dark(#46338c,#91185b)'}}>This simple website is the result of a complex project.</h2>
             <h4 style={{color:'goldenrod',textAlign:'center'}}>Under the hood, it's a serverless, microservice-based web-app built in AWS using multiple languages.</h4>
 
             <br/>&nbsp;<br/>

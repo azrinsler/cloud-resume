@@ -3,37 +3,18 @@ import * as React from "react";
 const AboutDevOps: () => React.JSX.Element = () => {
     return (
         <div id='about-technical-devops-caption' className='about-technical-caption'>
+
             <h2>DevOps</h2>
             <hr/>
-            <div>
-                <p>
-                    Build automation, DevOps, Lean, CI/CD, IaC (Infrastructure as Code)... these terms are often used somewhat interchangeably.
-                    They are highly related concepts that - broadly speaking - focus on the speed, quality, and consistency of your build and development processes.
-                    Much like QE, DevOps is frequently overlooked or deprioritized in favor of more visible and pressing aspects of software development,
-                    with the consequences of doing so only becoming clear at a late stage. Why is that?
-                </p>
-                <br/>&nbsp;<br/>
-                <p>
-                    There are, of course, a myriad of possible reasons, but I would argue that most of them fall into one of these categories:
-                </p>
-                <ul>
-                    <li>DevOps is its own skill set involving a different tech stack, which developers are not necessarily familiar with.</li>
-                    <li>Automation in general is heavily front-loaded in terms of effort, which makes it <em>painful</em> to set up.</li>
-                    <li>The benefits are frequently invisible — it's hard to appreciate the value of a seamless deployment if you haven't experienced the pain of a botched one.</li>
-                </ul>
-                <br/>&nbsp;<br/>
-                <p>
-                    The fact is, having a highly automated build process is of absolutely foundational importance to all but the smallest of projects.
-                </p>
-                <br/>&nbsp;<br/>
+            <div className='flex-column' style={{padding:'1em', backgroundColor:'light-dark(white,#0f080c)', border:'1px solid'}}>
                 <p>
                     This project leverages the following:
                 </p>
                 <ul>
-                    <li>GitHub Actions — Build Automation</li>
-                    <li>GitHub Packages — Artifact Storage</li>
-                    <li>Maven — Dependency Management</li>
-                    <li>Terraform — IaC</li>
+                    <li>GitHub Actions</li>
+                    <li>GitHub Packages</li>
+                    <li>Maven</li>
+                    <li>Terraform</li>
                 </ul>
                 <br/>&nbsp;<br/>
                 <p>
@@ -43,7 +24,6 @@ const AboutDevOps: () => React.JSX.Element = () => {
                     <br/>&nbsp;<br/>
                     Maven greatly simplifies dependency management in addition to being a powerful build tool in its own right.
                     A custom settings.xml file allows Maven to retrieve dependencies from GitHub packages without exposing credentials.
-                    I could have just as easily used Gradle for this same purpose, and mostly went with Maven out of personal preference.
                     <br/>&nbsp;<br/>
                     Being that this is an AWS-based project, Cloudformation would typically be the go-to option for IaC. So why Terraform?
                     Well, mostly because Terraform is open-source and vendor-agnostic.

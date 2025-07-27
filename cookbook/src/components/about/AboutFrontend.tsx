@@ -5,7 +5,7 @@ const AboutFrontend: () => React.JSX.Element = () => {
         <div id='about-technical-frontend-caption' className='about-technical-caption'>
             <h2>Frontend</h2>
             <hr/>
-            <div>
+            <div className='flex-column' style={{padding:'1em', backgroundColor:'light-dark(white,#0f080c)', border:'1px solid'}}>
                 <p>
                     The frontend for this site is relatively straightforward. It uses React and is written in a mixture
                     of JS/TS and HTML/CSS. All site files are stored in the same bucket in S3.

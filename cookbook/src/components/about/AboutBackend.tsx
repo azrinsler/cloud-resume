@@ -5,7 +5,7 @@ const AboutBackend: () => React.JSX.Element = () => {
         <div id='about-technical-backend-caption' className='about-technical-caption'>
             <h2>Backend</h2>
             <hr/>
-            <div>
+            <div className='flex-column' style={{padding:'1em', backgroundColor:'light-dark(white,#0f080c)', border:'1px solid'}}>
                 <p>The backend is based on a number of AWS services including SQS, Lambda, Dynamo DB, Cloud Watch, and API Gateway</p>
 
                 <br/>&nbsp;<br/>
