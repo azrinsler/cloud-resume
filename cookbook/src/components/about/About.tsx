@@ -6,7 +6,7 @@ import AboutTechnical from "./AboutTechnical.tsx";
 
 import architectureDiagram from '../../assets/diagrams/architecture.drawio.svg'
 import frontendDiagram from '../../assets/diagrams/frontend.drawio.svg'
-import backendDiagram from '../../assets/diagrams/backend.drawio.png'
+import backendDiagram from '../../assets/diagrams/backend.drawio.svg'
 import networkDiagram from '../../assets/diagrams/networking.drawio.svg'
 import devopsDiagram from '../../assets/diagrams/devops.drawio.svg'
 
