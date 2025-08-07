@@ -160,7 +160,7 @@ li {
     opacity: 0;
 }
 
-/*noinspection CssInvalidFunction*/
+/*noinspection CssInvalidFunction, CssReplaceWithShorthandSafely*/
 .hatched-background {
     background:
             repeating-linear-gradient(
