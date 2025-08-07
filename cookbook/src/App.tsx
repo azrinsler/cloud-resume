@@ -30,9 +30,15 @@ export function App() {
 
     const fetchRecipe = useCallback((recipe: string) => {
         console.log("cacheRecipe(" + recipe + ")")
-        setRecipeId(recipe)
-        localStorage.setItem("recipeId", recipe)
+
         setLoading(true)
+        setRecipeId(recipe)
+        setSidebarOption("recipe");
+
+        localStorage.setItem("recipeId", recipe)
+        localStorage.setItem("sidebarOption", "recipe")
+
+
         fetch("https://api.azrinsler.com/RecipeApiLambda", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -56,8 +62,6 @@ export function App() {
                 setData(jsonData);
                 console.log(jsonData);
                 setLoading(false);
-                setSidebarOption("recipe");
-                localStorage.setItem("sidebarOption", "recipe")
                 setError(null)
             }
         })
