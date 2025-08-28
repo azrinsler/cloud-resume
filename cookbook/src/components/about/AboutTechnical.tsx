@@ -17,7 +17,7 @@ const AboutTechnical: React.FC<AboutTechnicalProps> = (props: AboutTechnicalProp
     useEffect(() => {
         const activeImg = document.getElementById(props.images[activeSlide].props.id)
         console.log(activeImg);
-        activeImg?.scrollIntoView({behavior:'smooth',inline:'center'})
+        activeImg?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})
         if (!isMobile) {
             activeImg!.style.border = '5px solid light-dark(blue,white)'
         }
