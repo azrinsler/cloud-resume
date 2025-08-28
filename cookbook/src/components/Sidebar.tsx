@@ -15,7 +15,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
     const [isOpen, setOpen] = useState(startOpen)
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
-    const [sidebarBlip, setBlip] = useState( (localStorage.getItem("sidebarBlip") || "true") == "true" )
+    const [blip, setBlip] = useState( (localStorage.getItem("sidebarBlip") || "true") == "true" )
     const deactivateBlip = () => {
         setBlip(false)
         localStorage.setItem("sidebarBlip", "false")
@@ -47,7 +47,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
                             ? { rotate:'90deg' }
                             : { rotate:'0deg', marginRight:'-1em' }
                 }>&#9700;</span>
-                { sidebarBlip && !isOpen ? <span id='sidebar-blip' className='button text-outline'>&#9700;</span> : <></> }
+                { blip && !isOpen ? <span id='sidebar-blip' className='button text-outline'>&#9700;</span> : <></> }
             </div>
 
             <div

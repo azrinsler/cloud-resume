@@ -57,24 +57,23 @@ resource "aws_dynamodb_table_item" "ranch_sauce" {
   item =  <<ITEM
           {
             "recipe_id": {"S": "1"},
-            "title": {"S": "Ranch Sauce" },
+            "title": {"S": "Ranch" },
             "ingredients": {"L": [
-              {"M": { "name":{"S":"Sour Cream"}, "unit":{"S":"Cup"}, "amount":{"S":"1"} } },
+              {"M": { "name":{"S":"Sour Cream"}, "unit":{"S":"Cups"}, "amount":{"S":"1 1/2"} } },
               {"M": { "name":{"S":"Mayonnaise"}, "unit":{"S":"Cup"}, "amount":{"S":"1/2"} } },
-              {"M": { "name":{"S":"Dried Dill Weed"}, "unit":{"S":"tsp."}, "amount":{"S":"1"} } },
-              {"M": { "name":{"S":"Dried Parsely"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
-              {"M": { "name":{"S":"Granulated Onion"}, "unit":{"S":"tsp."}, "amount":{"S":"1/4"} } },
-              {"M": { "name":{"S":"Granulated Garlic"}, "unit":{"S":"tsp."}, "amount":{"S":"1/4"} } },
-              {"M": { "name":{"S":"Fresh Garlic"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
-              {"M": { "name":{"S":"Salt"}, "unit":{"S":"tsp."}, "amount":{"S":"1/4"} } },
-              {"M": { "name":{"S":"Black Pepper"}, "unit":{"S":"tsp."}, "amount":{"S":"1/4"} } },
-              {"M": { "name":{"S":"Chives"}, "unit":{"S":"tsp."}, "amount":{"S":"1"} } }
+              {"M": { "name":{"S":"Dried Dill Weed"}, "unit":{"S":"tsp."}, "amount":{"S":"1 1/2"} } },
+              {"M": { "name":{"S":"Dried Parsely"}, "unit":{"S":"tsp."}, "amount":{"S":"1"} } },
+              {"M": { "name":{"S":"Onion Powder"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
+              {"M": { "name":{"S":"Garlic Powder"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
+              {"M": { "name":{"S":"Salt"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
+              {"M": { "name":{"S":"Black Pepper"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
+              {"M": { "name":{"S":"(optional) Fresh Chives"}, "unit":{"S":""}, "amount":{"S":"yes"} } },
+              {"M": { "name":{"S":"(optional) Ghost Pepper Powder"}, "unit":{"S":"tsp."}, "amount":{"S":"1/4"} } }
             ] },
             "items": {"L": [{"S":"Container w/ Lid"}, {"S":"Something to stir with"}] },
             "steps": {"L": [
-              {"M": { "ordinal":{"N":"0"}, "description":{"S":"Mince or crush the fresh garlic."} } },
-              {"M": { "ordinal":{"N":"1"}, "description":{"S":"Mix all the things together in the container."}, "notes":{"L":[{"S":"Use freshly cracked/ground peppercorn if possible - it is stronger than black pepper."}]} } },
-              {"M": { "ordinal":{"N":"2"}, "description":{"S":"Cover and chill for at least 1-2 hours."}, "notes":{"L":[{"S":"Flavor will continue to develop over time."}]} } }
+              {"M": { "ordinal":{"N":"1"}, "description":{"S":"Mix all the things together in the container."}, "notes":{"L":[{"S":"Use freshly cracked/ground peppercorn if possible - it is stronger."}]} } },
+              {"M": { "ordinal":{"N":"2"}, "description":{"S":"Cover and chill for at least 20 minutes."}, "notes":{"L":[{"S":"Flavor may take several hours to fully develop."}]} } }
             ] }
           }
           ITEM
