@@ -108,7 +108,7 @@ export function App() {
               ]}
           >
           </Sidebar>
-          <div className='flex-column' style={{flexGrow:'1', overflow:'hidden', maxHeight:'100vh'}}>
+          <div className='flex-column' style={{flexGrow:'1', overflow:'hidden', maxHeight:'100dvh'}}>
               {
                   sidebarOption == "about"
                       ? <About></About>

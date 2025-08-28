@@ -1,7 +1,7 @@
 /*noinspection CssInvalidFunction*/
 #sidebar {
     background-color: light-dark(#65cfff,#c94080);
-    height: 100vh;
+    height: 100dvh;
     transition-duration: 1s;
     z-index: 1;
 }

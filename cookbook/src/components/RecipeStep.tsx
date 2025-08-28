@@ -68,7 +68,7 @@ export const RecipeStep: (step: RecipeStepProps) => React.JSX.Element = (step: R
                 style={{backgroundColor: 'transparent', borderWidth: '0 0 1px 0', width:'100%'}}
             />
 
-            <div className='flex-column' style={{flexGrow:'1',maxHeight:'30vh',overflowY:'scroll'}}>
+            <div className='flex-column' style={{flexGrow:'1',maxHeight:'30dvh',overflowY:'scroll'}}>
                 <ul>
                     { notes.map( (note) =>
                         <li className='flex-row' key={note} style={{placeItems:'center',flexWrap:'nowrap',margin:'0'}}>

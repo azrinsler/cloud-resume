@@ -19,7 +19,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             <h2>{recipe.title}</h2>
                         </div>
                     </div>
-                    <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80vh',overflowY:'scroll'}}>
+                    <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>
                         <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px solid',flexGrow:2,padding:'1em'}}>
                             <div>
                                 <h3>Ingredients</h3>

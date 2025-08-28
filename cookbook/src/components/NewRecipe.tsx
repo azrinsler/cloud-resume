@@ -189,7 +189,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 <button id='new-recipe-add-ingredient-button' className='happy-button' onClick={addIngredient}>Add Ingredient</button>
                             </label>
                         </div>
-                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30vh',overflowY:'scroll'}}>
+                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30dvh',overflowY:'scroll'}}>
                             <ul id='new-recipe-ingredient-list' style={{}}>
                                 { ingredients.map((ingredient) =>
                                     <li className='flex-row' key={ingredient.name+'-'+ingredient.amount+'-'+ingredient.unit} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
@@ -221,7 +221,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 <button id='new-recipe-add-item-button' className='happy-button' onClick={addItem}>Add Item</button>
                             </label>
                         </div>
-                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30vh',overflowY:'scroll'}}>
+                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30dvh',overflowY:'scroll'}}>
                             <ul id='new-recipe-item-list' style={{}}>
                                 { items.map( (item) =>
                                     <li className='flex-row' key={item} style={{placeItems:'center',flexWrap:'nowrap',margin:'0'}}>
@@ -255,7 +255,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                                 <button id='new-recipe-add-step-button' className='happy-button' onClick={addStep}>Add Step</button>
                             </label>
                         </div>
-                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'70vh',overflowY:'scroll'}}>
+                        <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'70dvh',overflowY:'scroll'}}>
                             <ul id='new-recipe-step-list' style={{flexGrow:'1'}}>
                                 { stepsOrdered.map((step, index) =>
                                     <li className='flex-row' key={step.ordinal} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>

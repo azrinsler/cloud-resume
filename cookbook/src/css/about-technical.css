@@ -8,8 +8,8 @@ h2 {
     width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
-    min-height: 30vh;
-    height: 30vh;
+    min-height: 30dvh;
+    height: 30dvh;
     background-color: light-dark(whitesmoke,black);
     flex-wrap: nowrap;
     place-self: center;
