@@ -20,7 +20,7 @@ export function App() {
     const [data, setData] = useState(testRecipe);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent)
     // sets current mode based on user preference and adds a listener in case they change their mind
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const [isDarkMode, setDarkMode] = useState(prefersDarkMode)
@@ -94,14 +94,15 @@ export function App() {
       <>
           <Sidebar
               icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
-              title={<span>Simple Recipes</span>}
+              title={<span style={ isMobile ? { fontSize:"x-large" } : {}}>Simple Recipes</span>}
               content={[
-                  <div onClick={ () => { setSidebarOption("about") } }>About</div>,
-                  <div onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
-                  <div onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
-                  <div onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
-                  <a href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div onMouseLeave={ () => { setJokeOption("") } }
+                  <div style={ isMobile ? { fontSize:"large" } : {}}  onClick={ () => { setSidebarOption("about") } }>About</div>,
+                  <div style={ isMobile ? { fontSize:"large" } : {}} onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                  <div style={ isMobile ? { fontSize:"large" } : {}} onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
+                  <div style={ isMobile ? { fontSize:"large" } : {}}  onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
+                  <a   style={ isMobile ? { fontSize:"large" } : {}} href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
+                  <div style={ isMobile ? { fontSize:"large" } : {}}
+                       onMouseLeave={ () => { setJokeOption("") } }
                        onMouseEnter={ () => { setJokeOption("donate") } }>
                       { jokeOption == "donate" ? <>Don't</> : <>Donate</> }
                   </div>
