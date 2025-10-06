@@ -96,12 +96,12 @@ export function App() {
               icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
               title={<span style={ isMobile ? { fontSize:"x-large" } : {}}>Simple Recipes</span>}
               content={[
-                  <div style={ isMobile ? { fontSize:"large" } : {}}  onClick={ () => { setSidebarOption("about") } }>About</div>,
-                  <div style={ isMobile ? { fontSize:"large" } : {}} onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
-                  <div style={ isMobile ? { fontSize:"large" } : {}} onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
-                  <div style={ isMobile ? { fontSize:"large" } : {}}  onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
-                  <a   style={ isMobile ? { fontSize:"large" } : {}} href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div style={ isMobile ? { fontSize:"large" } : {}}
+                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("about") } }>About</div>,
+                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
+                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
+                  <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
+                  <div style={ isMobile ? { fontSize:"large" } : {} }
                        onMouseLeave={ () => { setJokeOption("") } }
                        onMouseEnter={ () => { setJokeOption("donate") } }>
                       { jokeOption == "donate" ? <>Don't</> : <>Donate</> }

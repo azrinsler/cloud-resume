@@ -2,7 +2,7 @@
 resource "aws_acm_certificate" "primary_cert" {
   domain_name       = var.site_name
   validation_method = "DNS"
-  subject_alternative_names = ["www.${var.site_name}", "api.${var.site_name}", var.site_name]
+  subject_alternative_names = ["www.${var.site_name}", "api.${var.site_name}", "login.${var.site_name}", var.site_name]
 
   lifecycle {
     # preserves our cert in cases where this resource needs to be destroyed and recreated
