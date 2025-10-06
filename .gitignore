@@ -16,3 +16,5 @@
 # Build Outputs
 **/target
 **/*.zip
+
+node_modules

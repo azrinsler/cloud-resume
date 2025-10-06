@@ -9,10 +9,20 @@ import About from "./components/about/About.tsx";
 import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
 import NewRecipe from "./components/NewRecipe.tsx";
+import {useAuth} from "react-oidc-context";
 
 const testRecipe = testRecipeJson as Recipe
 
 export function App() {
+    const auth = useAuth();
+
+    const signOutRedirect = () => {
+        const clientId = "2posfe5jgoesk9e8sc7b5s8os8";
+        const logoutUri = "https://www.azrinsler.com/";
+        const cognitoDomain = "https://cookbook-login.auth.us-east-1.amazoncognito.com";
+        window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+    };
+
     // we'll try caching a few of these in local storage as well, so if the user reloads they don't lose their place
     const [recipeId, setRecipeId] = useState( localStorage.getItem("recipeId") || "0")
     const [sidebarOption, setSidebarOption] = useState( localStorage.getItem("sidebarOption") || "about" )
@@ -89,53 +99,77 @@ export function App() {
         }
     }, [fetchRecipe, loading, recipeId, sidebarOption]);
 
+    if (auth.isLoading) {
+        return <div>Loading...</div>;
+    }
 
-    return (
-      <>
-          <Sidebar
-              icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
-              title={<span style={ isMobile ? { fontSize:"x-large" } : {}}>Simple Recipes</span>}
-              content={[
-                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("about") } }>About</div>,
-                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
-                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
-                  <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
-                  <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                  <div style={ isMobile ? { fontSize:"large" } : {} }
-                       onMouseLeave={ () => { setJokeOption("") } }
-                       onMouseEnter={ () => { setJokeOption("donate") } }>
-                      { jokeOption == "donate" ? <>Don't</> : <>Donate</> }
+    if (auth.error) {
+        return <div>Encountering error... {auth.error.message}</div>;
+    }
+
+    if (auth.isAuthenticated) {
+        return (
+          <>
+              <Sidebar
+                  icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
+                  title={<span style={ isMobile ? { fontSize:"x-large" } : {}}>Simple Recipes</span>}
+                  content={[
+                      <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("about") } }>About</div>,
+                      <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                      <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
+                      <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
+                      <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
+                      <div style={ isMobile ? { fontSize:"large" } : {} }
+                           onMouseLeave={ () => { setJokeOption("") } }
+                           onMouseEnter={ () => { setJokeOption("donate") } }>
+                          { jokeOption == "donate" ? <>Don't</> : <>Donate</> }
+                      </div>,
+                      <div>
+                          <pre> Hello: {auth.user?.profile.email} </pre>
+                          <pre> ID Token: {auth.user?.id_token} </pre>
+                          <pre> Access Token: {auth.user?.access_token} </pre>
+                          <pre> Refresh Token: {auth.user?.refresh_token} </pre>
+                          <button onClick={() => auth.removeUser()}>Sign out</button>
+                      </div>
+                  ]}
+              >
+              </Sidebar>
+              <div className='flex-column' style={{flexGrow:'1', overflow:'hidden', maxHeight:'100dvh'}}>
+                  {
+                      sidebarOption == "about"
+                          ? <About></About>
+                      : sidebarOption == "new"
+                          ? <NewRecipe></NewRecipe>
+                      : sidebarOption == "browse"
+                          ? <Browse recipeCallback={fetchRecipe}></Browse>
+                      : sidebarOption == "recipe" && loading
+                          ? <Preheating></Preheating>
+                      : sidebarOption == "recipe"
+                          ? <>
+                              <RecipeCard
+                                  title={data?.title}
+                                  ingredients={data?.ingredients}
+                                  items={data?.items}
+                                  steps={data?.steps}>
+                              </RecipeCard>
+                              { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
+                            </>
+                      : <>Unknown Sidebar Option</>
+                  }
+                  <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>
+                      IMPORTANT: Please note that this is a DEV environment - new recipes may be lost any time the DB changes!
                   </div>
-              ]}
-          >
-          </Sidebar>
-          <div className='flex-column' style={{flexGrow:'1', overflow:'hidden', maxHeight:'100dvh'}}>
-              {
-                  sidebarOption == "about"
-                      ? <About></About>
-                  : sidebarOption == "new"
-                      ? <NewRecipe></NewRecipe>
-                  : sidebarOption == "browse"
-                      ? <Browse recipeCallback={fetchRecipe}></Browse>
-                  : sidebarOption == "recipe" && loading
-                      ? <Preheating></Preheating>
-                  : sidebarOption == "recipe"
-                      ? <>
-                          <RecipeCard
-                              title={data?.title}
-                              ingredients={data?.ingredients}
-                              items={data?.items}
-                              steps={data?.steps}>
-                          </RecipeCard>
-                          { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
-                        </>
-                  : <>Unknown Sidebar Option</>
-              }
-              <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>
-                  IMPORTANT: Please note that this is a DEV environment - new recipes may be lost any time the DB changes!
               </div>
-          </div>
-      </>
-  )
+          </>
+      )
+    }
+    return (
+        <>
+            <div>
+                <button onClick={() => auth.signinRedirect()}>Sign in</button>
+                <button onClick={() => signOutRedirect()}>Sign out</button>
+            </div>
+        </>
+    );
 }
 
