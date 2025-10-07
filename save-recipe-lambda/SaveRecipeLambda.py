@@ -31,8 +31,9 @@ def lambda_handler(event, context):
             logger.debug("Event Body: " + json.dumps(event_body))
 
             # event record body is passed along as an escaped JSON string within the overall JSON (parsed differently)
-            user = json.loads(event_body)["user"]
-            recipe = json.loads(event_body)["recipe"]
+            event_json = json.loads(event_body)
+            user = event_json["user"]
+            recipe = event_json["recipe"]
             recipe_id = recipe["recipeId"]
             recipe_title = recipe["title"]
             recipe_title_plus_id = '"' + recipe_title + '" [' + recipe_id + ']'
