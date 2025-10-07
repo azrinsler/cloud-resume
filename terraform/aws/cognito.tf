@@ -4,7 +4,6 @@
 resource "aws_cognito_user_pool" "main" {
   name = "cookbook-user-pool"
 
-  alias_attributes         = ["email"]
   username_attributes      = ["email"]
   auto_verified_attributes = ["email"]
 
@@ -65,19 +64,4 @@ resource "aws_cognito_user_pool_client" "cookbook_client" {
 resource "aws_cognito_user_pool_domain" "main" {
   domain       = "cookbook-login"
   user_pool_id = aws_cognito_user_pool.main.id
-}
-
-# ---------------------
-# Outputs
-# ---------------------
-output "user_pool_id" {
-  value = aws_cognito_user_pool.main.id
-}
-
-output "user_pool_client_id" {
-  value = aws_cognito_user_pool_client.cookbook_client.id
-}
-
-output "cognito_login_url" {
-  value = "https://${aws_cognito_user_pool_domain.main.domain}.auth.us-east-1.amazoncognito.com/login?client_id=${aws_cognito_user_pool_client.cookbook_client.id}&response_type=token&redirect_uri=https://www.${var.site_name}/"
 }
