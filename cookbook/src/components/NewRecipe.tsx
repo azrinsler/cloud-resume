@@ -7,8 +7,10 @@ import type {Recipe} from "./interfaces/Recipe.ts";
 import type {Ingredient} from "./interfaces/Ingredient.ts";
 import RecipeStep from "./RecipeStep.tsx";
 import type {Step} from "./interfaces/Step.ts";
+import {useAuth} from "react-oidc-context";
 
 const NewRecipe: () => React.JSX.Element = () => {
+    const auth = useAuth();
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
     const titleRef = useRef<HTMLInputElement>(null)
@@ -133,7 +135,8 @@ const NewRecipe: () => React.JSX.Element = () => {
             },
             body: JSON.stringify({
                 "operation": "newRecipe",
-                "recipe": JSON.stringify(recipe)
+                "recipe": JSON.stringify(recipe),
+                "user": auth.user?.profile.email
             })
         })
         .then((response) => {
@@ -157,6 +160,7 @@ const NewRecipe: () => React.JSX.Element = () => {
     }
 
     return (
+        !auth.isAuthenticated ? <></> : // returns nothing if not authenticated
         <div className='flex-column' style={{width:'100%',flexGrow:'1',overflow:'hidden'}}>
             <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>New Recipe</h1>
 

@@ -44,7 +44,7 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
         logger.info("Records: ${records.size()}")
 
         for (record in records) {
-            val recordJson = record["body"].asText()
+            val recordJson = record["body"]["recipe"].asText()
             logger.info("Record Body: $recordJson")
             val recipe = JacksonWrapper.readJson(recordJson) as Recipe
 
@@ -67,7 +67,7 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
             sqsClient.use {
                 val sendMsgRequest = SendMessageRequest.builder()
                     .queueUrl(saveRecipeQueueUrl)
-                    .messageBody(recipeJson)
+                    .messageBody(record["body"].asText())
                     .build()
 
                 val sqsResponse = sqsClient.sendMessage(sendMsgRequest)

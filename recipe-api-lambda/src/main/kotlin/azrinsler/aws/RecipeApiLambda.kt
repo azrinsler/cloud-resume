@@ -123,7 +123,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         sqsClient.use {
                             val sendMsgRequest = SendMessageRequest.builder()
                                 .queueUrl(newRecipeQueueUrl)
-                                .messageBody(recipeBody)
+                                .messageBody(event.body)
                                 .build()
 
                             val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
