@@ -17,7 +17,7 @@ export function App() {
     const auth = useAuth();
 
     const signOutRedirect = () => {
-        const clientId = "2posfe5jgoesk9e8sc7b5s8os8";
+        const clientId = "4beki0cs423atvjm1kr2ojehhu";
         const logoutUri = "https://www.azrinsler.com/";
         const cognitoDomain = "https://cookbook-login.auth.us-east-1.amazoncognito.com";
         window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
