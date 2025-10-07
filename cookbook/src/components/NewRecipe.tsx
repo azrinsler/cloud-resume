@@ -113,6 +113,7 @@ const NewRecipe: () => React.JSX.Element = () => {
     const toRecipe = () : Recipe => {
         const recipe = {
             title: titleRef.current!.value,
+            user: auth.user?.profile?.email,
             ingredients: ingredients,
             items: items,
             steps: steps

@@ -111,7 +111,6 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         .credentialsProvider(DefaultCredentialsProvider.create())
                         .build()
 
-                    // val recipeBody = JacksonWrapper.writeJson(inputAsJson["recipe"])
                     val recipeBody = inputAsJson["recipe"].asText()
 
                     logger.info("Recipe Body: $recipeBody")

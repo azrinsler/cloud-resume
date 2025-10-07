@@ -47,10 +47,7 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
             val recordBody = record["body"].asText()
             logger.info("Record Body: $recordBody")
             val recordJson = JacksonWrapper.readTree(recordBody)
-            val user = recordJson["user"].asText()
-            logger.info("User: $user")
             val recipe = JacksonWrapper.readJson(recordJson["recipe"].asText()) as Recipe
-            logger.info("Recipe: $recipe")
 
 
 
@@ -70,7 +67,7 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
             sqsClient.use {
                 val sendMsgRequest = SendMessageRequest.builder()
                     .queueUrl(saveRecipeQueueUrl)
-                    .messageBody(recordBody)
+                    .messageBody(recipeJson)
                     .build()
 
                 val sqsResponse = sqsClient.sendMessage(sendMsgRequest)

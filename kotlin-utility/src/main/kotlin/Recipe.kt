@@ -7,6 +7,7 @@ val logger : Logger = LoggerFactory.getLogger(Recipe::class.java)
 data class Recipe (
     val recipeId: UUID = UUID.randomUUID().also { logger.info("Called to instantiate a Recipe w/ no id. A new id has been randomly generated: $it") },
     val title: String,
+    val user: String,
     val ingredients: List<Ingredient>,
     val items: List<String>,
     val steps: List<Step>
