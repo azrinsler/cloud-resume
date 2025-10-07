@@ -70,7 +70,7 @@ class NewRecipeLambda : RequestStreamHandler { // (the official SQSEvent apparen
             sqsClient.use {
                 val sendMsgRequest = SendMessageRequest.builder()
                     .queueUrl(saveRecipeQueueUrl)
-                    .messageBody(record["body"].asText())
+                    .messageBody(recordBody)
                     .build()
 
                 val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
