@@ -30,10 +30,16 @@ def lambda_handler(event, context):
             event_body = record["body"]
             logger.debug("Event Body: " + json.dumps(event_body))
 
-            # event record body is passed along as an escaped JSON string within the overall JSON (parsed differently)
+            logger.info("Event JSON:")
             event_json = json.loads(event_body)
+            logger.info(event_json)
+
             user = event_json["user"]
-            recipe = event_json["recipe"]
+            logger.info("User: " + user)
+
+            recipe = json.loads(event_json["recipe"])
+            logger.info("Recipe:" + json.dumps(recipe))
+
             recipe_id = recipe["recipeId"]
             recipe_title = recipe["title"]
             recipe_title_plus_id = '"' + recipe_title + '" [' + recipe_id + ']'
@@ -48,9 +54,9 @@ def lambda_handler(event, context):
                 try:
                     recipeTable.put_item(
                         Item={
-                            "user": user,
                             "recipe_id" : recipe_id,
                             "title" : recipe_title,
+                            "user": user,
                             "ingredients": [] if not recipe.get("ingredients") else recipe["ingredients"],
                             "items": [] if not recipe.get("items") else recipe["items"],
                             "steps": [] if not recipe.get("steps") else recipe["steps"]
