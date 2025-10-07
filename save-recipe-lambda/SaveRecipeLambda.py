@@ -31,10 +31,7 @@ def lambda_handler(event, context):
             logger.debug("Event Body: " + json.dumps(event_body))
 
             logger.info("Event JSON:")
-            event_json = json.loads(event_body)
-            logger.info(event_json)
-
-            recipe = json.loads(event_json["recipe"])
+            recipe = json.loads(event_body)
             logger.info("Recipe:" + json.dumps(recipe))
 
             recipe_id = recipe["recipeId"]
