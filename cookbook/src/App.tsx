@@ -17,12 +17,12 @@ export function App() {
     const auth = useAuth();
 
     // this currently needs to be manually updated to match the user pool any time it gets recreated, which is not ideal
-    const signOutRedirect = () => {
-        const clientId = "4beki0cs423atvjm1kr2ojehhu";
-        const logoutUri = "https://www.azrinsler.com/";
-        const cognitoDomain = "https://cookbook-login.auth.us-east-1.amazoncognito.com";
-        window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-    };
+    // const signOutRedirect = () => {
+    //     const clientId = "4beki0cs423atvjm1kr2ojehhu";
+    //     const logoutUri = "https://www.azrinsler.com/";
+    //     const cognitoDomain = "https://cookbook-login.auth.us-east-1.amazoncognito.com";
+    //     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+    // };
 
     // we'll try caching a few of these in local storage as well, so if the user reloads they don't lose their place
     const [recipeId, setRecipeId] = useState( localStorage.getItem("recipeId") || "0")
@@ -142,7 +142,7 @@ export function App() {
                         //     </>
                         // );
                         auth.isAuthenticated
-                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signOutRedirect() } }>Sign out</div>
+                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { auth.removeUser() } }>Sign out</div>
                             : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { auth.signinRedirect() } }>Login</div>
                         ,
                     ]}
