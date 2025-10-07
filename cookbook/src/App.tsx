@@ -116,7 +116,12 @@ export function App() {
                     title={<span style={ isMobile ? { fontSize:"x-large" } : {}}>Simple Recipes</span>}
                     content={[
                         <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("about") } }>About</div>,
-                        <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("new") } }>New Recipe</div>,
+                        auth.isAuthenticated
+                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("new") } }>New Recipe</div>
+                            : <></>,
+                        auth.isAuthenticated
+                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("self") } }>My Recipes</div>
+                            : <></>,
                         <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("browse") } }>Browse Recipes</div>,
                         <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { setSidebarOption("recipe") } }>Current Recipe</div>,
                         <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
