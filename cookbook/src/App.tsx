@@ -16,6 +16,7 @@ const testRecipe = testRecipeJson as Recipe
 export function App() {
     const auth = useAuth();
 
+    // this currently needs to be manually updated to match the user pool any time it gets recreated, which is not ideal
     const signOutRedirect = () => {
         const clientId = "4beki0cs423atvjm1kr2ojehhu";
         const logoutUri = "https://www.azrinsler.com/";

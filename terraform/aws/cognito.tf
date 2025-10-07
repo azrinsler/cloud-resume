@@ -41,7 +41,7 @@ resource "aws_cognito_user_pool_client" "cookbook_client" {
 
   generate_secret = false
 
-  allowed_oauth_flows             = ["implicit"]
+  allowed_oauth_flows             = ["code"]
   allowed_oauth_scopes            = ["email", "openid", "profile"]
   allowed_oauth_flows_user_pool_client = true
 
