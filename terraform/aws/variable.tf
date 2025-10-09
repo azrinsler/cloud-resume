@@ -8,6 +8,11 @@ variable "packaged_new_recipe_relative_root" {
   default = "./new-recipe-lambda/target"
 }
 
+variable "packaged_delete_recipe_lambda_relative_root" {
+  type = string
+  default = "./delete-recipe-lambda/target"
+}
+
 variable "packaged_recipe_api_lambda_relative_root" {
   type = string
   default = "./recipe-api-lambda/target"
@@ -43,6 +48,11 @@ variable "new_recipe_lambda_class" {
   default = "NewRecipeLambda"
 }
 
+variable "delete_recipe_lambda_class" {
+  type = string
+  default = "DeleteRecipeLambda"
+}
+
 variable "recipe_api_lambda_class" {
   type = string
   default = "RecipeApiLambda"
@@ -53,12 +63,22 @@ variable "new_recipe_lambda_artifact" {
   default = "new-recipe-lambda"
 }
 
+variable "delete_recipe_lambda_artifact" {
+  type = string
+  default = "delete-recipe-lambda"
+}
+
 variable "recipe_api_lambda_artifact" {
   type = string
   default = "recipe-api-lambda"
 }
 
 variable "new_recipe_lambda_version" {
+  type = string
+  default = "O"
+}
+
+variable "delete_recipe_lambda_version" {
   type = string
   default = "O"
 }
