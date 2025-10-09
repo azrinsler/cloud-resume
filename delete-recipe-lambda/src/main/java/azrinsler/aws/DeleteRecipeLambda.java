@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
 import java.io.*;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class DeleteRecipeLambda implements RequestStreamHandler {
     private static final ObjectMapper jackson = new ObjectMapper();
     private static final Logger logger = LoggerFactory.getLogger(DeleteRecipeLambda.class);
@@ -65,7 +66,7 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
 
                 var deleteRequest = DeleteItemRequest.builder()
                         .tableName("Recipes")
-                        .key(Map.of("id", AttributeValue.builder().s(recipeId).build()))
+                        .key(Map.of("recipe_id", AttributeValue.builder().s(recipeId).build()))
                         .build();
 
                 dynamoDb.deleteItem(deleteRequest);
