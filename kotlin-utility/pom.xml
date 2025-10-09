@@ -5,7 +5,7 @@
 
     <groupId>azrinsler</groupId>
     <artifactId>kotlin-utility</artifactId>
-    <version>3</version>
+    <version>3-SNAPSHOT</version>
 
     <properties>
         <jvm.version>21</jvm.version>

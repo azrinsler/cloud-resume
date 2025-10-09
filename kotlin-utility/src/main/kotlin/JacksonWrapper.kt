@@ -16,10 +16,15 @@ object JacksonWrapper {
         }
     }
 
+    @JvmStatic
     fun writeJson (it: Any) : String = MAPPER.writeValueAsString(it)
 
+    @JvmStatic
     fun readTree (input: String) : JsonNode = MAPPER.readTree(input)
 
+    @JvmStatic
     inline fun <reified T> readJson (input: String) : T = MAPPER.readValue(input, T::class.java)
+
+    @JvmStatic
     inline fun <reified T> readJson (input: Map<*,*>) : T = readJson( writeJson(input) )
 }
