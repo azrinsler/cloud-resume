@@ -3,7 +3,7 @@ variable "cookbook_bucket_name" {
   default = "azrinsler-cookbook"
 }
 
-variable "packaged_new_recipe_relative_root" {
+variable "packaged_new_recipe_lambda_relative_root" {
   type = string
   default = "./new-recipe-lambda/target"
 }
