@@ -46,7 +46,7 @@ resource "aws_lambda_event_source_mapping" "new_recipe_lambda_sqs_event_source_m
 resource "aws_lambda_function" "delete_recipe_lambda_function" {
   function_name = var.delete_recipe_lambda_class
   s3_bucket = aws_s3_bucket.packaged_source_bucket.id
-  s3_key    = aws_s3_object.new_recipe_lambda_source.key
+  s3_key    = aws_s3_object.delete_recipe_lambda_source.key
   # Supported Runtimes: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-supported
   runtime = "java21"
   handler = "azrinsler.aws.${var.delete_recipe_lambda_class}::handleRequest"
