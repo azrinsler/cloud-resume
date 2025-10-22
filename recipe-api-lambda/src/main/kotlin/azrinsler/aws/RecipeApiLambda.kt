@@ -148,7 +148,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         body = "Failed to parse input recipe as Recipe data class."
                     }
                 }
-                "delete_recipe" -> {
+                "deleteRecipe" -> {
                     val sqsClient = SqsClient.builder()
                         .region(region)
                         .credentialsProvider(DefaultCredentialsProvider.create())
