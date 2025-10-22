@@ -133,6 +133,7 @@ const NewRecipe: () => React.JSX.Element = () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": auth.user?.access_token ?? "",
             },
             body: JSON.stringify({
                 "operation": "newRecipe",

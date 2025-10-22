@@ -2,10 +2,45 @@ import * as React from "react";
 import type {Recipe} from "./interfaces/Recipe.ts";
 
 import '../css/recipe-card.css'
+import {useRef} from "react";
+import {useAuth} from "react-oidc-context";
 
 const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
+    const auth = useAuth();
+
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
     const stepsOrdered = recipe.steps?.sort((a,b)=>a.ordinal-b.ordinal)
+
+    const deleteRecipeRef = useRef<HTMLButtonElement>(null)
+    const deleteRecipe = (recipeId: string) => {
+        // disable button to prevent multi-clicks
+        deleteRecipeRef.current!.disabled = true
+
+        fetch("https://api.azrinsler.com/RecipeApiLambda", {
+            signal: AbortSignal.timeout(120 * 1000),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": auth.user?.access_token ?? "",
+            },
+            body: JSON.stringify({
+                "operation": "deleteRecipe",
+                "recipeId": recipeId,
+                "user": auth.user?.profile.sub
+            })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log(response);
+            deleteRecipeRef.current!.disabled = false
+        })
+        .catch((err) => {
+            console.log(err)
+            deleteRecipeRef.current!.disabled = false
+        });
+    }
     return (
         <div className='flex-column' style={{width:'100%',flexGrow:'1'}}>
             <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Recipe</h1>
@@ -17,6 +52,9 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                         </div>
                         <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
                             <h2>{recipe.title}</h2>
+                        </div>
+                        <div>
+                            <button className='x-button' style={isMobile ? {} : {marginRight:'1em'}} onClick={()=>{deleteRecipe(recipe.id!)}}>x</button>
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>

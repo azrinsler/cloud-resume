@@ -10,6 +10,20 @@ resource "aws_apigatewayv2_api" "primary_gateway" {
   }
 }
 
+# this authorizer enables auth on the api gateway, using users from our cognito client
+resource "aws_apigatewayv2_authorizer" "cognito_auth" {
+  api_id           = aws_apigatewayv2_api.primary_gateway.id
+  authorizer_type  = "JWT"
+  identity_sources = ["$request.header.Authorization"]
+
+  name = "cognito-authorizer"
+
+  jwt_configuration {
+    audience = [aws_cognito_user_pool_client.cookbook_client.id]
+    issuer   = "https://${aws_cognito_user_pool.main.endpoint}"
+  }
+}
+
 # each api gateway needs at least one stage - usually you would have multiple (i.e. prod and dev)
 resource "aws_apigatewayv2_stage" "primary_gateway_stage" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
@@ -43,11 +57,13 @@ resource "aws_apigatewayv2_integration" "primary_gateway_recipe_api_lambda_integ
   integration_method = "POST"
 }
 
-# sends all POST requests to the recipe api lambda to the... you get it
+# sends all POST requests to the recipe api lambda to the... recipe api lambda. Yep.
 resource "aws_apigatewayv2_route" "primary_gateway_recipe_api_route" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
   route_key = "POST /${aws_lambda_function.recipe_api_lambda_function.function_name}"
   target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_recipe_api_lambda_integration.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.cognito_auth.id
+  authorization_type = "JWT"
 }
 
 # defines a custom domain name. note that this is separate from (and in addition to) our Route53 custom domain!

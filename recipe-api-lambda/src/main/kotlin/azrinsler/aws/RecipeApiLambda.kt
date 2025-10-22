@@ -24,6 +24,7 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest
 
 const val accountId = "477850672676"
 const val newRecipeQueueName = "new-recipe-input-queue"
+const val deleteRecipeQueueName = "delete-recipe-input-queue"
 
 @Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
 class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -31,6 +32,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
     val region : Region = Region.US_EAST_1
 
     val newRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$newRecipeQueueName"
+    val deleteRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$deleteRecipeQueueName"
 
     override fun handleRequest(event: APIGatewayProxyRequestEvent, context: Context): APIGatewayProxyResponseEvent {
         // OpenTelemetry span context information - helps AWS correlate logs to traces
@@ -41,6 +43,12 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
         }
 
         logger.trace("Recipe API Lambda Handler - API Gateway Proxy Request Event received.")
+
+        logger.info("Auth claims stuffs")
+        val claims = JacksonWrapper.readJson(event.requestContext?.authorizer as Map<*,*>) as Map<String,Any>
+        logger.info(claims.keys.toString())
+        for (key in claims.keys)
+            logger.info(claims[key].toString())
 
         val response = APIGatewayProxyResponseEvent()
 
@@ -139,7 +147,34 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         statusCode = 422
                         body = "Failed to parse input recipe as Recipe data class."
                     }
+                }
+                "delete_recipe" -> {
+                    val sqsClient = SqsClient.builder()
+                        .region(region)
+                        .credentialsProvider(DefaultCredentialsProvider.create())
+                        .build()
 
+                    // TODO
+                    val recipeId = inputAsJson["recipeId"].asText()
+                    if (recipeId != null) {
+                        sqsClient.use {
+                            val sendMsgRequest = SendMessageRequest.builder()
+                                .queueUrl(deleteRecipeQueueUrl)
+                                .messageBody(recipeId)
+                                .build()
+
+                            val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
+
+                            with (response) {
+                                statusCode = 200
+                                body = "\"message\":\"${sqsResponse.messageId()}\""
+                            }
+                        }
+                    }
+                    else with (response) {
+                        statusCode = 422
+                        body = "Failed to parse input."
+                    }
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
                     logger.warn("Unrecognized operation: $operation")

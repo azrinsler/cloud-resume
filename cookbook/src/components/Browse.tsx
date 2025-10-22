@@ -7,12 +7,14 @@ const testResponse = testJson as GetRecipeResponse
 
 import '../css/browse.css'
 import Preheating from "./Preheating.tsx";
+import {useAuth} from "react-oidc-context";
 
 interface BrowseProps {
     recipeCallback: (recipe: string) => void
 }
 
 const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallback}: BrowseProps) => {
+    const auth = useAuth();
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
     const [loading, setLoading] = useState(true);
@@ -36,6 +38,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": auth.user?.access_token ?? "",
                 },
                 body: JSON.stringify({
                     "operation": "getRecipes"
@@ -59,7 +62,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 setLoading(false);
             });
         }
-    }, [loading]);
+    }, [auth.user?.access_token, loading]);
 
     return (
         <>
