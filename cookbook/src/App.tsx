@@ -167,6 +167,7 @@ export function App() {
                                         : sidebarOption == "recipe"
                                             ? <>
                                                 <RecipeCard
+                                                    id={data?.id}
                                                     title={data?.title}
                                                     ingredients={data?.ingredients}
                                                     items={data?.items}

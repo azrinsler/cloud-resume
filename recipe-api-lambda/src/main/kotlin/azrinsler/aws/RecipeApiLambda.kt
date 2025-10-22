@@ -46,7 +46,6 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
 
         logger.info("Auth claims stuffs")
         val claims = JacksonWrapper.readJson(event.requestContext?.authorizer as Map<*,*>) as Map<String,Any>
-        logger.info(claims.keys.toString())
         for (key in claims.keys)
             logger.info(claims[key].toString())
 
