@@ -21,7 +21,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": auth.user?.access_token ?? "",
+                "Authorization": auth.user?.id_token ?? "",
             },
             body: JSON.stringify({
                 "operation": "deleteRecipe",
@@ -53,7 +53,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                         <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
                             <h2>{recipe.title}</h2>
                         </div>
-                        <div>
+                        <div style={{position:"fixed",right:"1.5em"}}>
                             <button className='x-button' style={isMobile ? {} : {marginRight:'1em'}} onClick={()=>{deleteRecipe(recipe.id!)}}>x</button>
                         </div>
                     </div>

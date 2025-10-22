@@ -38,7 +38,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": auth.user?.access_token ?? "",
+                    "Authorization": auth.user?.id_token ?? "",
                 },
                 body: JSON.stringify({
                     "operation": "getRecipes"
