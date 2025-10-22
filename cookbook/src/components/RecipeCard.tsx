@@ -15,7 +15,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     const deleteRecipe = (recipeId: string) => {
         // disable button to prevent multi-clicks
         deleteRecipeRef.current!.disabled = true
-
+        console.log(recipeId)
         fetch("https://api.azrinsler.com/RecipeApiLambda", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -25,7 +25,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             },
             body: JSON.stringify({
                 "operation": "deleteRecipe",
-                "recipeId": recipeId,
+                "recipeId": "0",
                 "user": auth.user?.profile.sub
             })
         })
