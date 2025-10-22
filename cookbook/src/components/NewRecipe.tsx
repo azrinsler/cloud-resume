@@ -138,7 +138,7 @@ const NewRecipe: () => React.JSX.Element = () => {
             body: JSON.stringify({
                 "operation": "newRecipe",
                 "recipe": JSON.stringify(recipe),
-                "user": auth.user?.profile.email
+                "user": auth.user?.profile.sub
             })
         })
         .then((response) => {

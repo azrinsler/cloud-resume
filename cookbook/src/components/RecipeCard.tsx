@@ -54,7 +54,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             <h2>{recipe.title}</h2>
                         </div>
                         <div style={{position:"fixed",right:"1.5em"}}>
-                            <button className='x-button' style={isMobile ? {} : {marginRight:'1em'}} onClick={()=>{deleteRecipe(recipe.id!)}}>x</button>
+                            <button ref={deleteRecipeRef} className='x-button' style={isMobile ? {} : {marginRight:'1em'}} onClick={()=>{deleteRecipe(recipe.id!)}}>x</button>
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>
