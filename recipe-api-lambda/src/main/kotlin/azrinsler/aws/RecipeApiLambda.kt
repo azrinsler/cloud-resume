@@ -153,13 +153,12 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                         .credentialsProvider(DefaultCredentialsProvider.create())
                         .build()
 
-                    // TODO
                     val recipeId = inputAsJson["recipeId"].asText()
                     if (recipeId != null) {
                         sqsClient.use {
                             val sendMsgRequest = SendMessageRequest.builder()
                                 .queueUrl(deleteRecipeQueueUrl)
-                                .messageBody(recipeId)
+                                .messageBody(event.body)
                                 .build()
 
                             val sqsResponse = sqsClient.sendMessage(sendMsgRequest)

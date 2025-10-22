@@ -53,6 +53,10 @@ resource "aws_cognito_user_pool_client" "cookbook_client" {
     "https://www.${var.site_name}/"
   ]
 
+  access_token_validity  = 12  # hours
+  id_token_validity      = 12  # hours
+  refresh_token_validity = 30  # days
+
   supported_identity_providers = ["COGNITO"]
 
   prevent_user_existence_errors = "ENABLED"
