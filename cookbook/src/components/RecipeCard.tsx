@@ -12,10 +12,10 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     const stepsOrdered = recipe.steps?.sort((a,b)=>a.ordinal-b.ordinal)
 
     const deleteRecipeRef = useRef<HTMLButtonElement>(null)
-    const deleteRecipe = (recipeId: string) => {
+    const deleteRecipe = () => {
         // disable button to prevent multi-clicks
         deleteRecipeRef.current!.disabled = true
-        console.log(recipeId)
+        console.log("Recipe ID: " + recipe.id)
         fetch("https://api.azrinsler.com/RecipeApiLambda", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -25,7 +25,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             },
             body: JSON.stringify({
                 "operation": "deleteRecipe",
-                "recipeId": "0",
+                "recipeId": recipe.id,
                 "user": auth.user?.profile.sub
             })
         })
@@ -54,7 +54,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             <h2>{recipe.title}</h2>
                         </div>
                         <div style={{position:"fixed",right:"1.5em"}}>
-                            <button ref={deleteRecipeRef} className='x-button' style={isMobile ? {} : {marginRight:'1em'}} onClick={()=>{deleteRecipe(recipe.id!)}}>x</button>
+                            <button ref={deleteRecipeRef} className='x-button' style={isMobile ? {} : {marginRight:'1em'}} onClick={()=>{deleteRecipe()}}>x</button>
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>
