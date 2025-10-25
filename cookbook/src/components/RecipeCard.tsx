@@ -51,12 +51,12 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             <h2>Simple Recipes</h2>
                         </div>
                         <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
-                            <h2 style={{flexGrow:1}}>{recipe.title}</h2>
-                            <button ref={deleteRecipeRef} className='x-button' style={isMobile ? {} : {marginLeft:'-1.25em',marginRight:0}} onClick={()=>{deleteRecipe()}}>x</button>
+                            <h2 style={{flexGrow:1,textAlign:'center'}}>{recipe.title}</h2>
+                            <button ref={deleteRecipeRef} className='x-button' style={{margin:0,marginLeft:'-1.25em',position:'relative',right:'-0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>
-                        <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px solid light-dark(gray,#7b4fab)',flexGrow:2,padding:'1em'}}>
+                        <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px dotted light-dark(gray,#76f80e1)',flexGrow:2,padding:'1em'}}>
                             <div>
                                 <h3>Ingredients</h3>
                                 <hr/>
