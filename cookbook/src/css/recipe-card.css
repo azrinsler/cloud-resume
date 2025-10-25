@@ -84,3 +84,10 @@
     color: light-dark(#2633ab,#ff80ec);
     font-weight: 700;
 }
+
+#delete-recipe-button {
+    margin: 0 0 0 -1.25em;
+    position: relative;
+    right: -1.25em;
+    top: -2em;
+}

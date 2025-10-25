@@ -16,7 +16,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
         // disable button to prevent multi-clicks
         deleteRecipeRef.current!.disabled = true
         console.log("Recipe ID: " + recipe.id)
-        fetch("https://api.azrinsler.com/RecipeApiLambda", {
+        fetch("https://api.azrinsler.com/RecipeApiLambdaUser", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
             headers: {
@@ -52,7 +52,14 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                         </div>
                         <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
                             <h2 style={{flexGrow:1,textAlign:'center'}}>{recipe.title}</h2>
-                            <button ref={deleteRecipeRef} className='x-button' style={{margin:0,marginLeft:'-1.25em',position:'relative',right:'-0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
+                            { // only show delete recipe button if the user is logged in
+                                auth.isAuthenticated // && auth.user?.profile.sub == recipe.id // TODO - Re-enable. commented out to make testing easier
+                                    ? <div id="delete-recipe-button" className="flex-row">
+                                        <span>Delete Recipe --&gt;</span>
+                                        <button ref={deleteRecipeRef} className='x-button' style={{margin:'0 0 0 0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
+                                    </div>
+                                    : <></>
+                            }
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>

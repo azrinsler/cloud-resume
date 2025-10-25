@@ -79,7 +79,6 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
                     // make sure we can read this input as a Recipe before accepting it
                     val recipe = JacksonWrapper.readJson(recipeBody) as? Recipe
-
                     if (recipe != null) {
                         sqsClient.use {
                             val sendMsgRequest = SendMessageRequest.builder()

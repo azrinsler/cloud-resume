@@ -58,6 +58,7 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
             logger.info("Record Body: {}", recordBody);
             var recordJson = jackson.readTree(recordBody);
             var recipeId = recordJson.get("recipeId").asText();
+            var user =  recordJson.get("user").asText();
             logger.info("Recipe Id: {}", recipeId);
 
             try (var dynamoDb = DynamoDbClient.builder()
@@ -67,6 +68,8 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
                 var deleteRequest = DeleteItemRequest.builder()
                         .tableName("Recipes")
                         .key(Map.of("recipe_id", AttributeValue.builder().s(recipeId).build()))
+                        .conditionExpression("user = :expectedUser")
+                        .expressionAttributeValues(Map.of(":expectedUser", AttributeValue.builder().s(user).build()))
                         .build();
 
                 dynamoDb.deleteItem(deleteRequest);
