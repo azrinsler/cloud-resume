@@ -74,7 +74,7 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
             logger.info("Operation: $operation")
 
             when (operation) {
-                "newRecipe" -> {
+                "saveRecipe" -> {
                     val sqsClient = SqsClient.builder()
                         .region(region)
                         .credentialsProvider(DefaultCredentialsProvider.create())
@@ -98,9 +98,12 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
                             with (response) {
                                 statusCode = 202
-                                body = "\"message\":\"Recipe was successfully sent to queue for additional handling. Assuming there " +
-                                        "are no issues, it should start appearing in search results momentarily. " +
-                                        "Message ID: ${sqsResponse.messageId()}\""
+                                body = """
+                                    { 
+                                        "message": "saveRecipe request sent to queue. Assuming no issues, it will start appearing in search results momentarily.",
+                                        "messageId": "${sqsResponse.messageId()}"
+                                    }                                       
+                                """.trimIndent()
                             }
                         }
                     }
@@ -128,7 +131,13 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
                             with (response) {
                                 statusCode = 200
-                                body = "\"message\":\"${sqsResponse.messageId()}\""
+                                body = """
+                                    { 
+                                        "message":"deleteRecipe request sent to queue. Assuming no issues, it will be deleted momentarily.",
+                                        "messageId": "${sqsResponse.messageId()}"
+                                    }                                       
+                                """.trimIndent()
+
                             }
                         }
                     }

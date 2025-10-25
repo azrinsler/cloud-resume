@@ -113,7 +113,6 @@ const NewRecipe: () => React.JSX.Element = () => {
     const toRecipe = () : Recipe => {
         const recipe = {
             title: titleRef.current!.value,
-            user: auth.user?.profile?.email,
             ingredients: ingredients,
             items: items,
             steps: steps
@@ -136,7 +135,7 @@ const NewRecipe: () => React.JSX.Element = () => {
                 "Authorization": auth.user?.id_token ?? "",
             },
             body: JSON.stringify({
-                "operation": "newRecipe",
+                "operation": "saveRecipe",
                 "recipe": JSON.stringify(recipe)
             })
         })

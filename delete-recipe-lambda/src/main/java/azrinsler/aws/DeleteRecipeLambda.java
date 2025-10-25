@@ -91,6 +91,7 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
                                 }
                             }
                             """;
+                    logger.info("Deleted Recipe {}", recipeId);
                 }
                 catch (ConditionalCheckFailedException wrongUser) {
                     returnMessage = """
@@ -102,11 +103,9 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
                                 }
                             }
                             """;
+                    logger.info("Did NOT delete recipe - wrong user!");
                 }
-
-                logger.info("Deleted Recipe {}", recipeId);
             }
-
             outputStream.write(returnMessage.getBytes());
         }
     }
