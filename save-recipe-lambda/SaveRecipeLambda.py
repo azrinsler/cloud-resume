@@ -45,51 +45,29 @@ def lambda_handler(event, context):
 
             if "Item" not in table_response:
                 logger.debug("No matching recipe id found in table. Recipe will be added to DB.")
-                try:
-                    recipeTable.put_item(
-                        Item={
-                            "recipe_id" : recipe_id,
-                            "title" : recipe_title,
-                            "user": recipe.get("user"),
-                            "ingredients": [] if not recipe.get("ingredients") else recipe["ingredients"],
-                            "items": [] if not recipe.get("items") else recipe["items"],
-                            "steps": [] if not recipe.get("steps") else recipe["steps"]
-                        }
-                    )
-
-                except ClientError as client_e:
-                    logger.error(
-                        "Failed to add recipe %s to table %s. Here's why: %s: %s",
-                        recipe_title_plus_id,
-                        TABLE_NAME,
-                        client_e.response["Error"]["Code"],
-                        client_e.response["Error"]["Message"],
-                    )
-                    raise
-
             else:
                 logger.debug("Recipe id already exists in the DB. Existing recipe will be updated.")
-                try:
-                    recipeTable.put_item(
-                        Item={
-                            "recipe_id" : recipe_id,
-                            "title" : recipe_title,
-                            "user": recipe.get("user"),
-                            "ingredients": [] if not recipe.get("ingredients") else recipe["ingredients"],
-                            "items": [] if not recipe.get("items") else recipe["items"],
-                            "steps": [] if not recipe.get("steps") else recipe["steps"]
-                        }
-                    )
+            try:
+                recipeTable.put_item(
+                    Item={
+                        "recipe_id" : recipe_id,
+                        "title" : recipe_title,
+                        "user": recipe.get("user"),
+                        "ingredients": [] if not recipe.get("ingredients") else recipe["ingredients"],
+                        "items": [] if not recipe.get("items") else recipe["items"],
+                        "steps": [] if not recipe.get("steps") else recipe["steps"]
+                    }
+                )
 
-                except ClientError as client_e:
-                    logger.error(
-                        "Failed to update recipe %s in table %s. Here's why: %s: %s",
-                        recipe_title_plus_id,
-                        TABLE_NAME,
-                        client_e.response["Error"]["Code"],
-                        client_e.response["Error"]["Message"],
-                    )
-                    raise
+            except ClientError as client_e:
+                logger.error(
+                    "Failed to add recipe %s to table %s. Here's why: %s: %s",
+                    recipe_title_plus_id,
+                    TABLE_NAME,
+                    client_e.response["Error"]["Code"],
+                    client_e.response["Error"]["Message"],
+                )
+                raise
 
         return {
             "statusCode": 200,
