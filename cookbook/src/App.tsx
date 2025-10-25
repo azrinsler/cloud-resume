@@ -56,7 +56,6 @@ export function App() {
         localStorage.setItem("recipeId", recipe)
         localStorage.setItem("sidebarOption", "recipe")
 
-
         fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",

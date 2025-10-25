@@ -25,8 +25,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             },
             body: JSON.stringify({
                 "operation": "deleteRecipe",
-                "recipeId": recipe.id,
-                "user": auth.user?.profile.sub
+                "recipeId": recipe.id
             })
         })
         .then((response) => {

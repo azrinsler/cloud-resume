@@ -114,12 +114,12 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
                         .build()
 
                     val recipeId = inputAsJson["recipeId"].asText()
-                    val user = inputAsJson["user"].asText()
-                    if (user == userSub && recipeId != null) {
+                    if (recipeId != null) {
+                        val message = """{ "recipeId": "$recipeId", "user": "$userSub" }"""
                         sqsClient.use {
                             val sendMsgRequest = SendMessageRequest.builder()
                                 .queueUrl(deleteRecipeQueueUrl)
-                                .messageBody(event.body)
+                                .messageBody(message)
                                 .build()
 
                             val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
@@ -131,14 +131,8 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
                         }
                     }
                     else with (response) {
-                        if (user != userSub) {
-                            statusCode = 400
-                            body = "Claims/Auth user sub does not match that of the request."
-                        }
-                        else {
-                            statusCode = 422
-                            body = "Failed to parse input."
-                        }
+                        statusCode = 422
+                        body = "Failed to parse input."
                     }
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
