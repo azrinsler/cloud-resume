@@ -36,7 +36,7 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
             MDC.put("spanId", span.spanContext.spanId)
         }
 
-        logger.trace("Recipe API Lambda Handler - API Gateway Proxy Request Event received.")
+        logger.trace("Recipe API Lambda Handler - User API - API Gateway Proxy Request Event received.")
 
         logger.info("Auth claims stuffs")
         val claims = JacksonWrapper.readJson(event.requestContext?.authorizer as Map<*,*>) as Map<String,Any>

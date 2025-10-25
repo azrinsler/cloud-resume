@@ -18,9 +18,6 @@ import software.amazon.awssdk.services.dynamodb.model.DynamoDbException
 import software.amazon.awssdk.services.dynamodb.model.QueryRequest
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest
 
-
-const val accountId = "477850672676"
-
 @Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
 class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     val logger : Logger = LoggerFactory.getLogger(RecipeApiLambdaPublic::class.java)
@@ -34,12 +31,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
             MDC.put("spanId", span.spanContext.spanId)
         }
 
-        logger.trace("Recipe API Lambda Handler - API Gateway Proxy Request Event received.")
-
-        logger.info("Auth claims stuffs")
-        val claims = JacksonWrapper.readJson(event.requestContext?.authorizer as Map<*,*>) as Map<String,Any>
-        for (key in claims.keys)
-            logger.info(claims[key].toString())
+        logger.trace("Recipe API Lambda Handler - Public API - API Gateway Proxy Request Event received.")
 
         val response = APIGatewayProxyResponseEvent()
 
