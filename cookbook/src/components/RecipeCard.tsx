@@ -56,7 +56,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>
-                        <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px dotted light-dark(gray,#76f80e1)',flexGrow:2,padding:'1em'}}>
+                        <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px dotted light-dark(gray,#6fdde1)',flexGrow:2,padding:'1em'}}>
                             <div>
                                 <h3>Ingredients</h3>
                                 <hr/>
@@ -65,7 +65,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                                         <li key={ingredient.name}>
                                             <div className="flex-row">
                                                 <span>{ingredient.name}</span>
-                                                <div style={{flexGrow:1}}></div>
+                                                <div style={{flexGrow:1,margin:'0.5em',borderBottom:'1px dashed light-dark(grey,#484619)'}}></div>
                                                 <span style={{textWrap:'nowrap'}}>{ingredient.amount||''} {ingredient.unit||''}</span>
                                             </div>
                                         </li>
