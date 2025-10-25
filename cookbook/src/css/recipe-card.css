@@ -1,11 +1,11 @@
 /*noinspection CssInvalidFunction*/
 #recipe-card {
-    border: 1px solid;
+    border: 1px solid light-dark(gray,#7b4fab);
     display: flex;
     flex-wrap: wrap;
     background-color: light-dark(#ffffff,#0f0f0d);
     max-width: 70em;
-    border-radius:0.35em;
+    border-radius:0.25em;
 }
 
 /*noinspection CssInvalidFunction*/
@@ -14,12 +14,12 @@
     width: 70%;
     padding: 0.5em 1em;
     justify-content: center;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid light-dark(gray,#7b4fab);;
     flex-grow: 1;
     height: fit-content;
-    border-radius: 0 0.35em 0 0;
+    border-radius: 0 0.25em 0 0;
     background-color: light-dark(#cc88ff,#750f68);
-    border-left: 1px solid;
+    border-left: 1px solid light-dark(gray,#7b4fab);;
 }
 
 /*noinspection CssInvalidFunction*/
@@ -28,10 +28,10 @@
     width: 25%;
     justify-content: center;
     padding: 0.5em 1em;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid light-dark(gray,#7b4fab);;
     flex-grow: 1;
     height: fit-content;
-    border-radius: 0.35em 0 0 0;
+    border-radius: 0.25em 0 0 0;
     background-color: light-dark(#cc88ff,#750f68);
 }
 

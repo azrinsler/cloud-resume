@@ -62,7 +62,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 setLoading(false);
             });
         }
-    }, [auth.user?.access_token, loading]);
+    }, [auth.user?.access_token, auth.user?.id_token, loading]);
 
     return (
         <>

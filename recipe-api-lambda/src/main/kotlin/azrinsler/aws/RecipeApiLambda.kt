@@ -229,7 +229,7 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                 val step = it.m()
                 """{ "ordinal": ${writeJson(step["ordinal"]?.n()?:"")}, "description": ${writeJson(step["description"]?.s()?:"")}, "notes": ${ if (step["notes"]?.l()?.isNotEmpty() == true) step["notes"]?.l()?.map { note -> writeJson(note.s()) } else "[]"} }"""
             }
-            responseBody = """{ "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+            responseBody = """{ "id": "$recipeId", "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
         }
         return responseBody
     }

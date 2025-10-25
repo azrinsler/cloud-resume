@@ -40,7 +40,7 @@ export function App() {
     });
 
     const fetchRecipe = useCallback((recipe: string) => {
-        console.log("cacheRecipe(" + recipe + ")")
+        console.log("fetchRecipe(" + recipe + ")")
 
         setLoading(true)
         setRecipeId(recipe)
