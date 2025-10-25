@@ -16,7 +16,7 @@ resource "aws_cloudwatch_log_group" "save_recipe_lambda_logs" {
   retention_in_days = 1
 }
 
-# log group for save recipe (Python) lambda
+# log group for save recipe (Java) lambda
 resource "aws_cloudwatch_log_group" "delete_recipe_lambda_logs" {
   name = "/aws/lambda/${aws_lambda_function.delete_recipe_lambda_function.function_name}"
   retention_in_days = 1

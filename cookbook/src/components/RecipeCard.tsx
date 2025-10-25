@@ -10,6 +10,13 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
 
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
     const stepsOrdered = recipe.steps?.sort((a,b)=>a.ordinal-b.ordinal)
+    const isRecipeOwner = () => {
+        console.log("auth sub value")
+        console.log(auth.user?.profile.sub)
+        console.log("recipe owner")
+        console.log(recipe.user)
+        return auth.user?.profile.sub == recipe.user
+    }
 
     const deleteRecipeRef = useRef<HTMLButtonElement>(null)
     const deleteRecipe = () => {
@@ -52,12 +59,12 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                         <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
                             <h2 style={{flexGrow:1,textAlign:'center'}}>{recipe.title}</h2>
                             { // only show delete recipe button if the user is logged in
-                                auth.isAuthenticated && auth.user?.profile.sub == recipe.user
+                                auth.isAuthenticated && isRecipeOwner()
                                     ? <div id="delete-recipe-button" className="flex-row">
                                         <span style={{marginLeft:'auto'}}>Delete Recipe &rarr;</span>
                                         <button ref={deleteRecipeRef} className='x-button' style={{margin:'0 0 0 0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
                                     </div>
-                                    : <></>
+                                    : <>{auth.user?.profile.sub}</>
                             }
                         </div>
                     </div>
