@@ -108,8 +108,6 @@ export function App() {
     // if (auth.error) {
     //     return <div>Encountering error... {auth.error.message}</div>;
     // }
-
-    // if (auth.isAuthenticated) {
         return (
             <>
                 <Sidebar
@@ -158,24 +156,26 @@ export function App() {
                     {
                         sidebarOption == "about"
                             ? <About></About>
-                            : sidebarOption == "new"
+                        : sidebarOption == "new"
+                            ? auth.isAuthenticated
                                 ? <NewRecipe></NewRecipe>
-                                : sidebarOption == "browse"
-                                    ? <Browse recipeCallback={fetchRecipe}></Browse>
-                                    : sidebarOption == "recipe" && loading
-                                        ? <Preheating></Preheating>
-                                        : sidebarOption == "recipe"
-                                            ? <>
-                                                <RecipeCard
-                                                    id={data?.id}
-                                                    title={data?.title}
-                                                    ingredients={data?.ingredients}
-                                                    items={data?.items}
-                                                    steps={data?.steps}>
-                                                </RecipeCard>
-                                                { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
-                                            </>
-                                            : <>Unknown Sidebar Option</>
+                                : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                        : sidebarOption == "browse"
+                            ? <Browse recipeCallback={fetchRecipe}></Browse>
+                        : sidebarOption == "recipe" && loading
+                            ? <Preheating></Preheating>
+                        : sidebarOption == "recipe"
+                            ? <>
+                                <RecipeCard
+                                    id={data?.id}
+                                    title={data?.title}
+                                    ingredients={data?.ingredients}
+                                    items={data?.items}
+                                    steps={data?.steps}>
+                                </RecipeCard>
+                                { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
+                            </>
+                        : <>Unknown Sidebar Option</>
                     }
                     <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>
                         IMPORTANT: Please note that this is a DEV environment - new recipes may be lost any time the DB changes!
