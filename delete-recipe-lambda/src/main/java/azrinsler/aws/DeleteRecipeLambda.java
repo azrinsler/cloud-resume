@@ -13,6 +13,7 @@ import org.slf4j.MDC;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ConditionalCheckFailedException;
 import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
 
 import java.io.*;
@@ -55,6 +56,7 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
         logger.info("Number of Records: {}", records.size());
 
         for (var record : records) {
+            var returnMessage = "";
             var recordBody = record.get("body").asText();
             logger.info("Record Body: {}", recordBody);
             var recordJson = jackson.readTree(recordBody);
@@ -78,12 +80,33 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
                         .expressionAttributeValues(Map.of(":expectedUser", AttributeValue.builder().s(user).build()))
                         .build();
 
-                dynamoDb.deleteItem(deleteRequest);
+                try {
+                    dynamoDb.deleteItem(deleteRequest);
+                    returnMessage = """
+                            {
+                                "statusCode": 200,
+                                "body": {
+                                    "status": "Success",
+                                    "message": "The recipe has been deleted."
+                                }
+                            }
+                            """;
+                }
+                catch (ConditionalCheckFailedException wrongUser) {
+                    returnMessage = """
+                            {
+                                "statusCode": 400,
+                                "body": {
+                                    "status": "Failed",
+                                    "message": "Only the owner of a recipe is allowed to delete it."
+                                }
+                            }
+                            """;
+                }
 
                 logger.info("Deleted Recipe {}", recipeId);
             }
 
-            var returnMessage = "Recipe deleted successfully";
             outputStream.write(returnMessage.getBytes());
         }
     }

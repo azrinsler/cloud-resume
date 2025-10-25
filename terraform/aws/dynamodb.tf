@@ -36,7 +36,7 @@ resource "aws_dynamodb_table_item" "stovetop_rice" {
           {
             "recipe_id": {"S": "0"},
             "title": {"S": "Stovetop Rice"},
-            "user": {"S": "az.rinsler@gmail.com"},
+            "user": {"S": "04d88438-e021-706c-ae4c-5479c6f143eb"},
             "ingredients": {"L": [
               {"M": { "name":{"S":"Rice"}, "unit":{"S":"Cup"}, "amount":{"S":"1"} } },
               {"M": { "name":{"S":"Water"}, "unit":{"S":"Cups"}, "amount":{"S":"2"} } }
@@ -59,7 +59,7 @@ resource "aws_dynamodb_table_item" "ranch_sauce" {
           {
             "recipe_id": {"S": "1"},
             "title": {"S": "Ranch"},
-            "user": {"S": "az.rinsler@gmail.com"},
+            "user": {"S": "04d88438-e021-706c-ae4c-5479c6f143eb"},
             "ingredients": {"L": [
               {"M": { "name":{"S":"Sour Cream"}, "unit":{"S":"Cups"}, "amount":{"S":"1 1/2"} } },
               {"M": { "name":{"S":"Mayonnaise"}, "unit":{"S":"Cup"}, "amount":{"S":"1/2"} } },
