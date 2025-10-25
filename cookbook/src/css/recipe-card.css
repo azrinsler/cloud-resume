@@ -86,8 +86,8 @@
 }
 
 #delete-recipe-button {
-    margin: 0 0 0 -1.25em;
+    margin: 0 0 0 -1em;
     position: relative;
-    right: -1.25em;
+    right: -1em;
     top: -2em;
 }

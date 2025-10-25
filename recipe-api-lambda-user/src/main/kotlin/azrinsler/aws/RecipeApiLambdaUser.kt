@@ -41,7 +41,14 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         logger.info("Auth claims stuffs")
         val claims = JacksonWrapper.readJson(event.requestContext?.authorizer as Map<*,*>) as Map<String,Any>
         for (key in claims.keys)
-            logger.info(claims[key].toString())
+            logger.info(key)
+        val userAuth = claims[claims.keys.first()]
+        logger.info(userAuth.toString())
+        val userAuthMap = userAuth as Map<*,*>
+        logger.info("Successfully parsed user auth as Map<*,*>")
+        val userAuthJson = JacksonWrapper.readJson(userAuthMap) as Map<String,Any>
+        val userSub = userAuthJson["sub"] as String
+        logger.info("user sub: $userSub")
 
         val response = APIGatewayProxyResponseEvent()
 
@@ -108,7 +115,8 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
                         .build()
 
                     val recipeId = inputAsJson["recipeId"].asText()
-                    if (recipeId != null) {
+                    val user = inputAsJson["user"].asText()
+                    if (user == userSub && recipeId != null) {
                         sqsClient.use {
                             val sendMsgRequest = SendMessageRequest.builder()
                                 .queueUrl(deleteRecipeQueueUrl)
@@ -124,8 +132,14 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
                         }
                     }
                     else with (response) {
-                        statusCode = 422
-                        body = "Failed to parse input."
+                        if (user != userSub) {
+                            statusCode = 400
+                            body = "Claims/Auth user sub does not match that of the request."
+                        }
+                        else {
+                            statusCode = 422
+                            body = "Failed to parse input."
+                        }
                     }
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)

@@ -55,7 +55,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             { // only show delete recipe button if the user is logged in
                                 auth.isAuthenticated // && auth.user?.profile.sub == recipe.id // TODO - Re-enable. commented out to make testing easier
                                     ? <div id="delete-recipe-button" className="flex-row">
-                                        <span>Delete Recipe --&gt;</span>
+                                        <span>Delete Recipe &rarr;</span>
                                         <button ref={deleteRecipeRef} className='x-button' style={{margin:'0 0 0 0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
                                     </div>
                                     : <></>

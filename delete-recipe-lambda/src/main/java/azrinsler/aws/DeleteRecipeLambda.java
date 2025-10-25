@@ -16,6 +16,7 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.DeleteItemRequest;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unused")
@@ -65,10 +66,15 @@ public class DeleteRecipeLambda implements RequestStreamHandler {
                     .region(region)
                     .build()) {
 
+                // "user" is a reserved keyword in Dynamo DB, so we have to escape it using a placeholder
+                var userKeywordMap = new HashMap<String,String>();
+                    userKeywordMap.put("#user","user");
+
                 var deleteRequest = DeleteItemRequest.builder()
                         .tableName("Recipes")
                         .key(Map.of("recipe_id", AttributeValue.builder().s(recipeId).build()))
-                        .conditionExpression("user = :expectedUser")
+                        .conditionExpression("#user = :expectedUser")
+                        .expressionAttributeNames(userKeywordMap)
                         .expressionAttributeValues(Map.of(":expectedUser", AttributeValue.builder().s(user).build()))
                         .build();
 
