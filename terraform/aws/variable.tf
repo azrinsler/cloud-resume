@@ -13,9 +13,14 @@ variable "packaged_delete_recipe_lambda_relative_root" {
   default = "./delete-recipe-lambda/target"
 }
 
-variable "packaged_recipe_api_lambda_relative_root" {
+variable "packaged_recipe_api_lambda_public_relative_root" {
   type = string
-  default = "./recipe-api-lambda/target"
+  default = "./recipe-api-lambda-public/target"
+}
+
+variable "packaged_recipe_api_lambda_user_relative_root" {
+  type = string
+  default = "./recipe-api-lambda-user/target"
 }
 
 variable "packaged_save_recipe_lambda_relative_root" {
@@ -53,9 +58,14 @@ variable "delete_recipe_lambda_class" {
   default = "DeleteRecipeLambda"
 }
 
-variable "recipe_api_lambda_class" {
+variable "recipe_api_lambda_public_class" {
   type = string
-  default = "RecipeApiLambda"
+  default = "RecipeApiLambdaPublic"
+}
+
+variable "recipe_api_lambda_user_class" {
+  type = string
+  default = "RecipeApiLambdaUser"
 }
 
 variable "new_recipe_lambda_artifact" {
@@ -68,9 +78,14 @@ variable "delete_recipe_lambda_artifact" {
   default = "delete-recipe-lambda"
 }
 
-variable "recipe_api_lambda_artifact" {
+variable "recipe_api_lambda_public_artifact" {
   type = string
-  default = "recipe-api-lambda"
+  default = "recipe-api-lambda-public"
+}
+
+variable "recipe_api_lambda_user_artifact" {
+  type = string
+  default = "recipe-api-lambda-user"
 }
 
 variable "new_recipe_lambda_version" {
@@ -83,7 +98,12 @@ variable "delete_recipe_lambda_version" {
   default = "O"
 }
 
-variable "recipe_api_lambda_version" {
+variable "recipe_api_lambda_public_version" {
+  type = string
+  default = "O"
+}
+
+variable "recipe_api_lambda_user_version" {
   type = string
   default = "O"
 }

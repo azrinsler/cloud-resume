@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>azrinsler.aws</groupId>
-    <artifactId>recipe-api-lambda</artifactId>
+    <artifactId>recipe-api-lambda-public</artifactId>
     <version>O</version>
 
     <properties>
@@ -101,7 +101,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.18</version>
+            <version>1.5.20</version>
         </dependency>
 
         <!-- json-friendly encoder for the logback.xml file -->

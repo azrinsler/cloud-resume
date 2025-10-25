@@ -128,7 +128,7 @@ const NewRecipe: () => React.JSX.Element = () => {
         const existingInnerHtml = submitButtonRef.current!.innerHTML
         submitButtonRef.current!.innerHTML = "<h2>Recipe Submitted...</h2>"
 
-        fetch("https://api.azrinsler.com/RecipeApiLambda", {
+        fetch("https://api.azrinsler.com/RecipeApiLambdaUser", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
             headers: {

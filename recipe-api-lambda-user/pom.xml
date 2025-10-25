@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>azrinsler.aws</groupId>
-    <artifactId>new-recipe-lambda</artifactId>
+    <artifactId>recipe-api-lambda-user</artifactId>
     <version>O</version>
 
     <properties>
@@ -90,15 +90,11 @@
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
+            <artifactId>sqs</artifactId>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>dynamodb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>sqs</artifactId>
         </dependency>
 
         <!-- includes SLF4J, which in turn supports OpenTelemetry -->
@@ -119,13 +115,6 @@
         <dependency>
             <groupId>io.opentelemetry</groupId>
             <artifactId>opentelemetry-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.13.1</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

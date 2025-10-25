@@ -27,9 +27,17 @@ resource "aws_s3_object" "delete_recipe_lambda_source" {
 # aws lambda requires source code be packaged w/ dependencies as a jar/zip file
 resource "aws_s3_object" "recipe_api_lambda_source" {
   bucket = aws_s3_bucket.packaged_source_bucket.id
-  key    = "${var.recipe_api_lambda_artifact}.zip"
+  key    = "${var.recipe_api_lambda_public_artifact}.zip"
   source = local.recipe_api_lambda_path
   etag = filemd5(local.recipe_api_lambda_path)
+}
+
+# aws lambda requires source code be packaged w/ dependencies as a jar/zip file
+resource "aws_s3_object" "recipe_api_lambda_user_source" {
+  bucket = aws_s3_bucket.packaged_source_bucket.id
+  key    = "${var.recipe_api_lambda_user_artifact}.zip"
+  source = local.recipe_api_lambda_user_path
+  etag = filemd5(local.recipe_api_lambda_user_path)
 }
 
 /**********************************************/

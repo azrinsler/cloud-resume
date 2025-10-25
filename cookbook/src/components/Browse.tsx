@@ -7,14 +7,12 @@ const testResponse = testJson as GetRecipeResponse
 
 import '../css/browse.css'
 import Preheating from "./Preheating.tsx";
-import {useAuth} from "react-oidc-context";
 
 interface BrowseProps {
     recipeCallback: (recipe: string) => void
 }
 
 const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallback}: BrowseProps) => {
-    const auth = useAuth();
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
     const [loading, setLoading] = useState(true);
@@ -33,12 +31,11 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading) {
             console.log("getRecipes()")
-            fetch("https://api.azrinsler.com/RecipeApiLambda", {
+            fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
                 signal: AbortSignal.timeout(120 * 1000),
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": auth.user?.id_token ?? "",
                 },
                 body: JSON.stringify({
                     "operation": "getRecipes"
@@ -62,7 +59,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 setLoading(false);
             });
         }
-    }, [auth.user?.access_token, auth.user?.id_token, loading]);
+    }, [loading]);
 
     return (
         <>

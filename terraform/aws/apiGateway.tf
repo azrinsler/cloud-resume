@@ -57,11 +57,26 @@ resource "aws_apigatewayv2_integration" "primary_gateway_recipe_api_lambda_integ
   integration_method = "POST"
 }
 
-# sends all POST requests to the recipe api lambda to the... recipe api lambda. Yep.
+# sends all POST requests to the (public) recipe api lambda to... that lambda. Yep.
 resource "aws_apigatewayv2_route" "primary_gateway_recipe_api_route" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
   route_key = "POST /${aws_lambda_function.recipe_api_lambda_function.function_name}"
   target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_recipe_api_lambda_integration.id}"
+}
+
+# lets AWS know that we're going to be backing this gateway with some lambdas
+resource "aws_apigatewayv2_integration" "primary_gateway_recipe_api_lambda_user_integration" {
+  api_id = aws_apigatewayv2_api.primary_gateway.id
+  integration_uri    = aws_lambda_function.recipe_api_lambda_user_function.invoke_arn
+  integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+}
+
+# sends all POST requests to the (user) recipe api lambda to... that lambda. Uses authentication.
+resource "aws_apigatewayv2_route" "primary_gateway_recipe_api_user_route" {
+  api_id = aws_apigatewayv2_api.primary_gateway.id
+  route_key = "POST /${aws_lambda_function.recipe_api_lambda_user_function.function_name}"
+  target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_recipe_api_lambda_user_integration.id}"
   authorizer_id = aws_apigatewayv2_authorizer.cognito_auth.id
   authorization_type = "JWT"
 }

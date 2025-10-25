@@ -57,12 +57,11 @@ export function App() {
         localStorage.setItem("sidebarOption", "recipe")
 
 
-        fetch("https://api.azrinsler.com/RecipeApiLambda", {
+        fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": auth.user?.id_token ?? "",
             },
             body: JSON.stringify({
                 "operation": "searchById",
@@ -88,7 +87,7 @@ export function App() {
                 setError(err.message);
                 setLoading(false)
             });
-    }, [auth.user?.id_token]);
+    }, []);
 
     // I think this should set loading to true and cache our recipe id any time it changes?
     useEffect(() => {

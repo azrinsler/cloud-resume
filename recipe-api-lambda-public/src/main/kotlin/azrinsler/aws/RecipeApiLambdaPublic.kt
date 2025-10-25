@@ -2,7 +2,6 @@ package azrinsler.aws
 
 import JacksonWrapper
 import JacksonWrapper.writeJson
-import Recipe
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
@@ -18,21 +17,14 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException
 import software.amazon.awssdk.services.dynamodb.model.QueryRequest
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest
-import software.amazon.awssdk.services.sqs.SqsClient
-import software.amazon.awssdk.services.sqs.model.SendMessageRequest
 
 
 const val accountId = "477850672676"
-const val newRecipeQueueName = "new-recipe-input-queue"
-const val deleteRecipeQueueName = "delete-recipe-input-queue"
 
 @Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
-class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-    val logger : Logger = LoggerFactory.getLogger(RecipeApiLambda::class.java)
+class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+    val logger : Logger = LoggerFactory.getLogger(RecipeApiLambdaPublic::class.java)
     val region : Region = Region.US_EAST_1
-
-    val newRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$newRecipeQueueName"
-    val deleteRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$deleteRecipeQueueName"
 
     override fun handleRequest(event: APIGatewayProxyRequestEvent, context: Context): APIGatewayProxyResponseEvent {
         // OpenTelemetry span context information - helps AWS correlate logs to traces
@@ -110,68 +102,6 @@ class RecipeApiLambda : RequestHandler<APIGatewayProxyRequestEvent, APIGatewayPr
                             statusCode = 404
                             body = "No recipes found..? That can't be right."
                         }
-                    }
-                }
-                "newRecipe" -> {
-                    val sqsClient = SqsClient.builder()
-                        .region(region)
-                        .credentialsProvider(DefaultCredentialsProvider.create())
-                        .build()
-
-                    val recipeBody = inputAsJson["recipe"].asText()
-
-                    logger.info("Recipe Body: $recipeBody")
-
-                    // make sure we can read this input as a Recipe before accepting it
-                    val recipe = JacksonWrapper.readJson(recipeBody) as? Recipe
-
-                    if (recipe != null) {
-                        sqsClient.use {
-                            val sendMsgRequest = SendMessageRequest.builder()
-                                .queueUrl(newRecipeQueueUrl)
-                                .messageBody(event.body)
-                                .build()
-
-                            val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
-
-                            with (response) {
-                                statusCode = 202
-                                body = "\"message\":\"Recipe was successfully sent to queue for additional handling. Assuming there " +
-                                        "are no issues, it should start appearing in search results momentarily. " +
-                                        "Message ID: ${sqsResponse.messageId()}\""
-                            }
-                        }
-                    }
-                    else with (response) {
-                        statusCode = 422
-                        body = "Failed to parse input recipe as Recipe data class."
-                    }
-                }
-                "deleteRecipe" -> {
-                    val sqsClient = SqsClient.builder()
-                        .region(region)
-                        .credentialsProvider(DefaultCredentialsProvider.create())
-                        .build()
-
-                    val recipeId = inputAsJson["recipeId"].asText()
-                    if (recipeId != null) {
-                        sqsClient.use {
-                            val sendMsgRequest = SendMessageRequest.builder()
-                                .queueUrl(deleteRecipeQueueUrl)
-                                .messageBody(event.body)
-                                .build()
-
-                            val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
-
-                            with (response) {
-                                statusCode = 200
-                                body = "\"message\":\"${sqsResponse.messageId()}\""
-                            }
-                        }
-                    }
-                    else with (response) {
-                        statusCode = 422
-                        body = "Failed to parse input."
                     }
                 }
                 else -> { // Return a 'bad request' response (if an unknown operation is requested)
