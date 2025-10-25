@@ -17,7 +17,8 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest
 
 
 const val accountId = "477850672676"
-const val newRecipeQueueName = "new-recipe-input-queue"
+// const val newRecipeQueueName = "new-recipe-input-queue"
+const val saveRecipeQueueName = "save-recipe-input-queue"
 const val deleteRecipeQueueName = "delete-recipe-input-queue"
 
 @Suppress("unused") // Supported events: https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-events/README.md
@@ -25,7 +26,8 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
     val logger : Logger = LoggerFactory.getLogger(RecipeApiLambdaUser::class.java)
     val region : Region = Region.US_EAST_1
 
-    val newRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$newRecipeQueueName"
+    // val newRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$newRecipeQueueName"
+    val saveRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$saveRecipeQueueName"
     val deleteRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$deleteRecipeQueueName"
 
     override fun handleRequest(event: APIGatewayProxyRequestEvent, context: Context): APIGatewayProxyResponseEvent {
@@ -88,7 +90,7 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
                         logger.info("Recipe with user: ${JacksonWrapper.writeJson(recipe)}")
                         sqsClient.use {
                             val sendMsgRequest = SendMessageRequest.builder()
-                                .queueUrl(newRecipeQueueUrl)
+                                .queueUrl(saveRecipeQueueUrl)
                                 .messageBody(JacksonWrapper.writeJson(recipe))
                                 .build()
 
