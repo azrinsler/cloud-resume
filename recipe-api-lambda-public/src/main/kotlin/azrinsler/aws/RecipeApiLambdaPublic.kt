@@ -139,6 +139,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
             val foundRecipe = queryResponse.items()[0] as Map<String, AttributeValue>
 
             val title = writeJson(foundRecipe["title"]?.s()?:"")
+            val user = writeJson(foundRecipe["user"]?.s()?:"")
 
             val ingredients = foundRecipe["ingredients"]?.l()?.map {
                 val ingredient = it.m()
@@ -151,7 +152,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
                 val step = it.m()
                 """{ "ordinal": ${writeJson(step["ordinal"]?.n()?:"")}, "description": ${writeJson(step["description"]?.s()?:"")}, "notes": ${ if (step["notes"]?.l()?.isNotEmpty() == true) step["notes"]?.l()?.map { note -> writeJson(note.s()) } else "[]"} }"""
             }
-            responseBody = """{ "id": "$recipeId", "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+            responseBody = """{ "id": "$recipeId", "user": $user, "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
         }
         return responseBody
     }

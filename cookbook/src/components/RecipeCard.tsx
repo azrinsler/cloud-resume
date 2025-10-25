@@ -52,7 +52,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                         <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
                             <h2 style={{flexGrow:1,textAlign:'center'}}>{recipe.title}</h2>
                             { // only show delete recipe button if the user is logged in
-                                auth.isAuthenticated // && auth.user?.profile.sub == recipe.id // TODO - Re-enable. commented out to make testing easier
+                                auth.isAuthenticated && auth.user?.profile.sub == recipe.user
                                     ? <div id="delete-recipe-button" className="flex-row">
                                         <span style={{marginLeft:'auto'}}>Delete Recipe &rarr;</span>
                                         <button ref={deleteRecipeRef} className='x-button' style={{margin:'0 0 0 0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
