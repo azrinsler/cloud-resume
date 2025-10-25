@@ -42,13 +42,11 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         val claims = JacksonWrapper.readJson(event.requestContext?.authorizer as Map<*,*>) as Map<String,Any>
         for (key in claims.keys)
             logger.info(key)
-        val userAuth = claims[claims.keys.first()]
-        logger.info(userAuth.toString())
+        val userAuth = claims["claims"]
+        logger.info("claims: $userAuth")
         val userAuthMap = userAuth as Map<*,*>
-        logger.info("Successfully parsed user auth as Map<*,*>")
         val userAuthJson = JacksonWrapper.readJson(userAuthMap) as Map<String,Any>
         val userSub = userAuthJson["sub"] as String
-        logger.info("user sub: $userSub")
 
         val response = APIGatewayProxyResponseEvent()
 
@@ -84,13 +82,14 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
                     logger.info("Recipe Body: $recipeBody")
 
-                    // make sure we can read this input as a Recipe before accepting it
-                    val recipe = JacksonWrapper.readJson(recipeBody) as? Recipe
+                    // make sure we can read this input as a Recipe before accepting it + set user to their claims sub
+                    val recipe = (JacksonWrapper.readJson(recipeBody) as? Recipe)?.copy(user = userSub)
                     if (recipe != null) {
+                        logger.info("Recipe with user: ${JacksonWrapper.writeJson(recipe)}")
                         sqsClient.use {
                             val sendMsgRequest = SendMessageRequest.builder()
                                 .queueUrl(newRecipeQueueUrl)
-                                .messageBody(event.body)
+                                .messageBody(JacksonWrapper.writeJson(recipe))
                                 .build()
 
                             val sqsResponse = sqsClient.sendMessage(sendMsgRequest)
