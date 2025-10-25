@@ -52,7 +52,7 @@ resource "aws_apigatewayv2_stage" "primary_gateway_stage" {
 # lets AWS know that we're going to be backing this gateway with some lambdas
 resource "aws_apigatewayv2_integration" "primary_gateway_recipe_api_lambda_integration" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
-  integration_uri    = aws_lambda_function.recipe_api_lambda_function.invoke_arn
+  integration_uri    = aws_lambda_function.recipe_api_lambda_public_function.invoke_arn
   integration_type   = "AWS_PROXY"
   integration_method = "POST"
 }
@@ -60,7 +60,7 @@ resource "aws_apigatewayv2_integration" "primary_gateway_recipe_api_lambda_integ
 # sends all POST requests to the (public) recipe api lambda to... that lambda. Yep.
 resource "aws_apigatewayv2_route" "primary_gateway_recipe_api_route" {
   api_id = aws_apigatewayv2_api.primary_gateway.id
-  route_key = "POST /${aws_lambda_function.recipe_api_lambda_function.function_name}"
+  route_key = "POST /${aws_lambda_function.recipe_api_lambda_public_function.function_name}"
   target    = "integrations/${aws_apigatewayv2_integration.primary_gateway_recipe_api_lambda_integration.id}"
 }
 

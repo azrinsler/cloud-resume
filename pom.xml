@@ -15,7 +15,6 @@
     <modules>
         <module>kotlin-utility</module>
 
-        <module>new-recipe-lambda</module>
         <module>delete-recipe-lambda</module>
         <module>recipe-api-lambda-user</module>
         <module>recipe-api-lambda-public</module>

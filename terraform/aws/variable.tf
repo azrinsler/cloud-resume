@@ -3,11 +3,6 @@ variable "cookbook_bucket_name" {
   default = "azrinsler-cookbook"
 }
 
-variable "packaged_new_recipe_lambda_relative_root" {
-  type = string
-  default = "./new-recipe-lambda/target"
-}
-
 variable "packaged_delete_recipe_lambda_relative_root" {
   type = string
   default = "./delete-recipe-lambda/target"
@@ -48,11 +43,6 @@ variable "site_homepage" {
   default = "index.html"
 }
 
-variable "new_recipe_lambda_class" {
-  type = string
-  default = "NewRecipeLambda"
-}
-
 variable "delete_recipe_lambda_class" {
   type = string
   default = "DeleteRecipeLambda"
@@ -68,11 +58,6 @@ variable "recipe_api_lambda_user_class" {
   default = "RecipeApiLambdaUser"
 }
 
-variable "new_recipe_lambda_artifact" {
-  type = string
-  default = "new-recipe-lambda"
-}
-
 variable "delete_recipe_lambda_artifact" {
   type = string
   default = "delete-recipe-lambda"
@@ -86,11 +71,6 @@ variable "recipe_api_lambda_public_artifact" {
 variable "recipe_api_lambda_user_artifact" {
   type = string
   default = "recipe-api-lambda-user"
-}
-
-variable "new_recipe_lambda_version" {
-  type = string
-  default = "O"
 }
 
 variable "delete_recipe_lambda_version" {

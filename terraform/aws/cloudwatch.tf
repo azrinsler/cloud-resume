@@ -6,7 +6,7 @@ resource "aws_cloudwatch_log_group" "new_recipe_lambda_logs" {
 
 # log group for recipe api (Kotlin) lambda
 resource "aws_cloudwatch_log_group" "recipe_api_lambda_logs" {
-  name = "/aws/lambda/${aws_lambda_function.recipe_api_lambda_function.function_name}"
+  name = "/aws/lambda/${aws_lambda_function.recipe_api_lambda_public_function.function_name}"
   retention_in_days = 1
 }
 
