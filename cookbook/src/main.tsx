@@ -16,7 +16,10 @@ const cognitoAuthConfig = {
     automaticSilentRenew: true,
     monitorSession: true,
     userStore: new WebStorageStateStore({ store: window.localStorage }),
-    onSigninCallback: () => { console.log("onSigninCallback()") }
+    onSigninCallback: () => {
+        console.log("onSigninCallback()")
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 };
 
 createRoot(document.getElementById('root')!).render(
