@@ -173,9 +173,9 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
 
         val scanRequest = ScanRequest.builder()
             .tableName("Recipes")
-            .filterExpression("#user = :user")
-            .expressionAttributeNames(mapOf("#user" to ":user"))
-            .expressionAttributeValues( mapOf(":user" to AttributeValue.builder().s(user).build()) )
+            .filterExpression("#user = :expectedUser")
+            .expressionAttributeNames(mapOf("#user" to "user"))
+            .expressionAttributeValues( mapOf(":expectedUser" to AttributeValue.builder().s(user).build()) )
             .build()
 
         val queryResponse = dynamoDbClient.use {
@@ -195,7 +195,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
                 responseRecipes.add(recipe)
             }
         }
-        return """{ "recipes": [${responseRecipes}] }"""
+        return """{ "recipes": $responseRecipes }"""
     }
 
     fun getRecipeTitles() : String {
