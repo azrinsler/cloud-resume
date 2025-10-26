@@ -48,8 +48,10 @@ export function App() {
 
     const signOut = () => {
         console.log("signOut()")
-        signOutRedirect()
-        auth.signoutRedirect().then(auth.removeUser).then(window.location.reload)
+        auth.removeUser().then(signOutRedirect)
+        console.log("auth.removeUser().then(signOutRedirect)")
+        auth.signoutRedirect().then(window.location.reload)
+        console.log("auth.signoutRedirect.then(window.location.reload)")
     }
 
     const refreshOrSetSidebarOption = (option: string) => {
@@ -107,13 +109,13 @@ export function App() {
                 console.log("User is authenticated")
             }
             else {
-                console.log("User is not authenticated - attempting silent sign in")
+                console.log("User is, but also isn't")
                 auth.signinSilent().catch(console.error);
-                console.log("Silent sign in completed")
             }
         }
         else {
             console.log("User is not?")
+            auth.signinSilent().catch(console.error);
         }
     }, [auth]);
 

@@ -43,8 +43,8 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <AuthProvider
           onSigninCallback = {onSignIn}
-          onSignoutCallback={onSignOut}
-          userManager={manager}
+          onSignoutCallback = {onSignOut}
+          userManager = {manager}
       >
           <App />
       </AuthProvider>
