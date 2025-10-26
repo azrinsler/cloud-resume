@@ -41,6 +41,7 @@ export function App() {
 
     const signIn = () => {
         auth.signinRedirect().then(() => {
+            window.history.replaceState({}, document.title, window.location.origin)
             setSidebarOption("self")
             window.location.reload()
         })
