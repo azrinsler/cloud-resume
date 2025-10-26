@@ -103,23 +103,6 @@ export function App() {
             });
     }, []);
 
-    useEffect(() => {
-        if (auth.user) {
-            if (auth.isAuthenticated) {
-                console.log("User is authenticated")
-            }
-            else {
-                console.log("User is, but also isn't")
-                auth.signinSilent().catch(console.error);
-            }
-        }
-        else {
-            console.log("User is not?")
-            auth.signinSilent().catch(console.error);
-        }
-    }, [auth]);
-
-
     // I think this should set loading to true and cache our recipe id any time it changes?
     useEffect(() => {
         setLoading(true)
