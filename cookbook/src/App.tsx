@@ -63,56 +63,51 @@ export function App() {
         setSidebarOption(option)
     }
 
-    const fetchRecipe = useCallback((recipe: string | Recipe) => {
+    const loadMyRecipe = useCallback((recipe: Recipe) => {
+        console.log("Loading recipe from MyRecipes", recipe)
+        setData(recipe)
+    },[])
+
+    const fetchRecipe = useCallback((recipe: string) => {
 
         setSidebarOption("recipe");
         localStorage.setItem("sidebarOption", "recipe")
 
-        if (typeof recipe == "string") {
-            console.log("fetchRecipe(" + recipe + ") - Attempting to fetch recipe by ID")
-            setLoading(true)
-            setRecipeId(recipe)
-            localStorage.setItem("recipeId", recipe)
+        console.log("fetchRecipe(" + recipe + ") - Attempting to fetch recipe by ID")
+        setLoading(true)
+        setRecipeId(recipe)
+        localStorage.setItem("recipeId", recipe)
 
-
-            fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
-                signal: AbortSignal.timeout(120 * 1000),
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "operation": "searchById",
-                    "recipeId": recipe
-                })
+        fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
+            signal: AbortSignal.timeout(120 * 1000),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "operation": "searchById",
+                "recipeId": recipe
             })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((json) => {
-                if (json != null) {
-                    const jsonData = JSON.parse(json) as Recipe;
-                    setData(jsonData);
-                    console.log(jsonData);
-                    setLoading(false);
-                    setError(null)
-                }
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false)
-            });
-        }
-        else {
-            console.log("fetchRecipe called using Recipe object - no fetch necessary!")
-            setData(recipe)
-            // sets local storage to this recipe id before calling setRecipeId() so we hopefully don't fetch it again
-            localStorage.setItem("recipeId", recipe.id!!)
-            setRecipeId(recipe.id!!)
-        }
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((json) => {
+            if (json != null) {
+                const jsonData = JSON.parse(json) as Recipe;
+                setData(jsonData);
+                console.log(jsonData);
+                setLoading(false);
+                setError(null)
+            }
+        })
+        .catch((err) => {
+            setError(err.message);
+            setLoading(false)
+        });
     }, []);
 
     // I think this should set loading to true and cache our recipe id any time it changes, assuming it does not match
@@ -180,7 +175,7 @@ export function App() {
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "self"
                         ? auth.isAuthenticated
-                            ? <MyRecipes recipeCallback={fetchRecipe}></MyRecipes>
+                            ? <MyRecipes recipeCallback={loadMyRecipe}></MyRecipes>
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "browse"
                         ? <Browse recipeCallback={fetchRecipe}></Browse>

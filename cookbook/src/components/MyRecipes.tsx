@@ -11,7 +11,7 @@ import {useAuth} from "react-oidc-context";
 import type {Recipe} from "./interfaces/Recipe.ts";
 
 interface MyRecipesProps {
-    recipeCallback: (recipe: string | Recipe) => void
+    recipeCallback: (recipe: Recipe) => void
 }
 
 const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recipeCallback}: MyRecipesProps) => {
