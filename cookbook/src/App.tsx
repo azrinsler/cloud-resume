@@ -68,7 +68,7 @@ export function App() {
         setData(recipe)
         setLoading(false)
         setSidebarOption("recipe");
-        setRecipeId(recipe.id!!)
+        setRecipeId(recipe.id!)
     },[])
 
     const fetchRecipe = useCallback((recipe: string) => {
@@ -109,23 +109,35 @@ export function App() {
         });
     }, []);
 
-    // keep local storage in sync with recipe id
+    // keep local storage in sync with recipeId
     useEffect(() => {
         localStorage.setItem("recipeId", recipeId)
-        if (data.id != recipeId) {
-            console.log("recipeId no longer matches data.id, setting loading to true")
-            setLoading(true)
-        }
+        //if (data.id != recipeId) {
+        //    console.log("recipeId no longer matches data.id, setting loading to true")
+        //    setLoading(true)
+        //}
     }, [recipeId]);
 
     // also keeps the recipe id in sync with any Recipe data object
     useEffect(() => {
         setLoading(false)
-        if (data.id != recipeId)
-            setRecipeId(data.id!!)
+        setRecipeId(data.id!)
+        //if (data.id != recipeId)
+        //    setRecipeId(data.id!)
     }, [data])
 
-    // additionally cache sidebarOption in local storage in the same way
+    useEffect(() => {
+        const inSync = data.id == recipeId
+        if (inSync) {
+            setLoading(false)
+        }
+        else {
+            setLoading(true)
+            setRecipeId(data.id!)
+        }
+    }, [data.id, recipeId]);
+
+    // additionally, cache sidebarOption in local storage in the same way
     useEffect(() => {
         localStorage.setItem("sidebarOption", sidebarOption)
     }, [sidebarOption]);
@@ -136,7 +148,7 @@ export function App() {
             console.log(`useEffect about to call fetchRecipe for id: ${recipeId}`)
             fetchRecipe(recipeId);
         }
-    }, [fetchRecipe, loading, recipeId, sidebarOption]);
+    }, [data.id, fetchRecipe, loading, recipeId, sidebarOption]);
 
     return (
         <>
