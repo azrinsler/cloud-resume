@@ -69,7 +69,7 @@ resource "aws_dynamodb_table_item" "ranch_sauce" {
               {"M": { "name":{"S":"Garlic Powder"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
               {"M": { "name":{"S":"Salt"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
               {"M": { "name":{"S":"Black Pepper"}, "unit":{"S":"tsp."}, "amount":{"S":"1/2"} } },
-              {"M": { "name":{"S":"(optional) Fresh Chives"}, "unit":{"S":""}, "amount":{"S":"yes"} } },
+              {"M": { "name":{"S":"Fresh Chives"}, "unit":{"S":""}, "amount":{"S":"yes"} } },
               {"M": { "name":{"S":"(optional) Ghost Pepper Powder"}, "unit":{"S":"tsp."}, "amount":{"S":"1/4"} } }
             ] },
             "items": {"L": [{"S":"Container w/ Lid"}, {"S":"Something to stir with"}] },

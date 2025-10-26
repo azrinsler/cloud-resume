@@ -53,6 +53,13 @@ resource "aws_cognito_user_pool_client" "cookbook_client" {
     "https://www.${var.site_name}/"
   ]
 
+  # allows tokens to persist through refreshes
+  explicit_auth_flows = [
+    "ALLOW_REFRESH_TOKEN_AUTH",
+    "ALLOW_USER_SRP_AUTH",
+    "ALLOW_USER_PASSWORD_AUTH"
+  ]
+
   access_token_validity  = 12  # hours
   id_token_validity      = 12  # hours
   refresh_token_validity = 30  # days
