@@ -223,19 +223,27 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
     }
 
     fun parseRecipeFromDynamoDB (recipe : Map<String, AttributeValue>) : String {
-        val id = recipe["recipe_id"]?.s()
-        val user = recipe["user"]?.s()
-        val title = recipe["title"]?.s()
+        val id = writeJson(recipe["recipe_id"]!!.s())
+        val user = writeJson(recipe["user"]!!.s())
+        val title = writeJson(recipe["title"]!!.s())
+
         val ingredients = recipe["ingredients"]?.l()?.map {
             val ingredient = it.m()
-            """{ "name": "${ingredient["name"]?.s()}", "unit": "${ingredient["unit"]?.s()}", "amount": "${ingredient["amount"]?.s()}" }"""
+            val ingredientName = writeJson(ingredient["name"]!!.s())
+            val ingredientUnit = writeJson(ingredient["unit"]!!.s())
+            val ingredientAmount = writeJson(ingredient["amount"]!!.s())
+            """{ "name": $ingredientName, "unit": $ingredientUnit, "amount": $ingredientAmount }"""
         }
-        val items = recipe["items"]?.l()?.map { "\"${it.s()}\"" }
+
+        val items = recipe["items"]?.l()?.map { writeJson(it.s()) }
         val steps = recipe["steps"]?.l()?.map {
             val step = it.m()
-            """{ "ordinal": ${step["ordinal"]?.n()}, "description": "${step["description"]?.s()}", "notes": ${step["notes"]?.l()?.map { note -> "\"${note.s()}\"" }} }"""
+            val stepOrdinal = writeJson(step["ordinal"]!!.n())
+            val stepDescription = writeJson(step["description"]!!.s())
+            val stepNotes = step["notes"]?.l()?.map { note -> writeJson(note.s()) }
+            """{ "ordinal": $stepOrdinal, "description": $stepDescription, "notes": $stepNotes }"""
         }
-        val recipeString = """{ "id": "$id", "user": "$user", "title": "$title", "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+        val recipeString = """{ "id": $id, "user": $user, "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
         return recipeString
     }
 }
