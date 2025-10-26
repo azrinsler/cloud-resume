@@ -108,7 +108,7 @@ export function App() {
         }
         else {
             console.log("fetchRecipe called using Recipe object - no fetch necessary!")
-            recipe = recipe as Recipe
+            setData(recipe)
             // sets local storage to this recipe id before calling setRecipeId() so we hopefully don't fetch it again
             localStorage.setItem("recipeId", recipe.id!!)
             setRecipeId(recipe.id!!)
@@ -125,6 +125,7 @@ export function App() {
         }
         else {
             console.log("recipeId changed to one already cached in localStorage.")
+            setLoading(false)
         }
     }, [recipeId]);
 
@@ -136,6 +137,7 @@ export function App() {
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
         if (loading && sidebarOption == 'recipe') {
+            console.log(`useEffect about to call fetchRecipe for id: ${recipeId}`)
             fetchRecipe(recipeId);
         }
     }, [fetchRecipe, loading, recipeId, sidebarOption]);
