@@ -31,7 +31,7 @@ if (window.location.search.includes("code=") && window.location.search.includes(
     console.log("Detected OIDC callback, processing...");
     manager.signinRedirectCallback()
         .then((user) => {
-            console.log("Callback complete, user:", user);
+            onSignIn(user)
         })
         .catch((err) => {
             console.error("Error in signinRedirectCallback:", err);
