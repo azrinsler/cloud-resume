@@ -173,6 +173,7 @@ export function App() {
                             ? <>
                                 <RecipeCard
                                     id={data?.id}
+                                    user={data?.user}
                                     title={data?.title}
                                     ingredients={data?.ingredients}
                                     items={data?.items}
