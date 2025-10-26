@@ -225,13 +225,13 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
     fun parseRecipeFromDynamoDB (recipe : Map<String, AttributeValue>) : String {
         val id = writeJson(recipe["recipe_id"]!!.s())
         val user = writeJson(recipe["user"]!!.s())
-        val title = writeJson(recipe["title"]!!.s())
+        val title = writeJson(recipe["title"]?.s()?:"")
 
         val ingredients = recipe["ingredients"]?.l()?.map {
             val ingredient = it.m()
-            val ingredientName = writeJson(ingredient["name"]!!.s())
-            val ingredientUnit = writeJson(ingredient["unit"]!!.s())
-            val ingredientAmount = writeJson(ingredient["amount"]!!.s())
+            val ingredientName = writeJson(ingredient["name"]?.s()?:"")
+            val ingredientUnit = writeJson(ingredient["unit"]?.s()?:"")
+            val ingredientAmount = writeJson(ingredient["amount"]?.s()?:"")
             """{ "name": $ingredientName, "unit": $ingredientUnit, "amount": $ingredientAmount }"""
         }
 
@@ -239,7 +239,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
         val steps = recipe["steps"]?.l()?.map {
             val step = it.m()
             val stepOrdinal = writeJson(step["ordinal"]!!.n())
-            val stepDescription = writeJson(step["description"]!!.s())
+            val stepDescription = writeJson(step["description"]?.s()?:"")
             val stepNotes = step["notes"]?.l()?.map { note -> writeJson(note.s()) }
             """{ "ordinal": $stepOrdinal, "description": $stepDescription, "notes": $stepNotes }"""
         }
