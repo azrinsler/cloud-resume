@@ -46,9 +46,12 @@ export function App() {
     }
 
     const signOut = () => {
-        auth.removeUser().then(() => {
-            console.log("signOut() --> auth.removeUser() completed")
-            window.location.reload()
+        // auth.removeUser().then(() => {
+        //     console.log("signOut() --> auth.removeUser() completed")
+        //     window.location.reload()
+        // })
+        auth.signoutRedirect().then(() => {
+            console.log("signOut() --> auth.signoutRedirect() completed")
         })
     }
 
