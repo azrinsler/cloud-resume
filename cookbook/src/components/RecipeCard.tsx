@@ -60,10 +60,10 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                 <div id="recipe-card">
                     <div className="flex-row" style={{width:'100%'}}>
                         <div id="simple-title" className="flex-row" style={isMobile ? {display:'none'} : {}}>
-                            <h2>Simple Recipes</h2>
+                            <h2 style={{marginTop:'-0.25em'}}>Simple Recipes</h2>
                         </div>
                         <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
-                            <h2 style={{flexGrow:1,textAlign:'center'}}>{recipe.title}</h2>
+                            <h2 style={{flexGrow:1,textAlign:'center',marginTop:'-0.25em;'}}>{recipe.title}</h2>
                             { // only show delete recipe button if the user is logged in
                                 isRecipeOwner()
                                     ? <div id="delete-recipe-button" className="flex-row">
