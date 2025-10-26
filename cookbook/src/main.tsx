@@ -5,9 +5,6 @@ import { App } from './App.tsx'
 import { AuthProvider } from "react-oidc-context";
 import {WebStorageStateStore} from "oidc-client-ts";
 
-
-const userStore = new WebStorageStateStore({ store: window.localStorage });
-
 // this currently needs to be manually updated to match the user pool any time it gets recreated, which is not ideal
 const cognitoAuthConfig = {
     authority: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_O30KqnNDH",
@@ -15,10 +12,13 @@ const cognitoAuthConfig = {
     redirect_uri: "https://www.azrinsler.com/",
     response_type: "code",
     scope: "email openid profile",
-    userStore,
-    onSigninCallback: () => {
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
+    // allows user login session to persist across reloads, tabs, etc.
+    automaticSilentRenew: true,
+    monitorSession: true,
+    userStore: new WebStorageStateStore({ store: window.localStorage }),
+    // onSigninCallback: () => {
+    //     window.history.replaceState({}, document.title, window.location.pathname);
+    // }
 };
 
 createRoot(document.getElementById('root')!).render(
