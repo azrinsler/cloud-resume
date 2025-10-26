@@ -3,6 +3,10 @@ import { createRoot } from 'react-dom/client'
 import './css/index.css'
 import { App } from './App.tsx'
 import { AuthProvider } from "react-oidc-context";
+import {WebStorageStateStore} from "oidc-client-ts";
+
+
+const userStore = new WebStorageStateStore({ store: window.localStorage });
 
 // this currently needs to be manually updated to match the user pool any time it gets recreated, which is not ideal
 const cognitoAuthConfig = {
@@ -11,6 +15,10 @@ const cognitoAuthConfig = {
     redirect_uri: "https://www.azrinsler.com/",
     response_type: "code",
     scope: "email openid profile",
+    userStore,
+    onSigninCallback: () => {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 };
 
 createRoot(document.getElementById('root')!).render(

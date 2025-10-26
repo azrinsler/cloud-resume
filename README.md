@@ -17,13 +17,15 @@
 ## Environment Setup Stuff
 
 - Make sure you have Java 21 installed
-  - JAVA_HOME should point to the correct JDK
+  - JAVA_HOME should point to the correct JDK 
+    - Note: may not be required _at this time_? I didn't set this on Kubuntu, and Maven still worked just fine.
   - JAVA_HOME should be included in PATH (append "\bin" so Windows can find it good)
   - Point IntelliJ to the .m2 settings.xml and repository defined in this repo 
 - Install Maven if necessary
 - [Install or update Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Install AWS Toolkit Plugin in IntelliJ
-- Install AWS SAM CLI
+- Install AWS SAM CLI 
+  - Note: may be optional; I didn't install on Kubuntu, and Terraform still worked just fine.
 - Install Postman
 - `cd` to Save Recipe (Python) Lambda directory and run an `npm install` (or whatever IntelliJ recommends)
   - This may only be necessary if you want to work on the Python function locally — it does not affect remote?
