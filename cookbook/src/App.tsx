@@ -32,7 +32,7 @@ export function App() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
-    // sets current mode based on user preference and adds a listener in case they change their mind
+    // sets the current mode based on user preference and adds a listener in case they change their mind
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const [isDarkMode, setDarkMode] = useState(prefersDarkMode)
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
@@ -41,17 +41,18 @@ export function App() {
 
     const signIn = () => {
         console.log("signIn()")
-        auth.signinRedirect().then(() => {
-            console.log("signIn() --> auth.signinRedirect() completed")
-        })
+        localStorage.setItem("sidebarOption", "self")
+        auth.signinRedirect()
     }
 
     const signOut = () => {
         console.log("signOut()")
-        auth.removeUser().then(signOutRedirect)
-        console.log("auth.removeUser().then(signOutRedirect)")
-        auth.signoutRedirect().then(window.location.reload)
-        console.log("auth.signoutRedirect.then(window.location.reload)")
+        auth.removeUser()
+        console.log("auth.removeUser()")
+        signOutRedirect()
+        console.log("signOutRedirect()")
+        // auth.signoutRedirect()
+        // console.log("auth.signoutRedirect()")
     }
 
     const refreshOrSetSidebarOption = (option: string) => {
@@ -121,88 +122,65 @@ export function App() {
         }
     }, [fetchRecipe, loading, recipeId, sidebarOption]);
 
-    // if (auth.isLoading) {
-    //     return <div>Loading...</div>;
-    // }
-    //
-    // if (auth.error) {
-    //     return <div>Encountering error... {auth.error.message}</div>;
-    // }
-        return (
-            <>
-                <Sidebar
-                    icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
-                    title={<span style={ isMobile ? { fontSize:"x-large" } : {}}>Simple Recipes</span>}
-                    content={[
-                        <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("about") } }>About</div>,
-                        auth.isAuthenticated
-                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("new") } }>New Recipe</div>
-                            : <></>,
-                        auth.isAuthenticated
-                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("self") } }>My Recipes</div>
-                            : <></>,
-                        <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("browse") } }>Browse Recipes</div>,
-                        <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("recipe") } }>Current Recipe</div>,
-                        <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
-                        <div style={ isMobile ? { fontSize:"large" } : {} }
-                             onMouseLeave={ () => { setJokeOption("") } }
-                             onMouseEnter={ () => { setJokeOption("donate") } }>
-                            { jokeOption == "donate" ? <>Don't</> : <>Donate</> }
-                        </div>,
-                        // <div>
-                        //     <pre> Hello: {auth.user?.profile.email} </pre>
-                        //     <pre> ID Token: {auth.user?.id_token} </pre>
-                        //     <pre> Access Token: {auth.user?.access_token} </pre>
-                        //     <pre> Refresh Token: {auth.user?.refresh_token} </pre>
-                        //     <button onClick={() => auth.removeUser()}>Sign out</button>
-                        // </div>,
-                        // }
-                        // return (
-                        //     <>
-                        //         <div>
-                        //             <button onClick={() => auth.signinRedirect()}>Sign in</button>
-                        //             <button onClick={() => signOutRedirect()}>Sign out</button>
-                        //         </div>
-                        //     </>
-                        // );
-                        auth.isAuthenticated
-                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signOut() } }>Sign out</div>
-                            : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signIn() } }>Login</div>
-                        ,
-                    ]}
-                >
-                </Sidebar>
-                <div className='flex-column' style={{flexGrow:'1', overflow:'hidden', maxHeight:'100dvh'}}>
-                    {
-                        sidebarOption == "about"
-                            ? <About></About>
-                        : sidebarOption == "new"
-                            ? auth.isAuthenticated
-                                ? <NewRecipe></NewRecipe>
-                                : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
-                        : sidebarOption == "browse"
-                            ? <Browse recipeCallback={fetchRecipe}></Browse>
-                        : sidebarOption == "recipe" && loading
-                            ? <Preheating></Preheating>
-                        : sidebarOption == "recipe"
-                            ? <>
-                                <RecipeCard
-                                    id={data?.id}
-                                    user={data?.user}
-                                    title={data?.title}
-                                    ingredients={data?.ingredients}
-                                    items={data?.items}
-                                    steps={data?.steps}>
-                                </RecipeCard>
-                                { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
-                            </>
-                        : <>Unknown Sidebar Option</>
-                    }
-                    <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>
-                        IMPORTANT: Please note that this is a DEV environment - new recipes may be lost any time the DB changes!
-                    </div>
+    return (
+        <>
+            <Sidebar
+                icon={<img src={ isDarkMode ? sidebarIcon : sidebarIconBlack } alt='Sidebar Icon'></img>}
+                title={<span style={ isMobile ? { fontSize:"x-large" } : {}}>Simple Recipes</span>}
+                content={[
+                    <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("about") } }>About</div>,
+                    auth.isAuthenticated
+                        ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("new") } }>New Recipe</div>
+                        : <></>,
+                    auth.isAuthenticated
+                        ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("self") } }>My Recipes</div>
+                        : <></>,
+                    <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("browse") } }>Browse Recipes</div>,
+                    <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("recipe") } }>Current Recipe</div>,
+                    <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
+                    <div style={ isMobile ? { fontSize:"large" } : {} }
+                         onMouseLeave={ () => { setJokeOption("") } }
+                         onMouseEnter={ () => { setJokeOption("donate") } }>
+                        { jokeOption == "donate" ? <>Don't</> : <>Donate</> }
+                    </div>,
+                    auth.isAuthenticated
+                        ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signOut() } }>Sign out</div>
+                        : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signIn() } }>Login</div>
+                    ,
+                ]}
+            >
+            </Sidebar>
+            <div className='flex-column' style={{flexGrow:'1', overflow:'hidden', maxHeight:'100dvh'}}>
+                {
+                    sidebarOption == "about"
+                        ? <About></About>
+                    : sidebarOption == "new"
+                        ? auth.isAuthenticated
+                            ? <NewRecipe></NewRecipe>
+                            : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                    : sidebarOption == "browse"
+                        ? <Browse recipeCallback={fetchRecipe}></Browse>
+                    : sidebarOption == "recipe" && loading
+                        ? <Preheating></Preheating>
+                    : sidebarOption == "recipe"
+                        ? <>
+                            <RecipeCard
+                                id={data?.id}
+                                user={data?.user}
+                                title={data?.title}
+                                ingredients={data?.ingredients}
+                                items={data?.items}
+                                steps={data?.steps}>
+                            </RecipeCard>
+                            { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
+                        </>
+                    : <>Unknown Sidebar Option</>
+                }
+                <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>
+                    IMPORTANT: Please note that this is a DEV environment - new recipes may be lost any time the DB changes!
                 </div>
-            </>
-        )
+            </div>
+        </>
+    )
 }
 

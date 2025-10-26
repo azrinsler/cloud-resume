@@ -30,7 +30,7 @@ const onSignOut = (resp: SignoutResponse | undefined) => {
 
 if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
     console.log("Detected OIDC callback, processing...");
-    manager.signinRedirectCallback()
+    manager.signinRedirectCallback().then(onSignIn)
         .catch((err) => {
             console.error("Error in signinRedirectCallback:", err);
         });
