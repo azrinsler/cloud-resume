@@ -228,14 +228,14 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
         val title = recipe["title"]?.s()
         val ingredients = recipe["ingredients"]?.l()?.map {
             val ingredient = it.m()
-            """{ "name": ${ingredient["name"]?.s()}, "unit": ${ingredient["unit"]?.s()}, "amount": ${ingredient["amount"]?.s()} }"""
+            """{ "name": "${ingredient["name"]?.s()}", "unit": "${ingredient["unit"]?.s()}", "amount": "${ingredient["amount"]?.s()}" }"""
         }
-        val items = recipe["items"]?.l()?.map { it.s() }
+        val items = recipe["items"]?.l()?.map { "\"${it.s()}\"" }
         val steps = recipe["steps"]?.l()?.map {
             val step = it.m()
-            """{ "ordinal": ${step["ordinal"]?.n()}, "description": ${step["description"]?.s()}, "notes": ${step["notes"]?.l()?.map { note -> note.s() }} }"""
+            """{ "ordinal": ${step["ordinal"]?.n()}, "description": "${step["description"]?.s()}", "notes": ${step["notes"]?.l()?.map { note -> "\"${note.s()}\"" }} }"""
         }
-        val recipeString = """{ "id": $id, "user": $user, "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+        val recipeString = """{ "id": "$id", "user": "$user", "title": "$title", "ingredients": $ingredients, "items": $items, "steps": $steps }"""
         return recipeString
     }
 }
