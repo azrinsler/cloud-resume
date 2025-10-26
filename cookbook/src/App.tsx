@@ -10,6 +10,7 @@ import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
 import NewRecipe from "./components/NewRecipe.tsx";
 import {useAuth} from "react-oidc-context";
+import MyRecipes from "./components/MyRecipes.tsx";
 
 const testRecipe = testRecipeJson as Recipe
 
@@ -158,6 +159,8 @@ export function App() {
                         ? auth.isAuthenticated
                             ? <NewRecipe></NewRecipe>
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                    : sidebarOption == "self"
+                        ? <MyRecipes recipeCallback={fetchRecipe}></MyRecipes>
                     : sidebarOption == "browse"
                         ? <Browse recipeCallback={fetchRecipe}></Browse>
                     : sidebarOption == "recipe" && loading

@@ -1,0 +1,18 @@
+#my-recipes {
+    flex-grow: 1;
+}
+
+#my-recipes > ul {
+    list-style-type: none;
+}
+
+#my-recipes > ul > li {
+    text-wrap: nowrap;
+    cursor: pointer;
+    margin: 2px 0 1px 0;
+}
+
+/*noinspection CssInvalidFunction*/
+#my-recipes > ul > li:hover {
+    color: light-dark(#b81bd9, #ec91ff);
+}

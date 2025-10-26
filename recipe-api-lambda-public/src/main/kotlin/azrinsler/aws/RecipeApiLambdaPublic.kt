@@ -2,6 +2,7 @@ package azrinsler.aws
 
 import JacksonWrapper
 import JacksonWrapper.writeJson
+import Recipe
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
@@ -79,6 +80,28 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
                         }
                     }
                 }
+                "searchByUser" -> {
+                    val userKey = "user"
+                    val user =
+                        if (inputAsJson[userKey].isTextual)   inputAsJson[userKey].asText().also { logger.trace("Recipe User is Textual") }
+                        else                                  inputAsJson[userKey].toString()
+
+                    val responseBody = searchByUser(user)
+                    if (responseBody.isNotEmpty()) { // return an 'ok' response with whatever our search turned up
+                        logger.info("Recipe(s) found")
+                        with (response) {
+                            statusCode = 200
+                            body = writeJson(responseBody)
+                        }
+                    }
+                    else { // return 'resource not found'
+                        logger.warn("No recipes found for user")
+                        with (response) {
+                            statusCode = 404
+                            body = "No recipes found for user"
+                        }
+                    }
+                }
                 "getRecipes" -> {
                     val responseBody = getRecipeTitles()
                     if (responseBody.isNotEmpty()) { // return an 'ok' response with whatever our search turned up
@@ -112,7 +135,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
         }
     }
 
-    fun searchById (recipeId : String) : String {
+    fun searchById (recipeId : String, user: String? = null) : String {
         val dynamoDbClient = DynamoDbClient.builder()
             .region(region)
             .credentialsProvider(DefaultCredentialsProvider.create())
@@ -137,24 +160,42 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
         var responseBody = ""
         if (queryResponse.items().isNotEmpty()) {
             val foundRecipe = queryResponse.items()[0] as Map<String, AttributeValue>
-
-            val title = writeJson(foundRecipe["title"]?.s()?:"")
-            val user = writeJson(foundRecipe["user"]?.s()?:"")
-
-            val ingredients = foundRecipe["ingredients"]?.l()?.map {
-                val ingredient = it.m()
-                """{ "name": ${writeJson(ingredient["name"]?.s()?:"")}, "unit": ${writeJson(ingredient["unit"]?.s()?:"")}, "amount": ${writeJson(ingredient["amount"]?.s()?:"")} }"""
-            }
-
-            val items = foundRecipe["items"]?.l()?.map { writeJson(it.s()) }
-
-            val steps = foundRecipe["steps"]?.l()?.map {
-                val step = it.m()
-                """{ "ordinal": ${writeJson(step["ordinal"]?.n()?:"")}, "description": ${writeJson(step["description"]?.s()?:"")}, "notes": ${ if (step["notes"]?.l()?.isNotEmpty() == true) step["notes"]?.l()?.map { note -> writeJson(note.s()) } else "[]"} }"""
-            }
-            responseBody = """{ "id": "$recipeId", "user": $user, "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+            responseBody = parseRecipeFromDynamoDB(foundRecipe)
         }
         return responseBody
+    }
+
+    fun searchByUser (user : String) : String {
+        val dynamoDbClient = DynamoDbClient.builder()
+            .region(region)
+            .credentialsProvider(DefaultCredentialsProvider.create())
+            .build()
+
+        val scanRequest = ScanRequest.builder()
+            .tableName("Recipes")
+            .filterExpression("#user = :user")
+            .expressionAttributeNames(mapOf("#user" to ":user"))
+            .expressionAttributeValues( mapOf(":user" to AttributeValue.builder().s(user).build()) )
+            .build()
+
+        val queryResponse = dynamoDbClient.use {
+            try {
+                dynamoDbClient.scan(scanRequest)
+            }
+            catch (e: DynamoDbException) {
+                throw RuntimeException("Failed to scan DynamoDb for user $user", e)
+            }
+        }
+
+        // re-assembles the recipe JSON out of the DynamoDB document fields
+        val responseRecipes = mutableListOf<String>()
+        if (queryResponse.items().isNotEmpty()) {
+            for (recipeResponse in queryResponse.items()) {
+                val recipe = parseRecipeFromDynamoDB(recipeResponse)
+                responseRecipes.add(recipe)
+            }
+        }
+        return """{ "recipes": [${responseRecipes}] }"""
     }
 
     fun getRecipeTitles() : String {
@@ -179,5 +220,22 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
             response = if (response.isNotEmpty()) "$response, $json" else json
         }
         return """{ "recipes": [$response] }"""
+    }
+
+    fun parseRecipeFromDynamoDB (recipe : Map<String, AttributeValue>) : String {
+        val id = recipe["recipe_id"]?.s()
+        val user = recipe["user"]?.s()
+        val title = recipe["title"]?.s()
+        val ingredients = recipe["ingredients"]?.l()?.map {
+            val ingredient = it.m()
+            """{ "name": ${ingredient["name"]?.s()}, "unit": ${ingredient["unit"]?.s()}, "amount": ${ingredient["amount"]?.s()} }"""
+        }
+        val items = recipe["items"]?.l()?.map { it.s() }
+        val steps = recipe["steps"]?.l()?.map {
+            val step = it.m()
+            """{ "ordinal": ${step["ordinal"]?.n()}, "description": ${step["description"]?.s()}, "notes": ${step["notes"]?.l()?.map { note -> note.s() }} }"""
+        }
+        val recipeString = """{ "id": $id, "user": $user, "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+        return recipeString
     }
 }
