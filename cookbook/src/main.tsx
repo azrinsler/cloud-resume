@@ -21,6 +21,7 @@ const manager = new UserManager({
 const onSignIn = (user: User | undefined) => {
     console.log('onSignIn() User:', user)
     window.history.replaceState({}, document.title, window.location.pathname)
+    localStorage.setItem("sidebarOption", "self")
 }
 
 const onSignOut = (resp: SignoutResponse | undefined) => {

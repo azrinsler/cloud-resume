@@ -18,7 +18,6 @@ export function App() {
 
     // this currently needs to be manually updated to match the user pool any time it gets recreated, which is not ideal
     const signOutRedirect = () => {
-        console.log("internal signOutRedirect() called")
         const clientId = "4beki0cs423atvjm1kr2ojehhu";
         const logoutUri = "https://www.azrinsler.com/";
         const cognitoDomain = "https://cookbook-login.auth.us-east-1.amazoncognito.com";
@@ -41,20 +40,16 @@ export function App() {
     });
 
     const signIn = () => {
+        console.log("signIn()")
         auth.signinRedirect().then(() => {
             console.log("signIn() --> auth.signinRedirect() completed")
         })
     }
 
-    // @ts-ignore
     const signOut = () => {
-        // auth.removeUser().then(() => {
-        //     console.log("signOut() --> auth.removeUser() completed")
-        //     window.location.reload()
-        // })
-        auth.signoutRedirect().then(() => {
-            console.log("signOut() --> auth.signoutRedirect() completed")
-        })
+        console.log("signOut()")
+        signOutRedirect()
+        auth.signoutRedirect().then(auth.removeUser).then(window.location.reload)
     }
 
     const refreshOrSetSidebarOption = (option: string) => {
@@ -186,7 +181,7 @@ export function App() {
                         //     </>
                         // );
                         auth.isAuthenticated
-                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signOutRedirect() } }>Sign out</div>
+                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signOut() } }>Sign out</div>
                             : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signIn() } }>Login</div>
                         ,
                     ]}
