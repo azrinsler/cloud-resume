@@ -46,6 +46,7 @@ export function App() {
         })
     }
 
+    // @ts-ignore
     const signOut = () => {
         // auth.removeUser().then(() => {
         //     console.log("signOut() --> auth.removeUser() completed")
