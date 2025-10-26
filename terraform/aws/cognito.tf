@@ -53,7 +53,7 @@ resource "aws_cognito_user_pool_client" "cookbook_client" {
     "https://www.${var.site_name}/"
   ]
 
-  # allows tokens to persist through refreshes
+  # GPT suggestion - may help allow tokens to persist through refreshes
   explicit_auth_flows = [
     "ALLOW_REFRESH_TOKEN_AUTH",
     "ALLOW_USER_SRP_AUTH",
@@ -63,12 +63,6 @@ resource "aws_cognito_user_pool_client" "cookbook_client" {
   access_token_validity  = 12  # hours
   id_token_validity      = 12  # hours
   refresh_token_validity = 30  # days
-
-  token_validity_units = {
-    access_token  = "hours"
-    id_token      = "hours"
-    refresh_token = "days"
-  }
 
   supported_identity_providers = ["COGNITO"]
 
