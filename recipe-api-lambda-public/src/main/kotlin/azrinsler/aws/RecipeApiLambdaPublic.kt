@@ -91,7 +91,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
                         logger.info("Recipe(s) found")
                         with (response) {
                             statusCode = 200
-                            body = writeJson(responseBody)
+                            body = responseBody
                         }
                     }
                     else { // return 'resource not found'

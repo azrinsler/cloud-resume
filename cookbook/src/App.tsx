@@ -160,7 +160,9 @@ export function App() {
                             ? <NewRecipe></NewRecipe>
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "self"
-                        ? <MyRecipes recipeCallback={fetchRecipe}></MyRecipes>
+                        ? auth.isAuthenticated
+                            ? <MyRecipes recipeCallback={fetchRecipe}></MyRecipes>
+                            : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "browse"
                         ? <Browse recipeCallback={fetchRecipe}></Browse>
                     : sidebarOption == "recipe" && loading

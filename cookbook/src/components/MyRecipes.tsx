@@ -62,11 +62,6 @@ const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recip
                 setLoading(false);
             });
         }
-        else {
-            if (!auth.user) {
-                console.log("Cannot search for user recipes, as no user is currently logged in.")
-            }
-        }
     }, [loading]);
 
     return (
