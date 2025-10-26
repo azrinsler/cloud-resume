@@ -8,9 +8,10 @@ const testResponse = testJson as MyRecipesResponse
 import '../css/my-recipes.css'
 import Preheating from "./Preheating.tsx";
 import {useAuth} from "react-oidc-context";
+import type {Recipe} from "./interfaces/Recipe.ts";
 
 interface MyRecipesProps {
-    recipeCallback: (recipe: string) => void
+    recipeCallback: (recipe: string | Recipe) => void
 }
 
 const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recipeCallback}: MyRecipesProps) => {
@@ -85,7 +86,7 @@ const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recip
                         { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
                         <ul style={{marginLeft:'1em'}}> {
                             filteredTitles.map(recipe =>
-                                <li key={recipe.id}  onClick={() => {setLoading(true); recipeCallback(recipe.id!)}}><h3 style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</h3></li>
+                                <li key={recipe.id}  onClick={() => {setLoading(true); recipeCallback(recipe)}}><h3 style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</h3></li>
                             )
                         } </ul>
                     </div>

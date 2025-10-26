@@ -63,27 +63,29 @@ export function App() {
         setSidebarOption(option)
     }
 
-    const fetchRecipe = useCallback((recipe: string) => {
+    const fetchRecipe = useCallback((recipe: string | Recipe) => {
         console.log("fetchRecipe(" + recipe + ")")
 
-        setLoading(true)
-        setRecipeId(recipe)
         setSidebarOption("recipe");
-
-        localStorage.setItem("recipeId", recipe)
         localStorage.setItem("sidebarOption", "recipe")
 
-        fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
-            signal: AbortSignal.timeout(120 * 1000),
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "operation": "searchById",
-                "recipeId": recipe
+        if (typeof recipe == "string") {
+            setLoading(true)
+            setRecipeId(recipe)
+            localStorage.setItem("recipeId", recipe)
+
+
+            fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
+                signal: AbortSignal.timeout(120 * 1000),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "operation": "searchById",
+                    "recipeId": recipe
+                })
             })
-        })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -103,6 +105,12 @@ export function App() {
                 setError(err.message);
                 setLoading(false)
             });
+        }
+        else {
+            recipe = recipe as Recipe
+            setRecipeId(recipe.id!!)
+            localStorage.setItem("recipeId", recipe.id!!)
+        }
     }, []);
 
     // I think this should set loading to true and cache our recipe id any time it changes?
