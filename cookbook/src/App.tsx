@@ -64,12 +64,12 @@ export function App() {
     }
 
     const fetchRecipe = useCallback((recipe: string | Recipe) => {
-        console.log("fetchRecipe(" + recipe + ")")
 
         setSidebarOption("recipe");
         localStorage.setItem("sidebarOption", "recipe")
 
         if (typeof recipe == "string") {
+            console.log("fetchRecipe(" + recipe + ") - Attempting to fetch recipe by ID")
             setLoading(true)
             setRecipeId(recipe)
             localStorage.setItem("recipeId", recipe)
@@ -107,16 +107,25 @@ export function App() {
             });
         }
         else {
+            console.log("fetchRecipe called using Recipe object - no fetch necessary!")
             recipe = recipe as Recipe
-            setRecipeId(recipe.id!!)
+            // sets local storage to this recipe id before calling setRecipeId() so we hopefully don't fetch it again
             localStorage.setItem("recipeId", recipe.id!!)
+            setRecipeId(recipe.id!!)
         }
     }, []);
 
-    // I think this should set loading to true and cache our recipe id any time it changes?
+    // I think this should set loading to true and cache our recipe id any time it changes, assuming it does not match
+    // what we have cached in local storage.
     useEffect(() => {
-        setLoading(true)
-        localStorage.setItem("recipeId", recipeId)
+        if (recipeId != localStorage.getItem("recipeId")) {
+            console.log("recipeId changed and no longer matches localStorage - an attempt will be made to fetch it.")
+            setLoading(true)
+            localStorage.setItem("recipeId", recipeId)
+        }
+        else {
+            console.log("recipeId changed to one already cached in localStorage.")
+        }
     }, [recipeId]);
 
     // Also cache sidebarOption in local storage in the same way
