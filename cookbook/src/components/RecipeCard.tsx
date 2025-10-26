@@ -15,9 +15,11 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     }
 
     const deleteRecipeRef = useRef<HTMLButtonElement>(null)
+    const deleteRecipeLabelRef = useRef<HTMLButtonElement>(null)
     const deleteRecipe = () => {
         // disable button to prevent multi-clicks
         deleteRecipeRef.current!.disabled = true
+        deleteRecipeLabelRef.current!.innerText = "Deleting..."
         console.log("Recipe ID: " + recipe.id)
         fetch("https://api.azrinsler.com/RecipeApiLambdaUser", {
             signal: AbortSignal.timeout(120 * 1000),
@@ -37,10 +39,13 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             }
             console.log(response);
             deleteRecipeRef.current!.disabled = false
+            deleteRecipeLabelRef.current!.innerText = "Deleted!"
+            localStorage.setItem("sidebarOption", "browse")
         })
         .catch((err) => {
             console.log(err)
             deleteRecipeRef.current!.disabled = false
+            deleteRecipeLabelRef.current!.innerText = "Delete FAILED."
         });
     }
     return (
@@ -57,10 +62,10 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             { // only show delete recipe button if the user is logged in
                                 isRecipeOwner()
                                     ? <div id="delete-recipe-button" className="flex-row">
-                                        <span style={{marginLeft:'auto'}}>Delete Recipe &rarr;</span>
+                                        <span ref={deleteRecipeLabelRef} style={{marginLeft:'auto'}}>Delete Recipe &rarr;</span>
                                         <button ref={deleteRecipeRef} className='x-button' style={{margin:'0 0 0 0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
                                     </div>
-                                    : <>{auth.user?.profile.sub}</>
+                                    : <></>
                             }
                         </div>
                     </div>
