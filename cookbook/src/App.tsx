@@ -39,6 +39,16 @@ export function App() {
         setDarkMode(event.matches)
     });
 
+    const signIn = () => {
+        auth.signinRedirect().then(() => {
+            setSidebarOption("self")
+        })
+    }
+
+    const signOut = () => {
+        auth.removeUser().then(window.location.reload)
+    }
+
     const refreshOrSetSidebarOption = (option: string) => {
         if (option == sidebarOption) {
             window.location.reload()
@@ -151,8 +161,8 @@ export function App() {
                         //     </>
                         // );
                         auth.isAuthenticated
-                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { auth.removeUser() } }>Sign out</div>
-                            : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { auth.signinRedirect() } }>Login</div>
+                            ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signOut() } }>Sign out</div>
+                            : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signIn() } }>Login</div>
                         ,
                     ]}
                 >
