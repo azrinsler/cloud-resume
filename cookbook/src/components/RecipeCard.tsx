@@ -41,6 +41,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             deleteRecipeRef.current!.disabled = false
             deleteRecipeLabelRef.current!.innerText = "Deleted!"
             localStorage.setItem("sidebarOption", "browse")
+            window.location.reload()
         })
         .catch((err) => {
             console.log(err)

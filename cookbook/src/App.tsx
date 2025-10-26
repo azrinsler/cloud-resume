@@ -41,7 +41,7 @@ export function App() {
 
     const refreshOrSetSidebarOption = (option: string) => {
         if (option == sidebarOption) {
-            setSidebarOption("loading")
+            window.location.reload()
         }
         setSidebarOption(option)
     }
