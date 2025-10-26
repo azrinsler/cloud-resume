@@ -14,7 +14,7 @@
 
 #about-simple-tab, #about-technical-tab {
     width: 50%;
-    border-radius: 1em 1em 0 0;
+    border-radius: 0.3em 0.3em 0 0;
     border: 1px solid;
     text-align: center;
     line-height: 1.5em;
@@ -35,7 +35,7 @@
 }
 
 #about-simple-tab > label, #about-technical-tab > label {
-    border-radius: 1em 1em 0 0;
+    border-radius: 0.3em 0.3em 0 0;
     transition-duration: 0s;
     font-size: 1.25em;
     display: inline-block;

@@ -42,6 +42,7 @@ export function App() {
     const signIn = () => {
         auth.signinRedirect().then(() => {
             setSidebarOption("self")
+            window.location.reload()
         })
     }
 
