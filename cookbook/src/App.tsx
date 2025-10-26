@@ -1,5 +1,5 @@
 import RecipeCard  from "./components/RecipeCard.tsx";
-import testRecipeJson from './json/error-recipe.json' with { type : 'json' }
+import errorRecipeJson from './json/error-recipe.json' with { type : 'json' }
 import Sidebar from "./components/Sidebar.tsx";
 import sidebarIcon from './assets/cookbook-icon.svg'
 import sidebarIconBlack from './assets/cookbook-icon-black.svg'
@@ -12,7 +12,7 @@ import NewRecipe from "./components/NewRecipe.tsx";
 import {useAuth} from "react-oidc-context";
 import MyRecipes from "./components/MyRecipes.tsx";
 
-const testRecipe = testRecipeJson as Recipe
+const errorRecipe = errorRecipeJson as Recipe
 
 export function App() {
     const auth = useAuth();
@@ -29,7 +29,7 @@ export function App() {
     const [recipeId, setRecipeId] = useState( localStorage.getItem("recipeId") || "0")
     const [sidebarOption, setSidebarOption] = useState( localStorage.getItem("sidebarOption") || "about" )
     const [jokeOption, setJokeOption] = useState("")
-    const [data, setData] = useState(testRecipe);
+    const [data, setData] = useState(errorRecipe);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
@@ -68,20 +68,14 @@ export function App() {
         setData(recipe)
         setLoading(false)
         setSidebarOption("recipe");
-        localStorage.setItem("sidebarOption", "recipe")
         setRecipeId(recipe.id!!)
-        localStorage.setItem("recipeId", recipe.id!!)
     },[])
 
     const fetchRecipe = useCallback((recipe: string) => {
-
-        setSidebarOption("recipe");
-        localStorage.setItem("sidebarOption", "recipe")
-
         console.log("fetchRecipe(" + recipe + ") - Attempting to fetch recipe by ID")
+        setSidebarOption("recipe");
         setLoading(true)
         setRecipeId(recipe)
-        localStorage.setItem("recipeId", recipe)
 
         fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
             signal: AbortSignal.timeout(120 * 1000),
@@ -104,7 +98,7 @@ export function App() {
             if (json != null) {
                 const jsonData = JSON.parse(json) as Recipe;
                 setData(jsonData);
-                console.log(jsonData);
+                console.log("Recipe returned", jsonData);
                 setLoading(false);
                 setError(null)
             }
@@ -118,9 +112,13 @@ export function App() {
     // keep local storage in sync with recipe id
     useEffect(() => {
         localStorage.setItem("recipeId", recipeId)
+        if (data.id != recipeId) {
+            console.log("recipeId no longer matches data.id, setting loading to true")
+            setLoading(true)
+        }
     }, [recipeId]);
 
-    // also keep recipe id in sync with any Recipe data object
+    // also keeps the recipe id in sync with any Recipe data object
     useEffect(() => {
         setLoading(false)
         if (data.id != recipeId)
