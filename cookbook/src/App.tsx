@@ -115,19 +115,17 @@ export function App() {
         });
     }, []);
 
-    // I think this should set loading to true and cache our recipe id any time it changes, assuming it does not match
-    // what we have cached in local storage.
-    // useEffect(() => {
-    //     if (recipeId != localStorage.getItem("recipeId")) {
-    //         console.log("recipeId changed and no longer matches localStorage - an attempt will be made to fetch it.")
-    //         setLoading(true)
-    //         localStorage.setItem("recipeId", recipeId)
-    //     }
-    //     else {
-    //         console.log("recipeId changed to one already cached in localStorage.")
-    //         setLoading(false)
-    //     }
-    // }, [recipeId]);
+    // keep local storage in sync with recipe id
+    useEffect(() => {
+        localStorage.setItem("recipeId", recipeId)
+    }, [recipeId]);
+
+    // also keep recipe id in sync with any Recipe data object
+    useEffect(() => {
+        setLoading(false)
+        if (data.id != recipeId)
+            setRecipeId(data.id!!)
+    }, [data])
 
     // Also cache sidebarOption in local storage in the same way
     useEffect(() => {
