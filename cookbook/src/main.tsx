@@ -14,6 +14,8 @@ const cognitoAuthConfig = {
     scope: "email openid profile",
     // this persists the session token between reloads
     userStore: new WebStorageStateStore({ store: window.localStorage }),
+    automaticSilentRenew: true,
+    monitorSession: false,
 };
 
 createRoot(document.getElementById('root')!).render(
