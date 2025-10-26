@@ -66,7 +66,10 @@ export function App() {
     const loadMyRecipe = useCallback((recipe: Recipe) => {
         console.log("Loading recipe from MyRecipes", recipe)
         setData(recipe)
+        setLoading(false)
         setSidebarOption("recipe");
+        localStorage.setItem("sidebarOption", "recipe")
+        setRecipeId(recipe.id!!)
         localStorage.setItem("recipeId", recipe.id!!)
     },[])
 
