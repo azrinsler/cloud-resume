@@ -27,6 +27,18 @@ const onSignOut = (resp: SignoutResponse | undefined) => {
     console.log(`onSignOut() SignoutResponse:`, resp)
 }
 
+if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
+    console.log("Detected OIDC callback, processing...");
+    manager.signinRedirectCallback()
+        .then((user) => {
+            console.log("Callback complete, user:", user);
+            onSignIn(user);
+        })
+        .catch((err) => {
+            console.error("Error in signinRedirectCallback:", err);
+        });
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <AuthProvider

@@ -46,7 +46,10 @@ export function App() {
     }
 
     const signOut = () => {
-        auth.removeUser().then(window.location.reload)
+        auth.removeUser().then(() => {
+            console.log("signOut() --> auth.removeUser() completed")
+            window.location.reload()
+        })
     }
 
     const refreshOrSetSidebarOption = (option: string) => {
