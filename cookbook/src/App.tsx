@@ -75,7 +75,6 @@ export function App() {
         console.log("fetchRecipe(" + recipe + ") - Attempting to fetch recipe by ID")
         setSidebarOption("recipe");
         setLoading(true)
-        setRecipeId(recipe)
 
         fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
             signal: AbortSignal.timeout(120 * 1000),
@@ -96,11 +95,12 @@ export function App() {
         })
         .then((json) => {
             if (json != null) {
-                const jsonData = JSON.parse(json) as Recipe;
-                setData(jsonData);
-                console.log("Recipe returned", jsonData);
-                setLoading(false);
+                const jsonData = JSON.parse(json) as Recipe
+                console.log("Recipe returned", jsonData)
+                setData(jsonData)
+                setLoading(false)
                 setError(null)
+                setRecipeId(recipe)
             }
         })
         .catch((err) => {
@@ -125,14 +125,14 @@ export function App() {
             setRecipeId(data.id!!)
     }, [data])
 
-    // Also cache sidebarOption in local storage in the same way
+    // additionally cache sidebarOption in local storage in the same way
     useEffect(() => {
         localStorage.setItem("sidebarOption", sidebarOption)
     }, [sidebarOption]);
 
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
-        if (loading && sidebarOption == 'recipe') {
+        if (loading && sidebarOption == 'recipe' && data.id != recipeId) {
             console.log(`useEffect about to call fetchRecipe for id: ${recipeId}`)
             fetchRecipe(recipeId);
         }
