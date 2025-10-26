@@ -1,5 +1,5 @@
 import RecipeCard  from "./components/RecipeCard.tsx";
-import testRecipeJson from './json/test/test-recipe.json' with { type : 'json' }
+import testRecipeJson from './json/error-recipe.json' with { type : 'json' }
 import Sidebar from "./components/Sidebar.tsx";
 import sidebarIcon from './assets/cookbook-icon.svg'
 import sidebarIconBlack from './assets/cookbook-icon-black.svg'

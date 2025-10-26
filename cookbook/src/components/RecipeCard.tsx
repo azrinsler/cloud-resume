@@ -41,7 +41,11 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             deleteRecipeRef.current!.disabled = false
             deleteRecipeLabelRef.current!.innerText = "Deleted!"
             localStorage.setItem("sidebarOption", "browse")
-            window.location.reload()
+
+            // Set a timer to reload after 5 seconds (5000 ms)
+            setTimeout(() => {
+                window.location.reload();
+            }, 5000);
         })
         .catch((err) => {
             console.log(err)

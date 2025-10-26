@@ -1,0 +1,12 @@
+{
+  "title": "Error",
+  "user": "",
+  "ingredients": [],
+  "items": [],
+  "steps": [
+    {
+      "ordinal": 0,
+      "description": "If you're seeing this, something has probably gone wrong."
+    }
+  ]
+}
