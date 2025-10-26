@@ -8,8 +8,13 @@ import type {Ingredient} from "./interfaces/Ingredient.ts";
 import RecipeStep from "./RecipeStep.tsx";
 import type {Step} from "./interfaces/Step.ts";
 import {useAuth} from "react-oidc-context";
+import type {SaveRecipeResponse} from "./interfaces/SaveRecipeResponse.ts";
 
-const NewRecipe: () => React.JSX.Element = () => {
+interface NewRecipeProps {
+    recipeCallback: (recipe: string) => void
+}
+
+const NewRecipe: (recipeCallback: NewRecipeProps) => React.JSX.Element = ({recipeCallback}: NewRecipeProps) => {
     const auth = useAuth();
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
@@ -151,6 +156,13 @@ const NewRecipe: () => React.JSX.Element = () => {
             setSteps([])
             submitButtonRef.current!.disabled = false
             submitButtonRef.current!.innerHTML = existingInnerHtml
+
+            return response.json()
+        })
+        .then((json) => {
+            console.log("SaveRecipeResponse JSON:", json)
+            const saveRecipeResponse = json as SaveRecipeResponse;
+            recipeCallback(saveRecipeResponse.body.recipeId!!)
         })
         .catch((err) => {
             console.log(err)

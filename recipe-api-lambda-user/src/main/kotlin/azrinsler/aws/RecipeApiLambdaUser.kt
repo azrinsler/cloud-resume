@@ -84,7 +84,7 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
                     logger.info("Recipe Body: $recipeBody")
 
-                    // make sure we can read this input as a Recipe before accepting it + set user to their claims sub
+                    // make sure we can read this input as a Recipe before accepting it and set user to their claims sub
                     val recipe = (JacksonWrapper.readJson(recipeBody) as? Recipe)?.copy(user = userSub)
                     if (recipe != null) {
                         logger.info("Recipe with user: ${JacksonWrapper.writeJson(recipe)}")
@@ -100,6 +100,7 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
                                 statusCode = 202
                                 body = """
                                     { 
+                                        "recipeId": "${recipe.recipeId}",
                                         "message": "saveRecipe request sent to queue. Assuming no issues, it will start appearing in search results momentarily.",
                                         "messageId": "${sqsResponse.messageId()}"
                                     }                                       

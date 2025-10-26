@@ -153,7 +153,7 @@ export function App() {
                         : <></>,
                     <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("browse") } }>Browse Recipes</div>,
                     <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("recipe") } }>Current Recipe</div>,
-                    <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume/tree/main/cookbook'>GitHub</a>,
+                    <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume'>GitHub</a>,
                     <div style={ isMobile ? { fontSize:"large" } : {} }
                          onMouseLeave={ () => { setJokeOption("") } }
                          onMouseEnter={ () => { setJokeOption("donate") } }>
@@ -172,7 +172,7 @@ export function App() {
                         ? <About></About>
                     : sidebarOption == "new"
                         ? auth.isAuthenticated
-                            ? <NewRecipe></NewRecipe>
+                            ? <NewRecipe recipeCallback={fetchRecipe}></NewRecipe>
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "self"
                         ? auth.isAuthenticated
