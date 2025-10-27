@@ -118,7 +118,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
 
     const toRecipe = () : Recipe => {
         const updatedRecipe = {
-            id: recipe?.recipeId,
+            recipeId: recipe?.recipeId,
             user: recipe?.user,
             title: titleRef.current!.value,
             ingredients: ingredients,
