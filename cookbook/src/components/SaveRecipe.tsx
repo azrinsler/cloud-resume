@@ -10,11 +10,12 @@ import type {Step} from "./interfaces/Step.ts";
 import {useAuth} from "react-oidc-context";
 import type {SaveRecipeResponse} from "./interfaces/SaveRecipeResponse.ts";
 
-interface NewRecipeProps {
-    recipeCallback: (recipe: string) => void
+interface SaveRecipeProps {
+    recipeCallback: (recipe: string) => void,
+    recipe: Recipe
 }
 
-const NewRecipe: (recipeCallback: NewRecipeProps) => React.JSX.Element = ({recipeCallback}: NewRecipeProps) => {
+const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({recipeCallback,recipe}: SaveRecipeProps) => {
     const auth = useAuth();
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
@@ -24,9 +25,9 @@ const NewRecipe: (recipeCallback: NewRecipeProps) => React.JSX.Element = ({recip
     const addStepRef = useRef<HTMLInputElement>(null)
     const submitButtonRef = useRef<HTMLButtonElement>(null)
 
-    const [ingredients, setIngredients] = useState<Ingredient[]>([])
-    const [items, setItems] = useState<string[]>([])
-    const [steps, setSteps] = useState<Step[]>([])
+    const [ingredients, setIngredients] = useState<Ingredient[]>(recipe.ingredients??[])
+    const [items, setItems] = useState<string[]>(recipe.items??[])
+    const [steps, setSteps] = useState<Step[]>(recipe.steps??[])
 
     const stepsOrdered = steps?.sort((a,b)=>a.ordinal-b.ordinal)
 
@@ -182,7 +183,7 @@ const NewRecipe: (recipeCallback: NewRecipeProps) => React.JSX.Element = ({recip
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
                     <label htmlFor='new-recipe-title-text'></label>
-                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' className='text-input' style={{textAlign:'center'}}/>
+                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' className='text-input' style={{textAlign:'center'}} value={recipe.title}/>
                 </div>
 
                 <br/>&nbsp;<br/>
@@ -293,4 +294,4 @@ const NewRecipe: (recipeCallback: NewRecipeProps) => React.JSX.Element = ({recip
         </div>
     )
 }
-export default NewRecipe
+export default SaveRecipe

@@ -8,9 +8,10 @@ import type {Recipe} from "./components/interfaces/Recipe.ts";
 import About from "./components/about/About.tsx";
 import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
-import NewRecipe from "./components/NewRecipe.tsx";
+//import NewRecipe from "./components/NewRecipe.tsx";
 import {useAuth} from "react-oidc-context";
 import MyRecipes from "./components/MyRecipes.tsx";
+import SaveRecipe from "./components/SaveRecipe.tsx";
 
 const errorRecipe = errorRecipeJson as Recipe
 
@@ -184,7 +185,9 @@ export function App() {
                         ? <About></About>
                     : sidebarOption == "new"
                         ? auth.isAuthenticated
-                            ? <NewRecipe recipeCallback={fetchRecipe}></NewRecipe>
+                                //  TODO either delete this line or reenable it depending whether SaveRecipe works
+                                // ? <NewRecipe recipeCallback={fetchRecipe}></NewRecipe>
+                                ? <SaveRecipe recipeCallback={fetchRecipe} recipe={data}></SaveRecipe>
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "self"
                         ? auth.isAuthenticated
