@@ -12,7 +12,7 @@ import type {SaveRecipeResponse} from "./interfaces/SaveRecipeResponse.ts";
 
 interface SaveRecipeProps {
     recipeCallback: (recipe: string) => void,
-    recipe: Recipe
+    recipe?: Recipe
 }
 
 const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({recipeCallback,recipe}: SaveRecipeProps) => {
@@ -25,9 +25,9 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
     const addStepRef = useRef<HTMLInputElement>(null)
     const submitButtonRef = useRef<HTMLButtonElement>(null)
 
-    const [ingredients, setIngredients] = useState<Ingredient[]>(recipe.ingredients??[])
-    const [items, setItems] = useState<string[]>(recipe.items??[])
-    const [steps, setSteps] = useState<Step[]>(recipe.steps??[])
+    const [ingredients, setIngredients] = useState<Ingredient[]>(recipe?.ingredients??[])
+    const [items, setItems] = useState<string[]>(recipe?.items??[])
+    const [steps, setSteps] = useState<Step[]>(recipe?.steps??[])
 
     const stepsOrdered = steps?.sort((a,b)=>a.ordinal-b.ordinal)
 
@@ -183,7 +183,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
                     <label htmlFor='new-recipe-title-text'></label>
-                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' className='text-input' style={{textAlign:'center'}} value={recipe.title}/>
+                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' className='text-input' style={{textAlign:'center'}} value={recipe?.title}/>
                 </div>
 
                 <br/>&nbsp;<br/>

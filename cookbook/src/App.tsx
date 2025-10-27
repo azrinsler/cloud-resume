@@ -8,7 +8,6 @@ import type {Recipe} from "./components/interfaces/Recipe.ts";
 import About from "./components/about/About.tsx";
 import Browse from "./components/Browse.tsx";
 import Preheating from "./components/Preheating.tsx";
-//import NewRecipe from "./components/NewRecipe.tsx";
 import {useAuth} from "react-oidc-context";
 import MyRecipes from "./components/MyRecipes.tsx";
 import SaveRecipe from "./components/SaveRecipe.tsx";
@@ -113,18 +112,12 @@ export function App() {
     // keep local storage in sync with recipeId
     useEffect(() => {
         localStorage.setItem("recipeId", recipeId)
-        //if (data.id != recipeId) {
-        //    console.log("recipeId no longer matches data.id, setting loading to true")
-        //    setLoading(true)
-        //}
     }, [recipeId]);
 
     // also keeps the recipe id in sync with any Recipe data object
     useEffect(() => {
         setLoading(false)
         setRecipeId(data.id!)
-        //if (data.id != recipeId)
-        //    setRecipeId(data.id!)
     }, [data])
 
     useEffect(() => {
@@ -161,6 +154,9 @@ export function App() {
                     auth.isAuthenticated
                         ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("new") } }>New Recipe</div>
                         : <></>,
+                    auth.isAuthenticated && auth.user?.profile.sub == data.user
+                        ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("edit") } }>Edit Recipe</div>
+                        : <></>,
                     auth.isAuthenticated
                         ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("self") } }>My Recipes</div>
                         : <></>,
@@ -185,9 +181,12 @@ export function App() {
                         ? <About></About>
                     : sidebarOption == "new"
                         ? auth.isAuthenticated
-                                //  TODO either delete this line or reenable it depending whether SaveRecipe works
-                                // ? <NewRecipe recipeCallback={fetchRecipe}></NewRecipe>
-                                ? <SaveRecipe recipeCallback={fetchRecipe} recipe={data}></SaveRecipe>
+                            // ? <NewRecipe recipeCallback={fetchRecipe}></NewRecipe>
+                            ? <SaveRecipe recipeCallback={fetchRecipe}></SaveRecipe>
+                            : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                    : sidebarOption == "edit"
+                        ? auth.isAuthenticated && auth.user?.profile.sub == data.user
+                            ? <SaveRecipe recipeCallback={fetchRecipe} recipe={data}></SaveRecipe>
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "self"
                         ? auth.isAuthenticated
