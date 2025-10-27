@@ -67,7 +67,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 loading
                     ? <Preheating></Preheating>
                     : <div id="browse-recipes" className="flex-column">
-                        <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Browse</h1>
+                        <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Browse</h1>
                         <div className='flex-row' style={{placeContent:'center',placeItems:'center',padding:'1em',borderBottom:'1px solid'}}>
                             <label htmlFor='browse-recipes-search' style={{fontSize:'1.25em'}}>Title:&nbsp;</label>
                             <input

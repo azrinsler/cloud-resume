@@ -55,7 +55,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
     }
     return (
         <div className='flex-column' style={{width:'100%',flexGrow:'1'}}>
-            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Recipe</h1>
+            <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Recipe</h1>
             <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
                 <div id="recipe-card" style={isMobile ? {border:"none"}:{}}>
                     <div className="flex-row" style={{width:'100%'}}>

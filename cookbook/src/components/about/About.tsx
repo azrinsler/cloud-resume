@@ -61,7 +61,7 @@ const About : () => React.JSX.Element = () => {
 
     return (
         <div id='about' className='flex-column'>
-            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(#535bf2,#a33dc2)'}}>About</h1>
+            <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(#535bf2,#a33dc2)'}}>About</h1>
             <div className='flex-row' style={{paddingTop:'0.5em',borderBottom:'1px solid',flexWrap:'nowrap'}}>
                 <div id='about-simple-tab' onClick={()=>{setActiveTab('simple')}} style={activeTab == 'simple' ? {backgroundColor:'light-dark(#64b3e3,#210012)'} : {}}>
                     <input type='radio' name='about-tab' id='about-simple-radio-input' value='simple' defaultChecked={true} />
