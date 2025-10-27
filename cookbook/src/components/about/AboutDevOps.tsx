@@ -5,7 +5,6 @@ const AboutDevOps: () => React.JSX.Element = () => {
         <div id='about-technical-devops-caption' className='about-technical-caption'>
 
             <h2>DevOps</h2>
-            <hr/>
             <div className='flex-column' style={{padding:'1em', backgroundColor:'light-dark(white,#0f080c)', border:'1px solid'}}>
                 <p>
                     This project leverages the following:

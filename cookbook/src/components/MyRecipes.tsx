@@ -84,9 +84,9 @@ const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recip
                             />
                         </div>
                         { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
-                        <ul style={{marginLeft:'1em'}}> {
+                        <ul style={{marginLeft:'1em',marginTop:'1em'}}> {
                             filteredTitles.map(recipe =>
-                                <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe)}}><h3 style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</h3></li>
+                                <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe)}}><p style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</p></li>
                             )
                         } </ul>
                     </div>

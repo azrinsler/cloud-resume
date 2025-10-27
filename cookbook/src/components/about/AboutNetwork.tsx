@@ -5,7 +5,6 @@ const AboutNetwork: () => React.JSX.Element = () => {
     return (
         <div id='about-technical-network-caption' className='about-technical-caption'>
             <h2>Networking</h2>
-            <hr/>
 
             <div className='flex-row' style={
                 isMobile
