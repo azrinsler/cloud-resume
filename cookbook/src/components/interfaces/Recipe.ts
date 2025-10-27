@@ -2,7 +2,7 @@ import type {Ingredient} from "./Ingredient.ts";
 import type {Step} from "./Step.ts";
 
 export interface Recipe {
-    id?: string;
+    recipeId?: string;
     title?: string;
     user?: string;
     ingredients?: Ingredient[];

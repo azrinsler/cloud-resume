@@ -216,7 +216,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
         for (item in queryResponse.items()) {
             val id = writeJson(item["recipe_id"]!!.s())
             val title = writeJson(item["title"]!!.s())
-            val json = """{ "id": $id, "title": $title }"""
+            val json = """{ "recipeId": $id, "title": $title }"""
             response = if (response.isNotEmpty()) "$response, $json" else json
         }
         return """{ "recipes": [$response] }"""

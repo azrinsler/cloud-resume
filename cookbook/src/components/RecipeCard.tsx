@@ -20,7 +20,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
         // disable button to prevent multi-clicks
         deleteRecipeRef.current!.disabled = true
         deleteRecipeLabelRef.current!.innerText = "Deleting..."
-        console.log("Recipe ID: " + recipe.id)
+        console.log("Recipe ID: " + recipe.recipeId)
         fetch("https://api.azrinsler.com/RecipeApiLambdaUser", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -30,7 +30,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
             },
             body: JSON.stringify({
                 "operation": "deleteRecipe",
-                "recipeId": recipe.id
+                "recipeId": recipe.recipeId
             })
         })
         .then((response) => {

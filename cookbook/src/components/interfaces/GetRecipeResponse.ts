@@ -3,6 +3,6 @@ export interface GetRecipeResponse {
 }
 
 interface RecipeResponse {
-    id: string
+    recipeId: string
     title: string
 }

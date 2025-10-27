@@ -68,7 +68,7 @@ export function App() {
         setData(recipe)
         setLoading(false)
         setSidebarOption("recipe");
-        setRecipeId(recipe.id!)
+        setRecipeId(recipe.recipeId!)
     },[])
 
     const fetchRecipe = useCallback((recipe: string) => {
@@ -117,19 +117,19 @@ export function App() {
     // also keeps the recipe id in sync with any Recipe data object
     useEffect(() => {
         setLoading(false)
-        setRecipeId(data.id!)
+        setRecipeId(data.recipeId!)
     }, [data])
 
     useEffect(() => {
-        const inSync = data.id == recipeId
+        const inSync = data.recipeId == recipeId
         if (inSync) {
             setLoading(false)
         }
         else {
             setLoading(true)
-            setRecipeId(data.id!)
+            setRecipeId(data.recipeId!)
         }
-    }, [data.id, recipeId]);
+    }, [data.recipeId, recipeId]);
 
     // additionally, cache sidebarOption in local storage in the same way
     useEffect(() => {
@@ -138,11 +138,11 @@ export function App() {
 
     useEffect(() => {
         // this calls a Lambda which has a cold start time and may need a few seconds if it hasn't been used recently
-        if (loading && sidebarOption == 'recipe' && data.id != recipeId) {
+        if (loading && sidebarOption == 'recipe' && data.recipeId != recipeId) {
             console.log(`useEffect about to call fetchRecipe for id: ${recipeId}`)
             fetchRecipe(recipeId);
         }
-    }, [data.id, fetchRecipe, loading, recipeId, sidebarOption]);
+    }, [data.recipeId, fetchRecipe, loading, recipeId, sidebarOption]);
 
     return (
         <>
@@ -198,7 +198,7 @@ export function App() {
                     : sidebarOption == "recipe"
                         ? <>
                             <RecipeCard
-                                id={data?.id}
+                                recipeId={data?.recipeId}
                                 user={data?.user}
                                 title={data?.title}
                                 ingredients={data?.ingredients}
