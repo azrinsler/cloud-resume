@@ -177,7 +177,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
     return (
         !auth.isAuthenticated ? <></> : // returns nothing if not authenticated
         <div className='flex-column' style={{width:'100%',flexGrow:'1',overflow:'hidden'}}>
-            <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>New Recipe</h1>
+            <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Save Recipe</h1>
 
             <br/>&nbsp;<br/>
 

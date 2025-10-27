@@ -19,7 +19,7 @@
     flex-grow: 1;
     height: 1.35em;
     border-radius: 0 0.25em 0 0;
-    background-color: light-dark(#cc88ff,#750f68);
+    background-color: light-dark(#cc88ff,#2d091f);
     border-left: 1px dashed light-dark(#7905ff,#ff370a);;
 }
 
@@ -33,7 +33,7 @@
     flex-grow: 1;
     height: 1.35em;
     border-radius: 0.25em 0 0 0;
-    background-color: light-dark(#cc88ff,#750f68);
+    background-color: light-dark(#cc88ff,#2d091f);
 }
 
 #recipe-steps {

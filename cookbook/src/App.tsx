@@ -144,10 +144,6 @@ export function App() {
         }
     }, [data.recipeId, fetchRecipe, loading, recipeId, sidebarOption]);
 
-    useEffect(() => {
-        document.body.classList.add("hatched-background")
-    })
-
     return (
         <>
             <Sidebar
