@@ -181,7 +181,6 @@ export function App() {
                         ? <About></About>
                     : sidebarOption == "new"
                         ? auth.isAuthenticated
-                            // ? <NewRecipe recipeCallback={fetchRecipe}></NewRecipe>
                             ? <SaveRecipe recipeCallback={fetchRecipe}></SaveRecipe>
                             : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "edit"
