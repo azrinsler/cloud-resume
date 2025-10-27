@@ -117,14 +117,16 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
     }
 
     const toRecipe = () : Recipe => {
-        const recipe = {
+        const updatedRecipe = {
+            id: recipe?.id,
+            user: recipe?.user,
             title: titleRef.current!.value,
             ingredients: ingredients,
             items: items,
             steps: steps
         }
-        console.log(recipe)
-        return recipe
+        console.log(updatedRecipe)
+        return updatedRecipe
     }
 
     const submitRecipe = (recipe: Recipe) => {
@@ -163,7 +165,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
         .then((json) => {
             console.log("SaveRecipeResponse JSON:", json)
             const saveRecipeResponse = json as SaveRecipeResponse;
-            recipeCallback(saveRecipeResponse.body.recipeId!)
+            recipeCallback(saveRecipeResponse.recipeId!)
         })
         .catch((err) => {
             console.log(err)
