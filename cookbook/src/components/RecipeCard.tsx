@@ -57,7 +57,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
         <div className='flex-column' style={{width:'100%',flexGrow:'1'}}>
             <h1 className='hatched-background' style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Recipe</h1>
             <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
-                <div id="recipe-card">
+                <div id="recipe-card" style={isMobile ? {border:"none"}:{}}>
                     <div className="flex-row" style={{width:'100%'}}>
                         <div id="simple-title" className="flex-row" style={isMobile ? {display:'none'} : {}}>
                             <h2 style={{marginTop:'-0.15em'}}>Simple Recipes</h2>
@@ -75,7 +75,7 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>
-                        <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px dotted light-dark(gray,#6fdde1)',flexGrow:2,padding:'1em'}}>
+                        <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px dotted light-dark(#201b21,#6fdde1)',flexGrow:2,padding:'1em'}}>
                             <div>
                                 <h3>Ingredients</h3>
                                 <hr/>

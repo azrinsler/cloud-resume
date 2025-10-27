@@ -26,16 +26,18 @@ body {
     width:100vw;
     min-height:100dvh;
     display: flex;
-    background-color: light-dark(#fffcf2, #080004);
+    background-color: light-dark(#fffcf2, #040500);
+    font-family: "courier new", "sans-serif";
 }
 
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
+    font-family: "garamond", "sans-serif";
 }
 
-h1, h2, h3 {
-    font-family: "Copperplate Gothic Bold", "sans-serif";
+h2 {
+    font-family: "consolas", "sans-serif";
 }
 
 li {
@@ -88,7 +90,8 @@ li {
     user-select: none; /* so users don't accidentally select/highlight button text when they meant to click on it */
     place-self:start;
     background-color: light-dark(red,#cc1554);
-    border-color: light-dark(black,red)
+    border-color: light-dark(darkred,red);
+    border-radius: 3px;
 }
 
 /*noinspection CssInvalidFunction*/
@@ -165,19 +168,19 @@ li {
     background:
             repeating-linear-gradient(
                 -30deg,
-                light-dark(#7974d4, #1b1040),
-                light-dark(#7974d4, #1b1040) 1px,
+                light-dark(#bcdbff, #1b1040),
+                light-dark(#c4fffe, #1b1040) 1px,
                 transparent 1px,
                 transparent 15px
             ),
             repeating-linear-gradient(
                 60deg,
-                light-dark(#749cd4,#401037),
-                light-dark(#749cd4,#401037) 1px,
+                light-dark(#e2bcff,#401037),
+                light-dark(#fff,#401037) 1px,
                 transparent 1px,
                 transparent 15px
             );
-    background-color: light-dark(white, #1a0013)
+    background-color: light-dark(#fceded, #1a0013)
 }
 
 /*noinspection CssInvalidFunction*/

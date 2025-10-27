@@ -3,8 +3,8 @@
     border: 1px solid transparent;
     display: flex;
     flex-wrap: wrap;
-    background: linear-gradient(light-dark(#fff,#0f0f0d), light-dark(#fff,#0f0f0d)) padding-box,
-                linear-gradient(165deg, light-dark(#000,#f49038), light-dark(#000,#750f68), light-dark(#000,#750f68), light-dark(#000,#ff370a)) border-box;
+    background: linear-gradient(light-dark(#fff,#161510), light-dark(#fff,#0f0f0d)) padding-box,
+                linear-gradient(175deg, light-dark(#f73b54,#f49038), light-dark(#3bf7a9,#750f68), light-dark(#dd3575,#750f68), light-dark(#ff370a,#ff370a)) border-box;
     max-width: 70em;
     border-radius:0.25em;
 }
@@ -15,12 +15,12 @@
     width: 70%;
     padding: 0.5em 1em;
     justify-content: center;
-    border-bottom: 1px solid light-dark(gray,#f49038);;
+    border-bottom: 1px solid light-dark(#5405ff,#f49038);;
     flex-grow: 1;
     height: 1.35em;
     border-radius: 0 0.25em 0 0;
     background-color: light-dark(#cc88ff,#750f68);
-    border-left: 1px dashed light-dark(gray,#ff370a);;
+    border-left: 1px dashed light-dark(#7905ff,#ff370a);;
 }
 
 /*noinspection CssInvalidFunction*/
@@ -29,7 +29,7 @@
     width: 25%;
     justify-content: center;
     padding: 0.5em 1em;
-    border-bottom: 1px solid light-dark(gray,#f49038);;
+    border-bottom: 1px solid light-dark(#5405ff,#f49038);;
     flex-grow: 1;
     height: 1.35em;
     border-radius: 0.25em 0 0 0;
@@ -37,7 +37,7 @@
 }
 
 #recipe-steps {
-    font-family: "Consolas", sans-serif;
+    font-family: "courier new", sans-serif;
     margin-left: 1em;
 }
 
@@ -49,12 +49,12 @@
 }
 
 #ingredients-list {
-    font-family: "Consolas", sans-serif;
+    font-family: "courier new", sans-serif;
     margin-left: 1.25em;
 }
 
 #recipe-items-list {
-    font-family: "Consolas", sans-serif;
+    font-family: "courier new", sans-serif;
     margin-left: 1.25em;
 }
 
@@ -87,9 +87,9 @@
 }
 
 #delete-recipe-button {
-    margin: 0 0 0 -10em;
+    margin: 0 0 0 -11em;
     position: relative;
     right: -1em;
     top: -2em;
-    width: 10em;
+    width: 11em;
 }
