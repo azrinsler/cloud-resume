@@ -162,7 +162,7 @@ const NewRecipe: (recipeCallback: NewRecipeProps) => React.JSX.Element = ({recip
         .then((json) => {
             console.log("SaveRecipeResponse JSON:", json)
             const saveRecipeResponse = json as SaveRecipeResponse;
-            recipeCallback(saveRecipeResponse.body.recipeId!)
+            recipeCallback(saveRecipeResponse.recipeId!)
         })
         .catch((err) => {
             console.log(err)
