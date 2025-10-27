@@ -34,7 +34,7 @@ resource "aws_dynamodb_table_item" "stovetop_rice" {
 
   item =  <<ITEM
           {
-            "recipe_id": {"S": "0"},
+            "recipe_id": {"S": "6d5c2a9c-7519-4ab6-a0c6-d3ed1c1a0f60"},
             "title": {"S": "Stovetop Rice"},
             "user": {"S": "04d88438-e021-706c-ae4c-5479c6f143eb"},
             "ingredients": {"L": [
@@ -57,7 +57,7 @@ resource "aws_dynamodb_table_item" "ranch_sauce" {
 
   item =  <<ITEM
           {
-            "recipe_id": {"S": "1"},
+            "recipe_id": {"S": "532ae1a4-54a5-4a0e-8219-77f5c440a2a3"},
             "title": {"S": "Ranch"},
             "user": {"S": "04d88438-e021-706c-ae4c-5479c6f143eb"},
             "ingredients": {"L": [
