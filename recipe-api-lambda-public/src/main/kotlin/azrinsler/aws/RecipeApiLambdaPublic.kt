@@ -243,7 +243,7 @@ class RecipeApiLambdaPublic : RequestHandler<APIGatewayProxyRequestEvent, APIGat
             val stepNotes = step["notes"]?.l()?.map { note -> writeJson(note.s()) }
             """{ "ordinal": $stepOrdinal, "description": $stepDescription, "notes": $stepNotes }"""
         }
-        val recipeString = """{ "id": $id, "user": $user, "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
+        val recipeString = """{ "recipeId": $id, "user": $user, "title": $title, "ingredients": $ingredients, "items": $items, "steps": $steps }"""
         return recipeString
     }
 }
