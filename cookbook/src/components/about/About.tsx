@@ -17,6 +17,7 @@ import AboutNetwork from "./AboutNetwork.tsx";
 import AboutDevOps from "./AboutDevOps.tsx";
 
 import {useState} from "react";
+import Resume from "./Resume.tsx";
 
 const About : () => React.JSX.Element = () => {
     const [activeTab, setActiveTab] = useState('simple')
@@ -52,6 +53,8 @@ const About : () => React.JSX.Element = () => {
                         <AboutDevOps></AboutDevOps>
                     ]}
                 ></AboutTechnical>
+            case 'resume':
+                return <Resume></Resume>
             default:
                 return (
                     <div>Unknown Tab</div>
@@ -70,6 +73,11 @@ const About : () => React.JSX.Element = () => {
                 <div id='about-technical-tab' onClick={()=>{setActiveTab('technical')}} style={activeTab == 'technical' ? {backgroundColor:'light-dark(#64b3e3,#210012)'} : {}}>
                     <input type='radio' name='about-tab' id='about-technical-radio-input' value='technical'/>
                     <label htmlFor='about-technical-radio-input'>Technical</label>
+                </div>
+
+                <div id='resume-tab' onClick={()=>{setActiveTab('resume')}} style={activeTab == 'resume' ? {backgroundColor:'light-dark(#64b3e3,#210012)'} : {}}>
+                    <input type='radio' name='about-tab' id='resume-radio-input' value='resume'/>
+                    <label htmlFor='resume-radio-input'>Resume</label>
                 </div>
             </div>
             <div id='about-content' className='flex-column'>
