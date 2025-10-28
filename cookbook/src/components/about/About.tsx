@@ -66,16 +66,16 @@ const About : () => React.JSX.Element = () => {
         <div id='about' className='flex-column'>
             <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(#535bf2,#a33dc2)'}}>About</h1>
             <div className='flex-row hatched-background' style={{paddingTop:'0.5em',borderBottom:'1px solid',flexWrap:'nowrap'}}>
-                <div id='about-simple-tab' onClick={()=>{setActiveTab('simple')}} style={activeTab == 'simple' ? {backgroundColor:'light-dark(#64b3e3,#210012)'} : {}}>
+                <div id='about-simple-tab' onClick={()=>{setActiveTab('simple')}} style={activeTab == 'simple' ? {backgroundColor:'light-dark(lightgreen,brown)'} : {opacity:'60%'}}>
                     <input type='radio' name='about-tab' id='about-simple-radio-input' value='simple' defaultChecked={true} />
                     <label htmlFor='about-simple-radio-input'>Simple</label>
                 </div>
-                <div id='about-technical-tab' onClick={()=>{setActiveTab('technical')}} style={activeTab == 'technical' ? {backgroundColor:'light-dark(#64b3e3,#210012)'} : {}}>
+                <div id='about-technical-tab' onClick={()=>{setActiveTab('technical')}} style={activeTab == 'technical' ? {backgroundColor:'light-dark(lightgreen,brown)'} : {opacity:'60%'}}>
                     <input type='radio' name='about-tab' id='about-technical-radio-input' value='technical'/>
                     <label htmlFor='about-technical-radio-input'>Technical</label>
                 </div>
 
-                <div id='resume-tab' onClick={()=>{setActiveTab('resume')}} style={activeTab == 'resume' ? {backgroundColor:'light-dark(#64b3e3,#210012)'} : {}}>
+                <div id='resume-tab' onClick={()=>{setActiveTab('resume')}} style={activeTab == 'resume' ? {backgroundColor:'light-dark(lightgreen,brown)'} : {opacity:'60%'}}>
                     <input type='radio' name='about-tab' id='resume-radio-input' value='resume'/>
                     <label htmlFor='resume-radio-input'>Resume</label>
                 </div>

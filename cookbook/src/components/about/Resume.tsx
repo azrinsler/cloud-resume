@@ -1,5 +1,5 @@
 import * as React from "react";
-import resume from '/cookbook/src/assets/resume/resume.pdf'
+import resume from '../../assets/resume/resume.pdf'
 
 const Resume: () => React.JSX.Element = () => {
     return (
