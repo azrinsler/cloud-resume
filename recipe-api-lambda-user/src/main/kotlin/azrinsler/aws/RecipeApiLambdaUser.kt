@@ -26,7 +26,6 @@ class RecipeApiLambdaUser : RequestHandler<APIGatewayProxyRequestEvent, APIGatew
     val logger : Logger = LoggerFactory.getLogger(RecipeApiLambdaUser::class.java)
     val region : Region = Region.US_EAST_1
 
-    // val newRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$newRecipeQueueName"
     val saveRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$saveRecipeQueueName"
     val deleteRecipeQueueUrl = "https://sqs.$region.amazonaws.com/$accountId/$deleteRecipeQueueName"
 
