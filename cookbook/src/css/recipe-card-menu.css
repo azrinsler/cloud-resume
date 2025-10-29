@@ -1,0 +1,27 @@
+#recipe-card-menu {
+    border: 1px solid white;
+    position: relative;
+    left: -7em;
+    width: 7em;
+    /*noinspection CssInvalidFunction*/
+    background-color: light-dark(rgba(255,255,255,0.5),rgba(0,0,0,0.5));
+}
+
+#recipe-card-menu-button {
+    cursor: pointer;
+    position: relative;
+    left: -1.5em;
+    user-select: none;
+}
+
+.recipe-card-menu-option {
+    width: 100%;
+    cursor: pointer;
+    text-align: center;
+}
+
+.recipe-card-menu-option:hover {
+    /*noinspection CssInvalidFunction*/
+    background-color: light-dark(white,black);
+    font-weight: 700;
+}

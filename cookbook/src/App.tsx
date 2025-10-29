@@ -11,7 +11,6 @@ import Preheating from "./components/Preheating.tsx";
 import {useAuth} from "react-oidc-context";
 import MyRecipes from "./components/MyRecipes.tsx";
 import SaveRecipe from "./components/SaveRecipe.tsx";
-import Resume from "./components/about/Resume.tsx";
 
 const errorRecipe = errorRecipeJson as Recipe
 
@@ -199,17 +198,19 @@ export function App() {
                     : sidebarOption == "recipe"
                         ? <>
                             <RecipeCard
-                                recipeId={data?.recipeId}
-                                user={data?.user}
-                                title={data?.title}
-                                ingredients={data?.ingredients}
-                                items={data?.items}
-                                steps={data?.steps}>
+                                fetchRecipeCallback={fetchRecipe}
+                                sidebarOptionCallback={setSidebarOption}
+                                recipe={data}
+                                // recipeId={data?.recipeId}
+                                // user={data?.user}
+                                // title={data?.title}
+                                // ingredients={data?.ingredients}
+                                // items={data?.items}
+                                // steps={data?.steps}
+                            >
                             </RecipeCard>
                             { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
                         </>
-                    : sidebarOption == "resume"
-                        ? <Resume></Resume>
                     : <>Unknown Sidebar Option</>
                 }
                 <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>

@@ -2,10 +2,16 @@ import * as React from "react";
 import type {Recipe} from "./interfaces/Recipe.ts";
 
 import '../css/recipe-card.css'
-import {useRef} from "react";
 import {useAuth} from "react-oidc-context";
+import RecipeCardMenu from "./RecipeCardMenu.tsx";
 
-const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
+interface RecipeCardProps {
+    recipe: Recipe
+    sidebarOptionCallback: (sidebarOption: string) => void
+    fetchRecipeCallback: (recipeId: string) => void
+}
+
+const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({recipe, sidebarOptionCallback}: RecipeCardProps) => {
     const auth = useAuth();
 
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
@@ -14,13 +20,8 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
         return auth.isAuthenticated && auth.user?.profile.sub == recipe.user
     }
 
-    const deleteRecipeRef = useRef<HTMLButtonElement>(null)
-    const deleteRecipeLabelRef = useRef<HTMLButtonElement>(null)
     const deleteRecipe = () => {
-        // disable button to prevent multi-clicks
-        deleteRecipeRef.current!.disabled = true
-        deleteRecipeLabelRef.current!.innerText = "Deleting..."
-        console.log("Recipe ID: " + recipe.recipeId)
+        console.log("Deleting Recipe w/ ID: " + recipe.recipeId)
         fetch("https://api.azrinsler.com/RecipeApiLambdaUser", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
@@ -38,8 +39,6 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                 throw new Error('Network response was not ok');
             }
             console.log(response);
-            deleteRecipeRef.current!.disabled = false
-            deleteRecipeLabelRef.current!.innerText = "Deleted!"
             localStorage.setItem("sidebarOption", "browse")
 
             // Set a timer to reload after 5 seconds (5000 ms)
@@ -49,8 +48,6 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
         })
         .catch((err) => {
             console.log(err)
-            deleteRecipeRef.current!.disabled = false
-            deleteRecipeLabelRef.current!.innerText = "Delete FAILED."
         });
     }
     return (
@@ -66,11 +63,15 @@ const RecipeCard: React.FC<Recipe> = (recipe: Recipe) => {
                             <h2 style={{flexGrow:1,textAlign:'center',marginTop:'-0.15em'}}>{recipe.title}</h2>
                             { // only show delete recipe button if the user is logged in
                                 isRecipeOwner()
-                                    ? <div id="delete-recipe-button" className="flex-row">
-                                        <span ref={deleteRecipeLabelRef} style={{marginLeft:'auto'}}>Delete Recipe &rarr;</span>
-                                        <button ref={deleteRecipeRef} className='x-button' style={{margin:'0 0 0 0.25em'}} onClick={()=>{deleteRecipe()}}>x</button>
-                                    </div>
-                                    : <></>
+                                    ?
+                                    <>
+                                        <RecipeCardMenu
+                                            sidebarOptionCallback={sidebarOptionCallback}
+                                            deleteOptionCallback={deleteRecipe}>
+                                        </RecipeCardMenu>
+                                    </>
+                                    :
+                                    <></>
                             }
                         </div>
                     </div>
