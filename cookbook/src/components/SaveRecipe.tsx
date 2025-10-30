@@ -212,7 +212,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                             <ul id='new-recipe-ingredient-list' style={{}}>
                                 { ingredients.map((ingredient) =>
                                     <li className='flex-row' key={ingredient.name+'-'+ingredient.amount+'-'+ingredient.unit} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
-                                        <button className='x-button' style={ isMobile ? {} : {margin:'0.5em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
+                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'0.5em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
                                         <RecipeIngredient
                                             name={ingredient.name}
                                             amount={ingredient.amount}
@@ -244,7 +244,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                             <ul id='new-recipe-item-list' style={{}}>
                                 { items.map( (item) =>
                                     <li className='flex-row' key={item} style={{placeItems:'center',flexWrap:'nowrap',margin:'0'}}>
-                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeItem(item)}}>x</button>
+                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'0.5em'}} onClick={()=>{removeItem(item)}}>x</button>
                                         <input
                                             type='text'
                                             defaultValue={item}
@@ -278,7 +278,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                             <ul id='new-recipe-step-list' style={{flexGrow:'1'}}>
                                 { stepsOrdered.map((step, index) =>
                                     <li className='flex-row' key={step.ordinal} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
-                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeStep(step)}}>x</button>
+                                        <button className='x-button' style={ isMobile ? {} : {margin:'0.5em'}} onClick={()=>{removeStep(step)}}>x</button>
                                         <RecipeStep
                                             ordinal={index}
                                             description={ step.description }
