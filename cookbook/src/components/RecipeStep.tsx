@@ -84,7 +84,7 @@ export const RecipeStep: (step: RecipeStepProps) => React.JSX.Element = (step: R
                     )}
                     <li className='flex-row' key='add-note-input-li' style={{placeItems:'center',flexWrap:'nowrap',margin:'0'}}>
                         <label htmlFor={'step-'+step.ordinal}>
-                            <button className='plus-button happy-button' onClick={addNote} style={ isMobile ? { borderRadius:'0.25em'} : { borderRadius:'0.5em', marginRight:'1em'} }>+</button>
+                            <button className='plus-button happy-button' onClick={addNote} style={ isMobile ? { borderRadius:'0.25em'} : { borderRadius:'0.5em', marginRight:'0.5em'} }>+</button>
                         </label>
                         <input
                             ref={noteRef}

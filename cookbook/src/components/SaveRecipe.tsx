@@ -212,7 +212,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                             <ul id='new-recipe-ingredient-list' style={{}}>
                                 { ingredients.map((ingredient) =>
                                     <li className='flex-row' key={ingredient.name+'-'+ingredient.amount+'-'+ingredient.unit} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
-                                        <button className='x-button' style={ isMobile ? {} : {marginRight:'1em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
+                                        <button className='x-button' style={ isMobile ? {} : {margin:'0.5em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
                                         <RecipeIngredient
                                             name={ingredient.name}
                                             amount={ingredient.amount}
