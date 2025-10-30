@@ -40,11 +40,6 @@ const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({re
             }
             console.log(response);
             localStorage.setItem("sidebarOption", "browse")
-
-            // Set a timer to reload after 5 seconds (5000 ms)
-            setTimeout(() => {
-                window.location.reload();
-            }, 5000);
         })
         .catch((err) => {
             console.log(err)

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import '../css/recipe-card-menu.css'
 
@@ -35,6 +35,12 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
         }
     }
 
+    useEffect(() => {
+        if (isDeleted) {
+            sidebarOptionCallback("browse")
+        }
+    }, [isDeleted, sidebarOptionCallback]);
+
     const checkIfRecipeDeleted = async (): Promise<boolean> => {
         return await fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
             signal: AbortSignal.timeout(120 * 1000),
@@ -48,6 +54,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
             })
         })
         .then((response) => {
+            console.log(response)
             if (!response.ok) {
                 throw new Error('Failed to retrieve deleted recipe');
             }
