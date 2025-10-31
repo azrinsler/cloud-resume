@@ -25,11 +25,17 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
     const addStepRef = useRef<HTMLInputElement>(null)
     const submitButtonRef = useRef<HTMLButtonElement>(null)
 
+    const [title, setTitle] = useState<string | undefined>(recipe?.title)
     const [ingredients, setIngredients] = useState<Ingredient[]>(recipe?.ingredients??[])
     const [items, setItems] = useState<string[]>(recipe?.items??[])
     const [steps, setSteps] = useState<Step[]>(recipe?.steps??[])
 
     const stepsOrdered = steps?.sort((a,b)=>a.ordinal-b.ordinal)
+
+    const updateTitle = () => {
+        const titleValue = titleRef.current?.value.valueOf()
+        setTitle(titleValue)
+    }
 
     const addIngredient = () => {
         const ingredientValue = { name: addIngredientRef.current?.value || '', amount: '', unit: '' }
@@ -120,7 +126,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
         const updatedRecipe = {
             recipeId: recipe?.recipeId,
             user: recipe?.user,
-            title: titleRef.current!.value,
+            title: title,
             ingredients: ingredients,
             items: items,
             steps: steps
@@ -185,7 +191,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
                     <label htmlFor='save-recipe-title-text'></label>
-                    <input ref={titleRef} type='text' id='save-recipe-title-text' name='save-recipe-title-text' className='text-input' style={{textAlign:'center'}} value={recipe?.title}/>
+                    <input ref={titleRef} type='text' id='save-recipe-title-text' name='save-recipe-title-text' className='text-input' style={{textAlign:'center'}} defaultValue={title} onBlur={updateTitle}  />
                 </div>
 
                 <br/>&nbsp;<br/>

@@ -37,6 +37,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
         }
     }, [deleteFailed]);
 
+    // TODO - this still triggers if a delete is successful - assuming inner isDeleting var isn't updating as expected
     useEffect(() => {
         if (isDeleting) {
             // stop trying if delete still hasn't succeeded after 30 seconds
