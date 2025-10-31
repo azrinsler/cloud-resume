@@ -15,6 +15,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
     const [isOpen, setIsOpen] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
     const [isDeleted, setIsDeleted] = useState(false)
+    const [deleteFailed, setDeleteFailed] = useState(false)
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
@@ -29,10 +30,19 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
             setTimeout( async () => {
                 let deletionStatus = false
                 while (!deletionStatus) {
-                    deletionStatus = await checkIfRecipeDeleted()
+                    console.log("delete failed is", deleteFailed)
+                    deletionStatus = !deleteFailed && await checkIfRecipeDeleted()
                     setIsDeleted(deletionStatus)
                 }
             }, 2000);
+            // stop trying if delete still hasn't succeeded after 30 seconds
+            setTimeout( () => {
+                //if (isDeleting) {
+                    console.log("Delete still hasn't finished after 30 seconds - assuming something went wrong")
+                    setIsDeleting(false)
+                    setDeleteFailed(true)
+                //}
+            }, 30000)
         }
     }
 
@@ -43,13 +53,13 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
     }, [isDeleted, sidebarOptionCallback]);
 
     useEffect(() => {
-        if (isDeleting && !isDeleted) {
+        if (isDeleting && !isDeleted && !deleteFailed) {
             recipeCardRef!.current!.style.animationPlayState = "running"
         }
         else {
             recipeCardRef!.current!.style.animationPlayState = "paused"
         }
-    }, [isDeleting, isDeleted, recipeCardRef]);
+    }, [isDeleting, isDeleted, recipeCardRef, deleteFailed]);
 
     const checkIfRecipeDeleted = async (): Promise<boolean> => {
         return await fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
@@ -63,7 +73,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
                 "recipeId": localStorage.getItem("recipeId")
             })
         })
-        .then((response) => {
+        .then( async (response) => {
             console.log(response)
             if (response.ok) {
                 // if we get something back, the recipe hasn't been deleted yet
@@ -73,7 +83,10 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
             else if (response.status == 404)
             {
                 console.log("Got a 404 for deleted recipe - assuming deletion is complete")
-                console.log(response.body)
+                const text = await response.text()
+                const json = await response.json()
+                console.log( text )
+                console.log( json.body )
                 setIsDeleted(true)
                 return true
             }
@@ -85,6 +98,8 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
         })
         .catch((err) => {
             console.log(err)
+            console.log("setting deleteFailed to true")
+            setDeleteFailed(true)
             return false
         });
     }
