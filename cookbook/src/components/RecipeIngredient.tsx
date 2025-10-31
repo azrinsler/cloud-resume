@@ -40,7 +40,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
             <input
                 ref={amountRef}
                 type='text'
-                placeholder={isMobile ? 'amount' : 'How many?'}
+                placeholder={isMobile ? 'amount' : 'How much?'}
                 defaultValue={ingredient.amount}
                 style={isMobile
                     ? {

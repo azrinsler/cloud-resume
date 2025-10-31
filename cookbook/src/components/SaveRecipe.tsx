@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useRef, useState} from "react";
 
-import '../css/new-recipe.css'
+import '../css/save-recipe.css'
 import RecipeIngredient from "./RecipeIngredient.tsx";
 import type {Recipe} from "./interfaces/Recipe.ts";
 import type {Ingredient} from "./interfaces/Ingredient.ts";
@@ -181,11 +181,11 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
 
             <br/>&nbsp;<br/>
 
-            <div id='new-recipe' className='flex-column' style={isMobile? {overflowY:'scroll'} : {flexGrow:'1'}}>
+            <div id='save-recipe' className='flex-column' style={isMobile? {overflowY:'scroll'} : {flexGrow:'1'}}>
                 <h3 style={{textAlign:'center'}}>Title</h3>
                 <div className='flex-row' style={{placeItems:'center'}}>
-                    <label htmlFor='new-recipe-title-text'></label>
-                    <input ref={titleRef} type='text' id='new-recipe-title-text' name='new-recipe-title-text' className='text-input' style={{textAlign:'center'}} value={recipe?.title}/>
+                    <label htmlFor='save-recipe-title-text'></label>
+                    <input ref={titleRef} type='text' id='save-recipe-title-text' name='save-recipe-title-text' className='text-input' style={{textAlign:'center'}} value={recipe?.title}/>
                 </div>
 
                 <br/>&nbsp;<br/>
@@ -199,17 +199,17 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                             <input
                                 ref={addIngredientRef}
                                 type='text'
-                                id='new-recipe-add-ingredient-text'
-                                name='new-recipe-add-ingredient-text'
+                                id='save-recipe-add-ingredient-text'
+                                name='save-recipe-add-ingredient-text'
                                 onKeyDown={ event => { if (event.key == 'Enter') { addIngredient() } } }
                                 className='text-input'
                             />
-                            <label htmlFor='new-recipe-add-ingredient-text'>
-                                <button id='new-recipe-add-ingredient-button' className='happy-button' onClick={addIngredient}>Add Ingredient</button>
+                            <label htmlFor='save-recipe-add-ingredient-text'>
+                                <button id='save-recipe-add-ingredient-button' className='happy-button' onClick={addIngredient}>Add Ingredient</button>
                             </label>
                         </div>
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30dvh',overflowY:'scroll'}}>
-                            <ul id='new-recipe-ingredient-list' style={{}}>
+                            <ul id='save-recipe-ingredient-list' style={{}}>
                                 { ingredients.map((ingredient) =>
                                     <li className='flex-row' key={ingredient.name+'-'+ingredient.amount+'-'+ingredient.unit} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
                                         <button className='x-button' style={ isMobile ? {} : {marginRight:'0.5em'}} onClick={()=>{removeIngredient(ingredient)}}>x</button>
@@ -231,17 +231,17 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                             <input
                                 ref={addItemRef}
                                 type='text'
-                                id='new-recipe-add-item-text'
-                                name='new-recipe-add-item-text'
+                                id='save-recipe-add-item-text'
+                                name='save-recipe-add-item-text'
                                 onKeyDown={ event => { if (event.key == 'Enter') { addItem() } } }
                                 className='text-input'
                             />
-                            <label htmlFor='new-recipe-add-item-text'>
-                                <button id='new-recipe-add-item-button' className='happy-button' onClick={addItem}>Add Item</button>
+                            <label htmlFor='save-recipe-add-item-text'>
+                                <button id='save-recipe-add-item-button' className='happy-button' onClick={addItem}>Add Item</button>
                             </label>
                         </div>
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'30dvh',overflowY:'scroll'}}>
-                            <ul id='new-recipe-item-list' style={{}}>
+                            <ul id='save-recipe-item-list' style={{}}>
                                 { items.map( (item) =>
                                     <li className='flex-row' key={item} style={{placeItems:'center',flexWrap:'nowrap',margin:'0'}}>
                                         <button className='x-button' style={ isMobile ? {} : {marginRight:'0.5em'}} onClick={()=>{removeItem(item)}}>x</button>
@@ -265,17 +265,17 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                             <input
                                 ref={addStepRef}
                                 type='text'
-                                id='new-recipe-add-step-text'
-                                name='new-recipe-add-step-text'
+                                id='save-recipe-add-step-text'
+                                name='save-recipe-add-step-text'
                                 onKeyDown={ event => { if (event.key == 'Enter') { addStep() } } }
                                 className='text-input'
                             />
-                            <label htmlFor='new-recipe-add-step-text'>
-                                <button id='new-recipe-add-step-button' className='happy-button' onClick={addStep}>Add Step</button>
+                            <label htmlFor='save-recipe-add-step-text'>
+                                <button id='save-recipe-add-step-button' className='happy-button' onClick={addStep}>Add Step</button>
                             </label>
                         </div>
                         <div className='flex-column' style={{minHeight:'10vh',flexGrow:'1',maxHeight:'70dvh',overflowY:'scroll'}}>
-                            <ul id='new-recipe-step-list' style={{flexGrow:'1'}}>
+                            <ul id='save-recipe-step-list' style={{flexGrow:'1'}}>
                                 { stepsOrdered.map((step, index) =>
                                     <li className='flex-row' key={step.ordinal} style={{placeItems:'center',margin:'0',flexWrap:'nowrap'}}>
                                         <button className='x-button' style={ isMobile ? {} : {margin:'0.5em'}} onClick={()=>{removeStep(step)}}>x</button>
@@ -292,7 +292,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                 </div>
             </div>
 
-            <button id='new-recipe-submit-button' ref={submitButtonRef} className='happy-button'><h2 className='text-outline' style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
+            <button id='save-recipe-submit-button' ref={submitButtonRef} className='happy-button'><h2 className='text-outline' style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
         </div>
     )
 }

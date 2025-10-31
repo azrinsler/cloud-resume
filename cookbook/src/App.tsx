@@ -182,15 +182,15 @@ export function App() {
                     : sidebarOption == "new"
                         ? auth.isAuthenticated
                             ? <SaveRecipe recipeCallback={fetchRecipe}></SaveRecipe>
-                            : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                            : <div style={{width:'100%',height:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "edit"
                         ? auth.isAuthenticated && auth.user?.profile.sub == data.user
                             ? <SaveRecipe recipeCallback={fetchRecipe} recipe={data}></SaveRecipe>
-                            : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                            : <div style={{width:'100%',height:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "self"
                         ? auth.isAuthenticated
                             ? <MyRecipes recipeCallback={loadMyRecipe}></MyRecipes>
-                            : <div style={{width:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                            : <div style={{width:'100%',height:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "browse"
                         ? <Browse recipeCallback={fetchRecipe}></Browse>
                     : sidebarOption == "recipe" && loading
@@ -201,12 +201,6 @@ export function App() {
                                 fetchRecipeCallback={fetchRecipe}
                                 sidebarOptionCallback={setSidebarOption}
                                 recipe={data}
-                                // recipeId={data?.recipeId}
-                                // user={data?.user}
-                                // title={data?.title}
-                                // ingredients={data?.ingredients}
-                                // items={data?.items}
-                                // steps={data?.steps}
                             >
                             </RecipeCard>
                             { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }

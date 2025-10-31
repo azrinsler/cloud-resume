@@ -91,7 +91,7 @@ export const RecipeStep: (step: RecipeStepProps) => React.JSX.Element = (step: R
                             id={'step-'+step.ordinal}
                             name={'step-'+step.ordinal}
                             type='text'
-                            placeholder='Any notes?'
+                            placeholder='add note'
                             onBlur={()=>{step.onChange(toStep())}}
                             onKeyDown={ event => { if (event.key == 'Enter') { addNote() } } }
                             style={{backgroundColor: 'transparent', borderWidth: '0 0 1px 0', width:'100%'}}

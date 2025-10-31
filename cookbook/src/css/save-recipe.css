@@ -1,0 +1,27 @@
+#save-recipe {
+    padding: 1em;
+}
+
+#save-recipe-title-text, #save-recipe-add-ingredient-text, #save-recipe-add-item-text, #save-recipe-add-step-text {
+    flex-grow: 1;
+}
+
+#save-recipe-ingredient-list, #save-recipe-item-list , #save-recipe-step-list {
+
+}
+
+#save-recipe-add-ingredient-button, #save-recipe-add-item-button, #save-recipe-add-step-button {
+    padding: 0.25em;
+    width: 10em;
+}
+
+#save-recipe-submit-button {
+    margin: 0.25em;
+    position: sticky;
+    bottom: 0;
+}
+
+::placeholder {
+    /*noinspection CssInvalidFunction*/
+    color: light-dark(#c9bf7c,#262311);
+}

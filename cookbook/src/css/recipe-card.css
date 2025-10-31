@@ -1,12 +1,15 @@
 /*noinspection CssInvalidFunction*/
 #recipe-card {
+    position: relative;
     border: 1px solid transparent;
     display: flex;
     flex-wrap: wrap;
     background: linear-gradient(light-dark(#fff,#161510), light-dark(#fff,#0f0f0d)) padding-box,
-                linear-gradient(175deg, light-dark(#f73b54,#f49038), light-dark(#3bf7a9,#750f68), light-dark(#dd3575,#750f68), light-dark(#ff370a,#ff370a)) border-box;
+                linear-gradient(var(--bg-angle), light-dark(#f73b54,#f49038), light-dark(#3bf7a9,#750f68), light-dark(#dd3575,#750f68), light-dark(#ff370a,#ff370a)) border-box;
     max-width: 70em;
-    border-radius:0.25em;
+    border-radius: 0.25em;
+    animation: bg-spin 3s linear infinite;
+    animation-play-state: paused;
 }
 
 /*noinspection CssInvalidFunction*/
@@ -92,4 +95,21 @@
     right: -1em;
     top: -2em;
     width: 11em;
+}
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/@property/syntax */
+@property --bg-angle {
+    inherits: false;
+    initial-value: 0deg;
+    syntax: "<angle>";
+}
+
+/**
+ * To animate the gradient, we set the custom property to 1 full
+ * rotation. The animation starts at the default value of `0deg`.
+ */
+@keyframes bg-spin {
+    to {
+        --bg-angle: 360deg;
+    }
 }

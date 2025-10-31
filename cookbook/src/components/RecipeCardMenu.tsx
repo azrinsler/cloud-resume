@@ -1,15 +1,16 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {type RefObject, useEffect, useState} from "react";
 
 import '../css/recipe-card-menu.css'
 
 interface RecipeCardMenuProps {
     sidebarOptionCallback: (sidebarOption: string) => void
     deleteOptionCallback: (recipeId: string) => void
+    recipeCardRef: RefObject<HTMLDivElement | null>
 }
 
 
-const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.Element = ({sidebarOptionCallback, deleteOptionCallback}: RecipeCardMenuProps) => {
+const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.Element = ({sidebarOptionCallback, deleteOptionCallback, recipeCardRef}: RecipeCardMenuProps) => {
 
     const [isOpen, setIsOpen] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
@@ -40,6 +41,15 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
             sidebarOptionCallback("browse")
         }
     }, [isDeleted, sidebarOptionCallback]);
+
+    useEffect(() => {
+        if (isDeleting && !isDeleted) {
+            recipeCardRef!.current!.style.animationPlayState = "running"
+        }
+        else {
+            recipeCardRef!.current!.style.animationPlayState = "paused"
+        }
+    }, [isDeleting, isDeleted, recipeCardRef]);
 
     const checkIfRecipeDeleted = async (): Promise<boolean> => {
         return await fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
