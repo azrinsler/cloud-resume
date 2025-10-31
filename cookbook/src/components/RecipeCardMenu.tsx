@@ -84,9 +84,9 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
             {
                 console.log("Got a 404 for deleted recipe - assuming deletion is complete")
                 const text = await response.text()
-                const json = await response.json()
+                //const json = await response.json()
                 console.log( text )
-                console.log( json.body )
+                //console.log( json.body )
                 setIsDeleted(true)
                 return true
             }
