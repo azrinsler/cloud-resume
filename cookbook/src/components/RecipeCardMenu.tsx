@@ -38,8 +38,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
     }, [deleteFailed]);
 
     useEffect(() => {
-        if (isDeleting && !isWaiting) {
-            setIsWaiting(true)
+        if (isDeleting) {
             // stop trying if delete still hasn't succeeded after 30 seconds
             setTimeout( () => {
                 if (isDeleting) {
@@ -47,13 +46,17 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
                     setDeleteFailed(true)
                 }
             }, 30000)
+        }
+    }, [isDeleting]);
 
+    useEffect(() => {
+        if (isDeleting && !isWaiting) {
+            setIsWaiting(true)
             setTimeout( async () => {
                 const deletionStatus = await checkIfRecipeDeleted()
                 setIsDeleted(deletionStatus)
                 setIsWaiting(false)
             },2000)
-
         }
     }, [isDeleting, isWaiting]);
 
