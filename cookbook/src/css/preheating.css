@@ -1,0 +1,47 @@
+#preheating {
+
+}
+
+/*noinspection ALL*/
+#preheating-text::before {
+    text-shadow: none;
+    content: "Preheating";
+    position: absolute;
+    color: light-dark(white, black);
+    overflow: hidden;
+    animation: preheating-fill 25s forwards;
+    height: 0;
+}
+
+#preheating-text {
+    animation: preheating-glow 10s ease-in-out infinite alternate;
+}
+
+/*noinspection CssInvalidFunction*/
+@keyframes preheating-glow {
+    from {
+        color: light-dark(gray, #775139);
+        text-shadow:
+                -5px 0 10px light-dark(#ede2b6,#1c0812),
+                5px 0 10px light-dark(#ede2b6,#1c0812),
+                0 -2px 10px light-dark(#ede2b6,#1c0812),
+                0 2px 10px light-dark(#ede2b6,#1c0812);
+    }
+    to {
+        color: light-dark(#a01c2c,white);
+        text-shadow:
+                -5px 0 15px light-dark(#ceae98,#5e3921),
+                5px 0 10px light-dark(#ffa782,#536339),
+                0 -15px 15px light-dark(#ceae98,#77455f),
+                0 2px 15px light-dark(#ffa782,#5e3921);
+    }
+}
+
+@keyframes preheating-fill {
+    from {
+        height: 1lh;
+    }
+    to {
+        height: 0;
+    }
+}
