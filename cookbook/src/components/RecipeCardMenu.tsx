@@ -26,29 +26,32 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
         if (recipeId != null) {
             setIsDeleting(true)
             deleteOptionCallback(recipeId)
-            // wait a few seconds then start checking if the recipe is deleted yet
-            setTimeout( async () => {
-                let deletionStatus = false
-                while (!deletionStatus) {
-                    console.log("delete failed is", deleteFailed)
-                    deletionStatus = !deleteFailed && await checkIfRecipeDeleted()
-                    setIsDeleted(deletionStatus)
-                }
-            }, 2000);
-            // stop trying if delete still hasn't succeeded after 30 seconds
-            setTimeout( () => {
-                //if (isDeleting) {
-                    console.log("Delete still hasn't finished after 30 seconds - assuming something went wrong")
-                    setIsDeleting(false)
-                    setDeleteFailed(true)
-                //}
-            }, 30000)
         }
     }
 
     useEffect(() => {
+        if (isDeleting) {
+            // stop trying if delete still hasn't succeeded after 30 seconds
+            setTimeout( () => {
+                if (isDeleting) {
+                    console.log("Delete still hasn't finished after 30 seconds - assuming something went wrong")
+                    setIsDeleting(false)
+                    setDeleteFailed(true)
+                }
+            }, 30000)
+
+            setTimeout( async () => {
+                const deletionStatus = await checkIfRecipeDeleted()
+                setIsDeleted(deletionStatus)
+            },2000)
+
+        }
+    }, [isDeleting]);
+
+    useEffect(() => {
         if (isDeleted) {
-            sidebarOptionCallback("browse")
+            setIsDeleting(false)
+            // sidebarOptionCallback("browse")
         }
     }, [isDeleted, sidebarOptionCallback]);
 
@@ -62,6 +65,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
     }, [isDeleting, isDeleted, recipeCardRef, deleteFailed]);
 
     const checkIfRecipeDeleted = async (): Promise<boolean> => {
+        console.log("checking if recipe deleted")
         return await fetch("https://api.azrinsler.com/RecipeApiLambdaPublic", {
             signal: AbortSignal.timeout(120 * 1000),
             method: "POST",
