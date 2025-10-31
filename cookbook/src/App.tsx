@@ -154,14 +154,16 @@ export function App() {
                     auth.isAuthenticated
                         ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("new") } }>New Recipe</div>
                         : <></>,
-                    auth.isAuthenticated && auth.user?.profile.sub == data.user
+                    auth.isAuthenticated && auth.user?.profile.sub == data.user && recipeId != undefined
                         ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("edit") } }>Edit Recipe</div>
                         : <></>,
                     auth.isAuthenticated
                         ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("self") } }>My Recipes</div>
                         : <></>,
                     <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("browse") } }>Browse Recipes</div>,
-                    <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("recipe") } }>Current Recipe</div>,
+                    recipeId != undefined
+                        ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { refreshOrSetSidebarOption("recipe") } }>Current Recipe</div>
+                        : <></>,
                     <a   style={ isMobile ? { fontSize:"large" } : {} } href='https://github.com/azrinsler/cloud-resume'>GitHub</a>,
                     <div style={ isMobile ? { fontSize:"large" } : {} }
                          onMouseLeave={ () => { setJokeOption("") } }
@@ -195,18 +197,17 @@ export function App() {
                         ? <Browse recipeCallback={fetchRecipe}></Browse>
                     : sidebarOption == "recipe" && loading
                         ? <Preheating></Preheating>
-                    : sidebarOption == "recipe"
+                    : sidebarOption == "recipe" && recipeId != undefined
                         ? <>
                             <RecipeCard
                                 fetchRecipeCallback={fetchRecipe}
                                 sidebarOptionCallback={setSidebarOption}
                                 recipe={data}
-                            >
-                            </RecipeCard>
-                            { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Recipe</p></> : <></> }
+                            ></RecipeCard>
                         </>
-                    : <>Unknown Sidebar Option</>
+                    : <div style={{width:'100%',height:'100%',marginTop:'50vh',textAlign:'center'}}>Use the sidebar to get started.</div>
                 }
+                { error ? <><p style={{color:'red'}}>Error</p><p style={{color:'darkgoldenrod'}}>{error}</p></> : <></> }
                 <div style={{width:'100%',textAlign:'center',color:'red',position:'sticky',bottom:'0'}}>
                     IMPORTANT: Please note that this is a DEV environment - new recipes may be lost any time the DB changes!
                 </div>
