@@ -23,7 +23,7 @@ a:visited {
 
 /*noinspection CssInvalidFunction*/
 body {
-    width:100vw;
+    width:100dvw;
     min-height:100dvh;
     display: flex;
     background-color: light-dark(#fffcf2, #040500);

@@ -172,8 +172,8 @@ export function App() {
                     </div>,
                     auth.isAuthenticated
                         ? <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signOut() } }>Sign out</div>
-                        : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signIn() } }>Login</div>
-                    ,
+                        : <div style={ isMobile ? { fontSize:"large" } : {} } onClick={ () => { signIn() } }>Login</div>,
+                    <div style={ isMobile ? { fontSize:"large", opacity:0.1 } : { opacity:0.1 } } onClick={ () => { refreshOrSetSidebarOption("test") } }>Test Page</div>
                 ]}
             >
             </Sidebar>
@@ -198,6 +198,14 @@ export function App() {
                     : sidebarOption == "recipe" && loading
                         ? <Preheating></Preheating>
                     : sidebarOption == "recipe" && recipeId != undefined
+                        ? <>
+                            <RecipeCard
+                                fetchRecipeCallback={fetchRecipe}
+                                sidebarOptionCallback={setSidebarOption}
+                                recipe={data}
+                            ></RecipeCard>
+                        </>
+                    : sidebarOption == "test"
                         ? <>
                             <RecipeCard
                                 fetchRecipeCallback={fetchRecipe}

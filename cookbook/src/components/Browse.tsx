@@ -79,7 +79,7 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                                 className='text-input'
                             />
                         </div>
-                        { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
+                        { error ? <><p style={{color:'red'}}>Error</p><p style={{color:'darkgoldenrod'}}>{error}</p></> : <></> }
                         <ul style={{marginLeft:'1em',marginTop:'1em'}}> {
                             filteredTitles.map(recipe =>
                                 <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe.recipeId)}}><p style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</p></li>

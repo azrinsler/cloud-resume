@@ -1,8 +1,4 @@
 {
   "recipes": [
-    { "recipeId": "0", "title": "Stovetop Rice" },
-    { "recipeId": "1", "title": "Ranch Sauce" },
-    { "recipeId": "2", "title": "Carolina-Style Chipotle BBQ Sauce" },
-    { "recipeId": "3", "title": "Chipotle-Cajun Inspired Dry Rub" }
   ]
 }

@@ -63,7 +63,7 @@ const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recip
                 setLoading(false);
             });
         }
-    }, [loading]);
+    }, [auth.user, loading]);
 
     return (
         <>
@@ -83,7 +83,7 @@ const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recip
                                 className='text-input'
                             />
                         </div>
-                        { error ? <><p style={{color:'red'}}>{error}</p><p style={{color:'darkgoldenrod'}}>Example Result:</p></> : <></> }
+                        { error ? <><p style={{color:'red'}}>Error</p><p style={{color:'darkgoldenrod'}}>{error}</p></> : <></> }
                         <ul style={{marginLeft:'1em',marginTop:'1em'}}> {
                             filteredTitles.map(recipe =>
                                 <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe)}}><p style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</p></li>
