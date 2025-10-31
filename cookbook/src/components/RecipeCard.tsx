@@ -54,7 +54,7 @@ const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({re
                         <div id="simple-title" className="flex-row" style={isMobile ? {display:'none'} : {}}>
                             <h2 style={{marginTop:'-0.15em'}}>Simple Recipes</h2>
                         </div>
-                        <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0'} : {}}>
+                        <div id="recipe-title" className="flex-row" style={isMobile ? {borderRadius:'0.35em 0.35em 0 0',borderLeft:'none'} : {}}>
                             <h2 style={{flexGrow:1,textAlign:'center',marginTop:'-0.15em'}}>{recipe.title}</h2>
                             { // only show delete recipe button if the user is logged in
                                 isRecipeOwner()
@@ -72,7 +72,11 @@ const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({re
                         </div>
                     </div>
                     <div className="flex-row" style={{flexGrow:1,minHeight:'25lh',maxHeight:'80dvh',overflowY:'scroll'}}>
-                        <div className="flex-column" style={{minWidth:'200px',width:'25%',borderRight:'1px dotted light-dark(#201b21,#6fdde1)',flexGrow:2,padding:'1em'}}>
+                        <div className="flex-column"
+                             style={ isMobile
+                                 ? {minWidth:'200px',width:'25%',flexGrow:2,padding:'1em'}
+                                 : {minWidth:'200px',width:'25%',borderRight:'1px dotted light-dark(#201b21,#6fdde1)',flexGrow:2,padding:'1em'}
+                            }>
                             <div>
                                 <h3>Ingredients</h3>
                                 <hr/>

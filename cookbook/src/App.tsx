@@ -182,15 +182,15 @@ export function App() {
                     : sidebarOption == "new"
                         ? auth.isAuthenticated
                             ? <SaveRecipe recipeCallback={fetchRecipe}></SaveRecipe>
-                            : <div style={{width:'100%',height:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                            : <div style={{width:'100%',height:'100%',marginTop:'50vh',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "edit"
                         ? auth.isAuthenticated && auth.user?.profile.sub == data.user
                             ? <SaveRecipe recipeCallback={fetchRecipe} recipe={data}></SaveRecipe>
-                            : <div style={{width:'100%',height:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                            : <div style={{width:'100%',height:'100%',marginTop:'50vh',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "self"
                         ? auth.isAuthenticated
                             ? <MyRecipes recipeCallback={loadMyRecipe}></MyRecipes>
-                            : <div style={{width:'100%',height:'100%',textAlign:'center'}}>Use the sidebar to login.</div>
+                            : <div style={{width:'100%',height:'100%',marginTop:'50vh',textAlign:'center'}}>Use the sidebar to login.</div>
                     : sidebarOption == "browse"
                         ? <Browse recipeCallback={fetchRecipe}></Browse>
                     : sidebarOption == "recipe" && loading

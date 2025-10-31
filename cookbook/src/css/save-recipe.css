@@ -21,7 +21,7 @@
     bottom: 0;
 }
 
-::placeholder {
+#save-recipe >> ::placeholder {
     /*noinspection CssInvalidFunction*/
     color: light-dark(#c9bf7c,#262311);
 }

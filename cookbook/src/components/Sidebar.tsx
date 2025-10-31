@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import '../css/sidebar.css'
 
@@ -11,7 +11,7 @@ interface BasicLayoutProps extends React.PropsWithChildren {
 }
 
 const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
-    const startOpen = props.isExpanded !== undefined ? props.isExpanded : false
+    const startOpen = props.isExpanded !== undefined ? props.isExpanded : localStorage.getItem("sidebarOpen") == "true" || localStorage.getItem("sidebarOpen") == undefined
     const [isOpen, setOpen] = useState(startOpen)
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
@@ -20,6 +20,10 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
         setBlip(false)
         localStorage.setItem("sidebarBlip", "false")
     }
+
+    useEffect(() => {
+        localStorage.setItem("sidebarOpen", isOpen ? "true" : "false")
+    }, [isOpen]);
 
     return (
         <div
@@ -75,7 +79,7 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
                     <h2>{props.title}</h2>
                 </div>
                 <hr style={{height:'0.15lh',width:'100%',backgroundColor:'aqua'}}/>
-                <ul style={{ listStyleType:'none', width:'100%'}}>
+                <ul style={{listStyleType:'none', width:'100%'}}>
                     {
                         props.content.map( item=>
                             <li className='button' key={'sidebarLi' + props.content.indexOf(item)} onClick={()=>{setOpen(isMobile ? false : isOpen)}}>{item}</li>
