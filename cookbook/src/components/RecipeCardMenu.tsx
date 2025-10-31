@@ -65,18 +65,27 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
         })
         .then((response) => {
             console.log(response)
-            if (!response.ok) {
-                throw new Error('Failed to retrieve deleted recipe');
+            if (response.ok) {
+                // if we get something back, the recipe hasn't been deleted yet
+                console.log("Deleted recipe returned - it hasn't been deleted yet")
+                return false
             }
-            // if we get something back, the recipe hasn't been deleted yet
-            console.log("Deleted recipe returned - it hasn't been deleted yet")
-            return false
+            else if (response.status == 404)
+            {
+                console.log("Got a 404 for deleted recipe - assuming deletion is complete")
+                console.log(response.body)
+                setIsDeleted(true)
+                return true
+            }
+            else {
+                console.log(response)
+                throw new Error('Failed to retrieve deleted recipe for unexpected reason');
+            }
+
         })
         .catch((err) => {
             console.log(err)
-            // if we failed to get anything, its probably gone
-            setIsDeleted(true)
-            return true
+            return false
         });
     }
 

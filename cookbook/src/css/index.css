@@ -40,6 +40,10 @@ h2 {
     font-family: "consolas", "sans-serif";
 }
 
+input {
+    font-family: "courier new", "sans-serif"
+}
+
 li {
     margin-left: 1em;
 }
