@@ -62,7 +62,10 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
             setIsDeleting(false)
             setDeleteFailed(false)
             setIsWaiting(false)
-            // sidebarOptionCallback("browse")
+            // wait 5 seconds then switch to the browse screen
+            setTimeout( async () => {
+                sidebarOptionCallback("browse")
+            },5000)
         }
     }, [isDeleted, sidebarOptionCallback]);
 
@@ -99,11 +102,10 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
             {
                 console.log("Got a 404 for deleted recipe - assuming deletion is complete")
                 const text = await response.text()
-                //const json = await response.json()
-                console.log( text )
-                //console.log( json.body )
-                setIsDeleted(true)
-                return true
+                console.log(text)
+                const noRecipeFound = text.startsWith('No recipe with id') // ${recipe.id} found
+                setIsDeleted(noRecipeFound)
+                return noRecipeFound
             }
             else {
                 console.log(response)
