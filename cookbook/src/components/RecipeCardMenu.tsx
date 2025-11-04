@@ -63,6 +63,8 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
 
     useEffect(() => {
         if (isDeleted) {
+            // transition off-screen
+            recipeCardRef.current!.style.bottom = "-100vh"
             setIsDeleting(false)
             setDeleteFailed(false)
             setIsWaiting(false)
@@ -71,7 +73,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
                 sidebarOptionCallback("browse")
             },5000)
         }
-    }, [isDeleted, sidebarOptionCallback]);
+    }, [isDeleted, recipeCardRef, sidebarOptionCallback]);
 
     useEffect(() => {
         if (isDeleting && !isDeleted && !deleteFailed) {

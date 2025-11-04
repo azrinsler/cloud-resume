@@ -4,7 +4,7 @@ import type {Recipe} from "./interfaces/Recipe.ts";
 import '../css/recipe-card.css'
 import {useAuth} from "react-oidc-context";
 import RecipeCardMenu from "./RecipeCardMenu.tsx";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 
 interface RecipeCardProps {
     recipe: Recipe
@@ -14,11 +14,21 @@ interface RecipeCardProps {
 
 const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({recipe, sidebarOptionCallback}: RecipeCardProps) => {
     const auth = useAuth();
+    const recipeCardDivRef = useRef<HTMLDivElement>(null)
     const recipeCardRef = useRef<HTMLDivElement>(null)
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
     const stepsOrdered = recipe.steps?.sort((a,b)=>a.ordinal-b.ordinal)
     const isRecipeOwner = () => {
         return auth.isAuthenticated && auth.user?.profile.sub == recipe.user
+    }
+
+    const centerRecipe = () => {
+        const cardHeight = recipeCardRef.current!.offsetHeight
+        const cardWidth = recipeCardRef.current!.offsetWidth
+        const containerHeight = recipeCardDivRef.current!.offsetHeight
+        const containerWidth =  recipeCardDivRef.current!.offsetWidth
+        recipeCardRef.current!.style.bottom = (containerHeight / 2) - (cardHeight / 2) + "px"
+        recipeCardRef.current!.style.right = (containerWidth / 2) - (cardWidth / 2) + "px"
     }
 
     const deleteRecipe = () => {
@@ -45,10 +55,15 @@ const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({re
             console.log(err)
         });
     }
+
+    useEffect(() => {
+        centerRecipe()
+    }, []);
+
     return (
         <div className='flex-column' style={{width:'100%',flexGrow:'1'}}>
             <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Recipe</h1>
-            <div className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
+            <div ref={recipeCardDivRef} className='flex-column' style={{width:'100%',placeContent:'center',placeItems:'center',flexGrow:'1'}}>
                 <div ref={recipeCardRef} id="recipe-card" style={isMobile ? {border:"none"}:{}}>
                     <div className="flex-row" style={{width:'100%'}}>
                         <div id="simple-title" className="flex-row" style={isMobile ? {display:'none'} : {}}>
