@@ -15,12 +15,13 @@ const Sidebar: React.FC<BasicLayoutProps> = (props: BasicLayoutProps) => {
     const [isOpen, setOpen] = useState(startOpen)
     const isMobile = /Mobi|Android/i.test(navigator.userAgent)
 
+    // used to make the icon blip until it's been clicked the first time a user loads the page
     const [blip, setBlip] = useState( (localStorage.getItem("sidebarBlip") || "true") == "true" )
     const deactivateBlip = () => {
         setBlip(false)
         localStorage.setItem("sidebarBlip", "false")
     }
-
+    // tracks whether the sidebar is open in local storage, which is used to prevent state from resetting on refresh
     useEffect(() => {
         localStorage.setItem("sidebarOpen", isOpen ? "true" : "false")
     }, [isOpen]);

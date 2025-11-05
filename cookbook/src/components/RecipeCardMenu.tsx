@@ -1,5 +1,5 @@
 import * as React from "react";
-import {type RefObject, useEffect, useState} from "react";
+import {type RefObject, useEffect, useRef, useState} from "react";
 
 import '../css/recipe-card-menu.css'
 
@@ -17,6 +17,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
     const [isDeleting, setIsDeleting] = useState(false)
     const [isDeleted, setIsDeleted] = useState(false)
     const [deleteFailed, setDeleteFailed] = useState(false)
+    const deletingTimeout = useRef(0)
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
@@ -41,7 +42,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
     useEffect(() => {
         if (isDeleting) {
             // stop trying if delete still hasn't succeeded after 30 seconds
-            setTimeout( () => {
+            deletingTimeout.current = setTimeout( () => {
                 if (isDeleting) {
                     console.log("Delete still hasn't finished after 30 seconds - assuming something went wrong")
                     setDeleteFailed(true)
@@ -63,6 +64,7 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
 
     useEffect(() => {
         if (isDeleted) {
+            clearTimeout(deletingTimeout.current)
             // transition off-screen
             recipeCardRef.current!.style.bottom = "-100vh"
             setIsDeleting(false)
