@@ -183,7 +183,7 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
     return (
         !auth.isAuthenticated ? <></> : // returns nothing if not authenticated
         <div className='flex-column' style={{width:'100%',flexGrow:'1',overflow:'hidden'}}>
-            <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Save Recipe</h1>
+            <h1 className='section-title'>Save Recipe</h1>
 
             <br/>&nbsp;<br/>
 
@@ -298,7 +298,9 @@ const SaveRecipe: (recipeCallback: SaveRecipeProps) => React.JSX.Element = ({rec
                 </div>
             </div>
 
-            <button id='save-recipe-submit-button' ref={submitButtonRef} className='happy-button'><h2 className='text-outline' style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2></button>
+            <button id='save-recipe-submit-button' ref={submitButtonRef} className='happy-button'>
+                <h2 className='text-outline' style={{textAlign:'center'}} onClick={()=>{submitRecipe(toRecipe())}}>Submit Recipe</h2>
+            </button>
         </div>
     )
 }

@@ -1,5 +1,7 @@
 .ingredient {
-
+    place-items: center;
+    width: 100%;
+    flex-wrap: nowrap;
 }
 
 .ingredient > input[type='text'] {

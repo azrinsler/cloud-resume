@@ -67,13 +67,12 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                 loading
                     ? <Preheating></Preheating>
                     : <div id="browse-recipes" className="flex-column">
-                        <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>Browse</h1>
-                        <div className='flex-row' style={{placeContent:'center',placeItems:'center',padding:'1em',borderBottom:'1px solid'}}>
+                        <h1 className='section-title'>Browse</h1>
+                        <div id="browse-recipes-title-div" className='flex-row'>
                             <label htmlFor='browse-recipes-search' style={{fontSize:'1.25em'}}>Title:&nbsp;</label>
                             <input
                                 id='browse-recipes-search'
                                 type='text' name='browse-recipes-search'
-                                style={{width:'80%',textAlign:'center'}}
                                 onChange={e => setSearchTerm(e.target.value)}
                                 placeholder='Filter by Title'
                                 className='text-input'
@@ -82,7 +81,9 @@ const Browse: (recipeCallback: BrowseProps) => React.JSX.Element = ({recipeCallb
                         { error ? <><p style={{color:'red'}}>Error</p><p style={{color:'darkgoldenrod'}}>{error}</p></> : <></> }
                         <ul style={{marginLeft:'1em',marginTop:'1em'}}> {
                             filteredTitles.map(recipe =>
-                                <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe.recipeId)}}><p style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</p></li>
+                                <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe.recipeId)}}>
+                                    <p style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</p>
+                                </li>
                             )
                         } </ul>
                     </div>

@@ -27,7 +27,7 @@ export const RecipeIngredient: (ingredient: RecipeIngredientProps) => React.JSX.
     }
 
     return (
-        <div className='flex-row ingredient' style={{placeItems: 'center', width: '100%', flexWrap: 'nowrap'}}>
+        <div className='flex-row ingredient'>
             <input
                 ref={nameRef}
                 type='text'

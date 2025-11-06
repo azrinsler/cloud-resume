@@ -82,6 +82,13 @@ li {
 }
 
 /*noinspection CssInvalidFunction*/
+.section-title {
+    text-align: center;
+    border-bottom: 1px solid light-dark(black,#a33dc2);
+    background-color: light-dark(#514eeb,#12000a);
+}
+
+/*noinspection CssInvalidFunction*/
 .x-button {
     cursor: pointer;
     margin: 0.1em;

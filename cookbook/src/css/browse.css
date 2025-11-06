@@ -16,3 +16,15 @@
 #browse-recipes > ul > li:hover {
     color: light-dark(#b81bd9, #ec91ff);
 }
+
+#browse-recipes-title-div {
+    place-content: center;
+    place-items: center;
+    padding: 1em;
+    border-bottom: 1px solid;
+}
+
+#browse-recipes-search {
+    width: 80%;
+    text-align: center;
+}

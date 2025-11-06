@@ -71,13 +71,12 @@ const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recip
                 loading
                     ? <Preheating></Preheating>
                     : <div id="my-recipes" className="flex-column">
-                        <h1 style={{textAlign:'center', borderBottom:'1px solid light-dark(black,#a33dc2)', backgroundColor:'light-dark(#514eeb,#12000a)'}}>My Recipes</h1>
-                        <div className='flex-row' style={{placeContent:'center',placeItems:'center',padding:'1em',borderBottom:'1px solid'}}>
+                        <h1 className='section-title'>My Recipes</h1>
+                        <div id='my-recipes-title-div'>
                             <label htmlFor='my-recipes-search' style={{fontSize:'1.25em'}}>Title:&nbsp;</label>
                             <input
                                 id='my-recipes-search'
                                 type='text' name='my-recipes-search'
-                                style={{width:'80%',textAlign:'center'}}
                                 onChange={e => setSearchTerm(e.target.value)}
                                 placeholder='Filter by Title'
                                 className='text-input'
@@ -86,7 +85,9 @@ const MyRecipes: (recipeCallback: MyRecipesProps) => React.JSX.Element = ({recip
                         { error ? <><p style={{color:'red'}}>Error</p><p style={{color:'darkgoldenrod'}}>{error}</p></> : <></> }
                         <ul style={{marginLeft:'1em',marginTop:'1em'}}> {
                             filteredTitles.map(recipe =>
-                                <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe)}}><p style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</p></li>
+                                <li key={recipe.recipeId}  onClick={() => {setLoading(true); recipeCallback(recipe)}}>
+                                    <p style={isMobile ? {textAlign:'center'} : {textAlign:'left'}}>{recipe.title}</p>
+                                </li>
                             )
                         } </ul>
                     </div>
