@@ -23,12 +23,16 @@ const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({re
     }
 
     const centerRecipe = () => {
-        const cardHeight = recipeCardRef.current!.offsetHeight
-        const cardWidth = recipeCardRef.current!.offsetWidth
-        const containerHeight = recipeCardDivRef.current!.offsetHeight
-        const containerWidth =  recipeCardDivRef.current!.offsetWidth
-        recipeCardRef.current!.style.bottom = (containerHeight / 2) - (cardHeight / 2) + "px"
-        recipeCardRef.current!.style.right = (containerWidth / 2) - (cardWidth / 2) + "px"
+        // const cardHeight = recipeCardRef.current!.offsetHeight
+        // const cardWidth = recipeCardRef.current!.offsetWidth
+        // const containerHeight = recipeCardDivRef.current!.offsetHeight
+        // const containerWidth =  recipeCardDivRef.current!.offsetWidth
+        // recipeCardRef.current!.style.bottom = (containerHeight / 2) - (cardHeight / 2) + "px"
+        // recipeCardRef.current!.style.right = (containerWidth / 2) - (cardWidth / 2) + "px"
+        if (recipeCardRef.current) {
+            recipeCardRef.current.style.top = "0"
+            recipeCardRef.current.style.left = "0"
+        }
     }
 
     const deleteRecipe = () => {
@@ -58,6 +62,11 @@ const RecipeCard: (recipeCardProps: RecipeCardProps) => React.JSX.Element = ({re
 
     useEffect(() => {
         centerRecipe()
+        setTimeout(() => {
+            if (recipeCardRef.current) {
+                recipeCardRef.current.style.position = "initial"
+            }
+        }, 500)
     }, []);
 
     return (

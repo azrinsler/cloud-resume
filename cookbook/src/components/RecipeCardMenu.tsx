@@ -10,7 +10,12 @@ interface RecipeCardMenuProps {
 }
 
 
-const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.Element = ({sidebarOptionCallback, deleteOptionCallback, recipeCardRef}: RecipeCardMenuProps) => {
+const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) =>
+                                            React.JSX.Element = ({
+                                                   sidebarOptionCallback,
+                                                   deleteOptionCallback,
+                                                   recipeCardRef
+}: RecipeCardMenuProps) => {
 
     const [isWaiting, setIsWaiting] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
@@ -38,7 +43,6 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
         }
     }, [deleteFailed]);
 
-    // TODO - this still triggers if a delete is successful - assuming inner isDeleting var isn't updating as expected
     useEffect(() => {
         if (isDeleting) {
             // stop trying if delete still hasn't succeeded after 30 seconds
@@ -63,10 +67,11 @@ const RecipeCardMenu: (sidebarOptionCallback: RecipeCardMenuProps) => React.JSX.
     }, [isDeleting, isWaiting]);
 
     useEffect(() => {
-        if (isDeleted) {
+        if (isDeleted && recipeCardRef.current) {
             clearTimeout(deletingTimeout.current)
             // transition off-screen
-            recipeCardRef.current!.style.bottom = "-100vh"
+            recipeCardRef.current.style.position = "relative"
+            recipeCardRef.current.style.top = "100vh"
             setIsDeleting(false)
             setDeleteFailed(false)
             setIsWaiting(false)
